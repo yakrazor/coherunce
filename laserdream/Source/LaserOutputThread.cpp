@@ -26,25 +26,24 @@ LaserOutputThread::LaserOutputThread() : Thread("Laser Output Thread") {
    }
 }
 
-int LaserOutputThread::init() {
+bool LaserOutputThread::init() {
     etherdream_lib_start();
     usleep(1200000);
 
 	int cc = etherdream_dac_count();
 	if (!cc) {
 		printf("No DACs found.\n");
-		return 0;
+		return false;
 	}
 
 	dac_device = etherdream_get(0);
 
 	printf("Connecting...\n");
     if (etherdream_connect(dac_device) < 0) {
-        printf("Success.");
-        return 1;
-    } else {
         printf("Could not connect to DAC!");
-        return 0;
+        return false;
+    } else {
+        return true;
     }
 }
 

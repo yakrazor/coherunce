@@ -19,7 +19,7 @@ class LaserOutputThread : public Thread
 {
 public:
     LaserOutputThread();
-    int init();
+    bool init();
     void run() override;
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LaserOutputThread)
