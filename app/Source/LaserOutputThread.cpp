@@ -40,7 +40,7 @@ bool LaserOutputThread::init() {
 
 	printf("Connecting...\n");
     if (etherdream_connect(dac_device) < 0) {
-        printf("Could not connect to DAC!");
+        printf("Could not connect to DAC!\n");
         return false;
     } else {
         return true;
@@ -48,12 +48,14 @@ bool LaserOutputThread::init() {
 }
 
 void LaserOutputThread::run() {
-	if (connected) {
-        fill_circle(points, NUM_POINTS, 0, 0);
-        etherdream_wait_for_ready(dac_device);
-        int res = etherdream_write(dac_device, points, NUM_POINTS, 30000, 1);
-        if (res != 0) {
-            printf("write returned %d\n", res);
+    while(true) {
+        if (connected) {
+            fill_circle(points, NUM_POINTS, 0, 0);
+            etherdream_wait_for_ready(dac_device);
+            int res = etherdream_write(dac_device, points, NUM_POINTS, 30000, 1);
+            if (res != 0) {
+                printf("write returned %d\n", res);
+            }
         }
-	}
+    }
 }

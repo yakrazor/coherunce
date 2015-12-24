@@ -31,12 +31,15 @@ public:
 
         mainWindow = new MainWindow (getApplicationName());
         laserThread = new LaserOutputThread();
+        laserThread->startThread();
     }
 
     void shutdown() override
     {
         // Add your application's shutdown code here..
-
+        
+        // Exit laser output thread
+        laserThread->stopThread(10);
         mainWindow = nullptr; // (deletes our window)
         laserThread = nullptr;
     }
