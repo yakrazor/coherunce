@@ -6,8 +6,6 @@
   <MAINGROUP id="dWToof" name="laserdream">
     <GROUP id="{FC597BDF-A594-DAFD-5E88-4BDF3DF7AE4B}" name="Input"/>
     <GROUP id="{0954451C-E5BA-15C3-924D-EE8E6287ED75}" name="Output">
-      <FILE id="Bzv7fM" name="etherdream.c" compile="1" resource="0" file="Source/etherdream.c"/>
-      <FILE id="clNBof" name="etherdream.h" compile="0" resource="0" file="Source/etherdream.h"/>
       <FILE id="N3DuAm" name="etherdream_test.h" compile="1" resource="0"
             file="Source/etherdream_test.h"/>
       <FILE id="K3CvKr" name="LaserOutputThread.cpp" compile="1" resource="0"
@@ -23,12 +21,15 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX">
+    <XCODE_MAC targetFolder="Builds/MacOSX" externalLibraries="etherdream" prebuildCommand=""
+               postbuildCommand="if [[ ! -f &quot;${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries/libetherdream.dylib&quot; ]]; then&#10;mkdir ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries&#10;cp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries&#10;install_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/MacOS/laserdream &#10;fi">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="1" optimisation="1" targetName="laserdream"/>
+                       isDebug="0" optimisation="1" targetName="laserdream" headerPath="$(PROJECT_DIR)/../../lib/libetherdream"
+                       libraryPath="$(PROJECT_DIR)/../../lib/libetherdream/osx"/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="0" optimisation="3" targetName="laserdream"/>
+                       isDebug="0" optimisation="3" targetName="laserdream" headerPath="$(PROJECT_DIR)/../../lib/libetherdream&#10;"
+                       libraryPath="$(PROJECT_DIR)/../../lib/libetherdream/osx"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>

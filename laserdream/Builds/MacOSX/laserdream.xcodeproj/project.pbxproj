@@ -20,7 +20,6 @@
 		DA76440F44FE3C2F7A113D58 = {isa = PBXBuildFile; fileRef = 3D414D1973C987F6BF98F9D3; };
 		BA34700743839722F7D081B8 = {isa = PBXBuildFile; fileRef = 12BC631B73DBBF0F5EB8D185; };
 		BE6946915BD21AABA0C68B9B = {isa = PBXBuildFile; fileRef = 698CD44311B6EFEC3EFE820A; };
-		9F8685DF93B04A06D62159C7 = {isa = PBXBuildFile; fileRef = 337379F51C82997B018CD711; };
 		F3B80BE7898C00FFF1DAA439 = {isa = PBXBuildFile; fileRef = 0B8BB3DA421B0C29CD20A12F; };
 		8AC3A70187BD4E950280E31A = {isa = PBXBuildFile; fileRef = CEA467346CE4B7335D80396F; };
 		5050275F423E6B765748CA90 = {isa = PBXBuildFile; fileRef = 133FD02CCBC15F1729E7EF92; };
@@ -241,7 +240,6 @@
 		3280D18234D107515585983E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_MP3AudioFormat.h"; path = "../../../../JUCE/modules/juce_audio_formats/codecs/juce_MP3AudioFormat.h"; sourceTree = "SOURCE_ROOT"; };
 		32DA89FC896021018EEEC7DD = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_Value.h"; path = "../../../../JUCE/modules/juce_data_structures/values/juce_Value.h"; sourceTree = "SOURCE_ROOT"; };
 		33342C6435FE9F8C152E6F68 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_OSCTypes.h"; path = "../../../../JUCE/modules/juce_osc/osc/juce_OSCTypes.h"; sourceTree = "SOURCE_ROOT"; };
-		337379F51C82997B018CD711 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = etherdream.c; path = ../../Source/etherdream.c; sourceTree = "SOURCE_ROOT"; };
 		33E7E3B1E0E3EC03C9DE722D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_DirectShowComponent.h"; path = "../../../../JUCE/modules/juce_video/playback/juce_DirectShowComponent.h"; sourceTree = "SOURCE_ROOT"; };
 		33E8DA72FDC2E19E3837DD0A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_linux_JackAudio.cpp"; path = "../../../../JUCE/modules/juce_audio_devices/native/juce_linux_JackAudio.cpp"; sourceTree = "SOURCE_ROOT"; };
 		3409FBAE3AE0EF0F6D40912A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_OpenGLPixelFormat.cpp"; path = "../../../../JUCE/modules/juce_opengl/opengl/juce_OpenGLPixelFormat.cpp"; sourceTree = "SOURCE_ROOT"; };
@@ -344,7 +342,6 @@
 		4FB0106D765BBFD0AEEE12AF = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_MenuBarComponent.cpp"; path = "../../../../JUCE/modules/juce_gui_basics/menus/juce_MenuBarComponent.cpp"; sourceTree = "SOURCE_ROOT"; };
 		4FFEA93CC45CDAFD0CE6EE1D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_Vector3D.h"; path = "../../../../JUCE/modules/juce_opengl/geometry/juce_Vector3D.h"; sourceTree = "SOURCE_ROOT"; };
 		501AAABAC75D633C96B4583C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_OpenGLShaderProgram.cpp"; path = "../../../../JUCE/modules/juce_opengl/opengl/juce_OpenGLShaderProgram.cpp"; sourceTree = "SOURCE_ROOT"; };
-		50D5BBA2CA944310C5CD44A8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = etherdream.h; path = ../../Source/etherdream.h; sourceTree = "SOURCE_ROOT"; };
 		520F2E7C2F002AC8A16CFFEC = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_ThreadPool.cpp"; path = "../../../../JUCE/modules/juce_core/threads/juce_ThreadPool.cpp"; sourceTree = "SOURCE_ROOT"; };
 		52238793A63FBE936CCDD439 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_RelativePointPath.cpp"; path = "../../../../JUCE/modules/juce_gui_basics/positioning/juce_RelativePointPath.cpp"; sourceTree = "SOURCE_ROOT"; };
 		52584FE1701BD224713E3D86 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "juce_mac_NSViewComponent.mm"; path = "../../../../JUCE/modules/juce_gui_extra/native/juce_mac_NSViewComponent.mm"; sourceTree = "SOURCE_ROOT"; };
@@ -958,8 +955,6 @@
 		FFE21D7623C115A06344BD83 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ActionBroadcaster.h"; path = "../../../../JUCE/modules/juce_events/broadcasters/juce_ActionBroadcaster.h"; sourceTree = "SOURCE_ROOT"; };
 		C8FA7C2FE3D0D66DBBE0BF06 = {isa = PBXGroup; children = (  ); name = Input; sourceTree = "<group>"; };
 		358A1CC10CFEAE102EF8ABA8 = {isa = PBXGroup; children = (
-					337379F51C82997B018CD711,
-					50D5BBA2CA944310C5CD44A8,
 					0B8BB3DA421B0C29CD20A12F,
 					CEA467346CE4B7335D80396F,
 					F592332574886472460A5F31,
@@ -2093,20 +2088,23 @@
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"_DEBUG=1",
-					"DEBUG=1",
+					"_NDEBUG=1",
+					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.0.0",
 					"JUCE_APP_VERSION_HEX=0x10000", );
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "../../../../JUCE/modules", "$(inherited)");
+				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "../../../../JUCE/modules", "$(PROJECT_DIR)/../../lib/libetherdream", "$(inherited)");
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"$(PROJECT_DIR)/../../lib/libetherdream/osx\"");
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
+				OTHER_LDFLAGS = "-letherdream";
 				SDKROOT_ppc = macosx10.5; }; name = Debug; };
 		6C89F1D720EB304537D52679 = {isa = XCBuildConfiguration; buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -2124,10 +2122,12 @@
 					"JUCE_APP_VERSION_HEX=0x10000", );
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "../../../../JUCE/modules", "$(inherited)");
+				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "../../../../JUCE/modules", "$(PROJECT_DIR)/../../lib/libetherdream", "$(inherited)");
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"$(PROJECT_DIR)/../../lib/libetherdream/osx\"");
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
+				OTHER_LDFLAGS = "-letherdream";
 				SDKROOT_ppc = macosx10.5; }; name = Release; };
 		67222F9CED6E02E2E80BF00D = {isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2141,7 +2141,6 @@
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "laserdream";
 				WARNING_CFLAGS = -Wreorder;
 				ZERO_LINK = NO; }; name = Debug; };
@@ -2169,7 +2168,6 @@
 		3958063C1DEEF97F0283A942 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
 					BE6946915BD21AABA0C68B9B, ); runOnlyForDeploymentPostprocessing = 0; };
 		D612482D25DFB001AC107243 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
-					9F8685DF93B04A06D62159C7,
 					F3B80BE7898C00FFF1DAA439,
 					8AC3A70187BD4E950280E31A,
 					5050275F423E6B765748CA90,
@@ -2202,10 +2200,12 @@
 					7392A38C29F84F932EBAD1A9,
 					DA76440F44FE3C2F7A113D58,
 					BA34700743839722F7D081B8, ); runOnlyForDeploymentPostprocessing = 0; };
+		07E89A10F49A845250764B21 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "if [[ ! -f \"${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries/libetherdream.dylib\" ]]; then\nmkdir ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries\ncp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries\ninstall_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/MacOS/laserdream \nfi"; };
 		39150776B6BF11F2F144C0EC = {isa = PBXNativeTarget; buildConfigurationList = F97E829858375197DE31D227; buildPhases = (
 					3958063C1DEEF97F0283A942,
 					D612482D25DFB001AC107243,
-					88FA24C51E2781A3C2808727, ); buildRules = ( ); dependencies = ( ); name = laserdream; productName = laserdream; productReference = E1D45276039BBF9B1C7A7E99; productInstallPath = "$(HOME)/Applications"; productType = "com.apple.product-type.application"; };
+					88FA24C51E2781A3C2808727,
+					07E89A10F49A845250764B21, ); buildRules = ( ); dependencies = ( ); name = laserdream; productName = laserdream; productReference = E1D45276039BBF9B1C7A7E99; productInstallPath = "$(HOME)/Applications"; productType = "com.apple.product-type.application"; };
 		A756088D9863FF1B3B51E88B = {isa = PBXProject; buildConfigurationList = 7927BE58DA9ACB5EB9EBCCB6; attributes = { LastUpgradeCheck = 0440; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = FB5E9D455F6675E75EBA6BA0; projectDirPath = ""; projectRoot = ""; targets = ( 39150776B6BF11F2F144C0EC ); };
 	};
 	rootObject = A756088D9863FF1B3B51E88B;

@@ -316,9 +316,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\etherdream.c">
-      <Filter>laserdream\Output</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\LaserOutputThread.cpp">
       <Filter>laserdream\Output</Filter>
     </ClCompile>
@@ -1575,9 +1572,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\etherdream.h">
-      <Filter>laserdream\Output</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\etherdream_test.h">
       <Filter>laserdream\Output</Filter>
     </ClInclude>

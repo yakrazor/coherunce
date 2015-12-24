@@ -9,7 +9,7 @@
 */
 
 #include "LaserOutputThread.h"
-#include "etherdream.h"
+#include <etherdream.h>
 #include "etherdream_test.h"
 
 
