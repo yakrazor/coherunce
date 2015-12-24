@@ -14,11 +14,11 @@
 Component* createMainContentComponent();
 
 //==============================================================================
-class laserdreamApplication  : public JUCEApplication
+class coherunceApplication  : public JUCEApplication
 {
 public:
     //==============================================================================
-    laserdreamApplication() {}
+    coherunceApplication() {}
 
     const String getApplicationName() override       { return ProjectInfo::projectName; }
     const String getApplicationVersion() override    { return ProjectInfo::versionString; }
@@ -102,4 +102,4 @@ private:
 
 //==============================================================================
 // This macro generates the main() routine that launches the app.
-START_JUCE_APPLICATION (laserdreamApplication)
+START_JUCE_APPLICATION (coherunceApplication)

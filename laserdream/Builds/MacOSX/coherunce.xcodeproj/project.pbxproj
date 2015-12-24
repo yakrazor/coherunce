@@ -859,7 +859,7 @@
 		E1AA093BB55A28A5B14D3564 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_ComponentListener.cpp"; path = "../../../../JUCE/modules/juce_gui_basics/components/juce_ComponentListener.cpp"; sourceTree = "SOURCE_ROOT"; };
 		E1AE9F57457FE8EB641BF25E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_PositionableAudioSource.h"; path = "../../../../JUCE/modules/juce_audio_basics/sources/juce_PositionableAudioSource.h"; sourceTree = "SOURCE_ROOT"; };
 		E1B4864F4A889556F78CE1D7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_ToneGeneratorAudioSource.cpp"; path = "../../../../JUCE/modules/juce_audio_basics/sources/juce_ToneGeneratorAudioSource.cpp"; sourceTree = "SOURCE_ROOT"; };
-		E1D45276039BBF9B1C7A7E99 = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = laserdream.app; sourceTree = "BUILT_PRODUCTS_DIR"; };
+		E1D45276039BBF9B1C7A7E99 = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coherunce.app; sourceTree = "BUILT_PRODUCTS_DIR"; };
 		E1E9B835530933A20F83C64C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_Label.cpp"; path = "../../../../JUCE/modules/juce_gui_basics/widgets/juce_Label.cpp"; sourceTree = "SOURCE_ROOT"; };
 		E226C0F1D428CE2CEBE4639E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_OSCMessage.cpp"; path = "../../../../JUCE/modules/juce_osc/osc/juce_OSCMessage.cpp"; sourceTree = "SOURCE_ROOT"; };
 		E271ECF18047E5D51D8932CD = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_Path.h"; path = "../../../../JUCE/modules/juce_graphics/geometry/juce_Path.h"; sourceTree = "SOURCE_ROOT"; };
@@ -965,7 +965,7 @@
 		6D20A3E393FE122FBC878C33 = {isa = PBXGroup; children = (
 					C8FA7C2FE3D0D66DBBE0BF06,
 					358A1CC10CFEAE102EF8ABA8,
-					368470757AF31D332AC107C8, ); name = laserdream; sourceTree = "<group>"; };
+					368470757AF31D332AC107C8, ); name = coherunce; sourceTree = "<group>"; };
 		75E5C6675DEBA5BF54ACFD6F = {isa = PBXGroup; children = (
 					CA4B2CEBDB1C3B4B20D1B1D8,
 					3ABC986FD3BB703FED1A4601,
@@ -2141,7 +2141,7 @@
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PRODUCT_NAME = "laserdream";
+				PRODUCT_NAME = "coherunce";
 				WARNING_CFLAGS = -Wreorder;
 				ZERO_LINK = NO; }; name = Debug; };
 		2C32ECC2351998C67B5894A5 = {isa = XCBuildConfiguration; buildSettings = {
@@ -2156,7 +2156,7 @@
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PRODUCT_NAME = "laserdream";
+				PRODUCT_NAME = "coherunce";
 				WARNING_CFLAGS = -Wreorder;
 				ZERO_LINK = NO; }; name = Release; };
 		7927BE58DA9ACB5EB9EBCCB6 = {isa = XCConfigurationList; buildConfigurations = (
@@ -2200,12 +2200,12 @@
 					7392A38C29F84F932EBAD1A9,
 					DA76440F44FE3C2F7A113D58,
 					BA34700743839722F7D081B8, ); runOnlyForDeploymentPostprocessing = 0; };
-		07E89A10F49A845250764B21 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "if [[ ! -f \"${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries/libetherdream.dylib\" ]]; then\nmkdir ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries\ncp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries\nfi\ninstall_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/MacOS/laserdream 2>/dev/null || true\n"; };
+		07E89A10F49A845250764B21 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "if [[ ! -f \"${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries/libetherdream.dylib\" ]]; then\nmkdir ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries\ncp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries\nfi\ninstall_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/MacOS/coherunce 2>/dev/null || true\n"; };
 		39150776B6BF11F2F144C0EC = {isa = PBXNativeTarget; buildConfigurationList = F97E829858375197DE31D227; buildPhases = (
 					3958063C1DEEF97F0283A942,
 					D612482D25DFB001AC107243,
 					88FA24C51E2781A3C2808727,
-					07E89A10F49A845250764B21, ); buildRules = ( ); dependencies = ( ); name = laserdream; productName = laserdream; productReference = E1D45276039BBF9B1C7A7E99; productInstallPath = "$(HOME)/Applications"; productType = "com.apple.product-type.application"; };
+					07E89A10F49A845250764B21, ); buildRules = ( ); dependencies = ( ); name = coherunce; productName = coherunce; productReference = E1D45276039BBF9B1C7A7E99; productInstallPath = "$(HOME)/Applications"; productType = "com.apple.product-type.application"; };
 		A756088D9863FF1B3B51E88B = {isa = PBXProject; buildConfigurationList = 7927BE58DA9ACB5EB9EBCCB6; attributes = { LastUpgradeCheck = 0440; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = FB5E9D455F6675E75EBA6BA0; projectDirPath = ""; projectRoot = ""; targets = ( 39150776B6BF11F2F144C0EC ); };
 	};
 	rootObject = A756088D9863FF1B3B51E88B;

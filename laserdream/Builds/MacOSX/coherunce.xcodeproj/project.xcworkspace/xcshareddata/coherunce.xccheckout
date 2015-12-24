@@ -5,9 +5,9 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>BFC98B07-F426-41A3-A38D-97CC240FF842</string>
+	<string>5E07A9CA-2C16-4550-8CAA-B68E5A01A38A</string>
 	<key>IDESourceControlProjectName</key>
-	<string>laserdream</string>
+	<string>coherunce</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>3AEB7DBC3096558E8D3D31D56675508265BA7E88</key>
@@ -16,7 +16,7 @@
 		<string>https://github.com/julianstorer/JUCE/</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>laserdream/Builds/MacOSX/laserdream.xcodeproj</string>
+	<string>laserdream/Builds/MacOSX/coherunce.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>3AEB7DBC3096558E8D3D31D56675508265BA7E88</key>

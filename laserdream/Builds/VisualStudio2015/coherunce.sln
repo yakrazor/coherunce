@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2015
-Project("{E5D29844-0307-68AD-286B-970F48CEEF35}") = "laserdream", "laserdream.vcxproj", "{45454047-47D0-8469-D63A-797751AE6AF6}"
+Project("{98DC8108-56A6-5BDC-F6A3-634FF56572AB}") = "coherunce", "coherunce.vcxproj", "{45454047-47D0-8469-D63A-797751AE6AF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

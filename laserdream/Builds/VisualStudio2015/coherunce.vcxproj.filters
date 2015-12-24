@@ -2,17 +2,17 @@
 
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="laserdream">
-      <UniqueIdentifier>{DCB77EC9-101B-D2F2-7CBD-1B020DE7515F}</UniqueIdentifier>
+    <Filter Include="coherunce">
+      <UniqueIdentifier>{C735DC11-D3CD-903B-ED6A-1297C2161BB8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="laserdream\Input">
-      <UniqueIdentifier>{6CC53327-D4D2-BB78-3FEF-143C84D8D92E}</UniqueIdentifier>
+    <Filter Include="coherunce\Input">
+      <UniqueIdentifier>{B34CC912-69CF-CD40-CB88-8CD0774C374C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="laserdream\Output">
-      <UniqueIdentifier>{7FAC583E-EE6F-4717-D66F-C773E056F52B}</UniqueIdentifier>
+    <Filter Include="coherunce\Output">
+      <UniqueIdentifier>{FAE6BEE1-C613-8E37-35B6-141FFF78CA8D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="laserdream\Application">
-      <UniqueIdentifier>{B8594DE4-861E-00BF-88C8-8D3753F44EE9}</UniqueIdentifier>
+    <Filter Include="coherunce\Application">
+      <UniqueIdentifier>{A3AB6FA2-0D4E-C1ED-F6E4-FFCD13DCB5BE}</UniqueIdentifier>
     </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
@@ -317,13 +317,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\LaserOutputThread.cpp">
-      <Filter>laserdream\Output</Filter>
+      <Filter>coherunce\Output</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
-      <Filter>laserdream\Application</Filter>
+      <Filter>coherunce\Application</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
-      <Filter>laserdream\Application</Filter>
+      <Filter>coherunce\Application</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
@@ -1573,13 +1573,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\etherdream_test.h">
-      <Filter>laserdream\Output</Filter>
+      <Filter>coherunce\Output</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LaserOutputThread.h">
-      <Filter>laserdream\Output</Filter>
+      <Filter>coherunce\Output</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\protocol.h">
-      <Filter>laserdream\Output</Filter>
+      <Filter>coherunce\Output</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>

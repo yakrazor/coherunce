@@ -13,9 +13,9 @@ BEGIN
   BEGIN
     BLOCK "040904E4"
     BEGIN
-      VALUE "FileDescription",  "laserdream\0"
+      VALUE "FileDescription",  "coherunce\0"
       VALUE "FileVersion",  "1.0.0\0"
-      VALUE "ProductName",  "laserdream\0"
+      VALUE "ProductName",  "coherunce\0"
       VALUE "ProductVersion",  "1.0.0\0"
     END
   END

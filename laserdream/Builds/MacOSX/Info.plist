@@ -8,9 +8,9 @@
     <key>CFBundleIconFile</key>
     <string></string>
     <key>CFBundleIdentifier</key>
-    <string>com.yourcompany.laserdream</string>
+    <string>com.yakrazor.coherunce</string>
     <key>CFBundleName</key>
-    <string>laserdream</string>
+    <string>coherunce</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
