@@ -2200,7 +2200,7 @@
 					7392A38C29F84F932EBAD1A9,
 					DA76440F44FE3C2F7A113D58,
 					BA34700743839722F7D081B8, ); runOnlyForDeploymentPostprocessing = 0; };
-		07E89A10F49A845250764B21 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "if [[ ! -f \"${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries/libetherdream.dylib\" ]]; then\nmkdir ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries\ncp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries\ninstall_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/MacOS/laserdream \nfi"; };
+		07E89A10F49A845250764B21 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "if [[ ! -f \"${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries/libetherdream.dylib\" ]]; then\nmkdir ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries\ncp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/Libraries\nfi\ninstall_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/laserdream.app/Contents/MacOS/laserdream 2>/dev/null || true\n"; };
 		39150776B6BF11F2F144C0EC = {isa = PBXNativeTarget; buildConfigurationList = F97E829858375197DE31D227; buildPhases = (
 					3958063C1DEEF97F0283A942,
 					D612482D25DFB001AC107243,
