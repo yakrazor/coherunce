@@ -1,3 +1,4 @@
 laserdream/Builds/MacOSX/build
 laserdream/Builds/VisualStudio2015/build
 xcuserdata
+*.xccheckout
