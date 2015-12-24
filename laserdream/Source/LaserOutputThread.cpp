@@ -1,0 +1,60 @@
+/*
+  ==============================================================================
+
+    LaserOutputThread.cpp
+    Created: 24 Dec 2015 12:04:33am
+    Author:  Michael Dewberry
+
+  ==============================================================================
+*/
+
+#include "LaserOutputThread.h"
+#include "etherdream.h"
+#include "etherdream_test.h"
+
+
+struct etherdream *dac_device = nullptr;
+
+#define NUM_POINTS 600
+struct etherdream_point points[NUM_POINTS];
+
+
+LaserOutputThread::LaserOutputThread() : Thread("Laser Output Thread") {
+   connected = false;
+   if (init()) {
+       connected = true;
+   }
+}
+
+int LaserOutputThread::init() {
+    etherdream_lib_start();
+    usleep(1200000);
+
+	int cc = etherdream_dac_count();
+	if (!cc) {
+		printf("No DACs found.\n");
+		return 0;
+	}
+
+	dac_device = etherdream_get(0);
+
+	printf("Connecting...\n");
+    if (etherdream_connect(dac_device) < 0) {
+        printf("Success.");
+        return 1;
+    } else {
+        printf("Could not connect to DAC!");
+        return 0;
+    }
+}
+
+void LaserOutputThread::run() {
+	if (connected) {
+        fill_circle(points, NUM_POINTS, 0, 0);
+        etherdream_wait_for_ready(dac_device);
+        int res = etherdream_write(dac_device, points, NUM_POINTS, 30000, 1);
+        if (res != 0) {
+            printf("write returned %d\n", res);
+        }
+	}
+}
