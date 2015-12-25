@@ -103,8 +103,9 @@ void coherunceApplication::initialise(const String& commandLine)
 
 void coherunceApplication::shutdown()
 {
-    laserThread->stopThread(10);
+    laserThread->stopThread(600);
 
+    mainMenu = nullptr;
     mainWindow = nullptr;
     settingsWindow = nullptr;
     laserThread = nullptr;

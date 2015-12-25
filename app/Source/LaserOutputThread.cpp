@@ -26,9 +26,12 @@ LaserOutputThread::LaserOutputThread() : Thread("Laser Output Thread") {
    }
 }
 
+LaserOutputThread::~LaserOutputThread() {
+}
+
 bool LaserOutputThread::init() {
     etherdream_lib_start();
-    usleep(1200000);
+    wait(1200);
 
 	int cc = etherdream_dac_count();
 	if (!cc) {
@@ -49,6 +52,9 @@ bool LaserOutputThread::init() {
 
 void LaserOutputThread::run() {
     while(true) {
+        if (threadShouldExit()) {
+            return;
+        }
         if (connected) {
             fill_circle(points, NUM_POINTS, 0, 0);
             etherdream_wait_for_ready(dac_device);
@@ -56,6 +62,8 @@ void LaserOutputThread::run() {
             if (res != 0) {
                 printf("write returned %d\n", res);
             }
+        } else {
+            wait(500);
         }
     }
 }
