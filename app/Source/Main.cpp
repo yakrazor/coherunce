@@ -71,6 +71,7 @@ public:
 
     virtual void menuItemSelected(int menuItemID, int topLevelMenuIndex)
     {
+
     }
 
     ~coherunceMenuBar()
@@ -90,7 +91,10 @@ void coherunceApplication::initialise(const String& commandLine)
 {
     mainWindow = new MainWindow(getApplicationName());
     settingsWindow = new SettingsWindow();
+
     laserThread = new LaserOutputThread();
+    laserThread->startThread();
+
     auto menu = new coherunceMenuBar();
     getApplicationCommandManager().registerAllCommandsForTarget(this);
     menu->initialize();
@@ -99,6 +103,8 @@ void coherunceApplication::initialise(const String& commandLine)
 
 void coherunceApplication::shutdown()
 {
+    laserThread->stopThread(10);
+
     mainWindow = nullptr;
     settingsWindow = nullptr;
     laserThread = nullptr;
