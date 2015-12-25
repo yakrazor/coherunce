@@ -9,13 +9,9 @@
 #ifndef MAINCOMPONENT_H_INCLUDED
 #define MAINCOMPONENT_H_INCLUDED
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "Main.h"
 
-//==============================================================================
-/*
-    This component lives inside our window, and this is where you should put all
-    your controls and content.
-*/
+
 class MainContentComponent   : public OpenGLAppComponent
 {
 public:
@@ -23,6 +19,7 @@ public:
     MainContentComponent()
     {
         setSize (800, 600);
+
     }
 
     ~MainContentComponent()
