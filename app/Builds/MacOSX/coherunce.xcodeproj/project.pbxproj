@@ -2231,6 +2231,7 @@
 		F97E829858375197DE31D227 = {isa = XCConfigurationList; buildConfigurations = (
 					9E28DFDB7B70E241DA2ECC36,
 					6C89F1D720EB304537D52679, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
+		07E89A10F49A845250764B21 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Pre-build script"; shellPath = /bin/sh; shellScript = "/usr/libexec/PlistBuddy ${SRCROOT}/Info.plist -c \"Set CFBundleName coherünce\""; };
 		3958063C1DEEF97F0283A942 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
 					BE6946915BD21AABA0C68B9B, ); runOnlyForDeploymentPostprocessing = 0; };
 		D612482D25DFB001AC107243 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
@@ -2268,12 +2269,13 @@
 					7392A38C29F84F932EBAD1A9,
 					DA76440F44FE3C2F7A113D58,
 					BA34700743839722F7D081B8, ); runOnlyForDeploymentPostprocessing = 0; };
-		07E89A10F49A845250764B21 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "if [[ ! -f \"${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries/libetherdream.dylib\" ]]; then\nmkdir ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries\ncp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries\nfi\ninstall_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/MacOS/coherunce 2>/dev/null || true\n"; };
+		2BC9F06D09F5AC04007F2A76 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "if [[ ! -f \"${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries/libetherdream.dylib\" ]]; then\nmkdir ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries\ncp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries\nfi\ninstall_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/MacOS/coherunce 2>/dev/null || true\n"; };
 		39150776B6BF11F2F144C0EC = {isa = PBXNativeTarget; buildConfigurationList = F97E829858375197DE31D227; buildPhases = (
+					07E89A10F49A845250764B21,
 					3958063C1DEEF97F0283A942,
 					D612482D25DFB001AC107243,
 					88FA24C51E2781A3C2808727,
-					07E89A10F49A845250764B21, ); buildRules = ( ); dependencies = ( ); name = coherunce; productName = coherunce; productReference = E1D45276039BBF9B1C7A7E99; productInstallPath = "$(HOME)/Applications"; productType = "com.apple.product-type.application"; };
+					2BC9F06D09F5AC04007F2A76, ); buildRules = ( ); dependencies = ( ); name = coherunce; productName = coherunce; productReference = E1D45276039BBF9B1C7A7E99; productInstallPath = "$(HOME)/Applications"; productType = "com.apple.product-type.application"; };
 		A756088D9863FF1B3B51E88B = {isa = PBXProject; buildConfigurationList = 7927BE58DA9ACB5EB9EBCCB6; attributes = { LastUpgradeCheck = 0440; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = FB5E9D455F6675E75EBA6BA0; projectDirPath = ""; projectRoot = ""; targets = ( 39150776B6BF11F2F144C0EC ); };
 	};
 	rootObject = A756088D9863FF1B3B51E88B;

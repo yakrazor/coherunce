@@ -28,7 +28,7 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" externalLibraries="etherdream" prebuildCommand=""
+    <XCODE_MAC targetFolder="Builds/MacOSX" externalLibraries="etherdream" prebuildCommand="/usr/libexec/PlistBuddy ${SRCROOT}/Info.plist -c &quot;Set CFBundleName coher&#252;nce&quot;"
                postbuildCommand="if [[ ! -f &quot;${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries/libetherdream.dylib&quot; ]]; then&#10;mkdir ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries&#10;cp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries&#10;fi&#10;install_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/MacOS/coherunce 2&gt;/dev/null || true&#10;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"

@@ -48,7 +48,7 @@ class coherunceApplication  : public JUCEApplication
 public:
     coherunceApplication() {}
 
-    const String getApplicationName() override       { return ProjectInfo::projectName; }
+    const String getApplicationName() override       { return CharPointer_UTF8("coher\xc3\xbcnce") ; }
     const String getApplicationVersion() override    { return ProjectInfo::versionString; }
     bool moreThanOneInstanceAllowed() override       { return true; }
 
