@@ -19,7 +19,6 @@ public:
     MainContentComponent()
     {
         setSize (800, 600);
-
     }
 
     ~MainContentComponent()

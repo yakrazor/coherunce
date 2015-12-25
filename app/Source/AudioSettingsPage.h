@@ -55,6 +55,8 @@ public:
 
     void paint (Graphics& g) override
     {
+        g.fillAll(Colours::grey);   // clear the background
+
     }
 
     void resized() override

@@ -22,7 +22,10 @@ Component* createMainContentComponent();
 
 enum CommandIDs {
     About = 0x2000,
-    Preferences
+    Preferences,
+    Open,
+    Save,
+    HelpContents
 };
 
 class MainWindow : public DocumentWindow
@@ -59,6 +62,13 @@ public:
     ApplicationCommandManager& getApplicationCommandManager();
     AudioDeviceManager& getSharedAudioDeviceManager();
     SettingsWindow& getSettingsWindow();
+
+    // ApplicationCommandTarget interface
+    ApplicationCommandTarget* getNextCommandTarget() override;
+    void getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) override;
+    void getAllCommands(Array<CommandID>& commands) override;
+    bool perform(const InvocationInfo& info) override;
+
 
 private:
     ScopedPointer<MainWindow> mainWindow;

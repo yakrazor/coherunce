@@ -14,12 +14,12 @@
 
 //==============================================================================
 SettingsWindow::SettingsWindow()
-: DocumentWindow("Settings", Colours::lightgrey, DocumentWindow::closeButton)
+: DocumentWindow("Preferences", Colours::lightgrey, DocumentWindow::closeButton)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
     auto audioPage = new AudioSettingsPage();
-    audioPage->setBounds(0, 0, 400, 400);
+    audioPage->setBounds(0, 0, 400, 600);
 
     setUsingNativeTitleBar(true);
     setContentOwned(audioPage, true);
