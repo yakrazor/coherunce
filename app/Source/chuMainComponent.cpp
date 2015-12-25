@@ -9,19 +9,19 @@
 #ifndef MAINCOMPONENT_H_INCLUDED
 #define MAINCOMPONENT_H_INCLUDED
 
-#include "Main.h"
+#include "chuApplication.h"
 
 
-class MainContentComponent   : public OpenGLAppComponent
+class chuMainComponent : public OpenGLAppComponent
 {
 public:
     //==============================================================================
-    MainContentComponent()
+    chuMainComponent()
     {
-        setSize (800, 600);
+        setSize(800, 600);
     }
 
-    ~MainContentComponent()
+    ~chuMainComponent()
     {
         shutdownOpenGL();
     }
@@ -61,12 +61,12 @@ private:
 
 
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (chuMainComponent)
 };
 
 
 // (This function is called by the app startup code to create our main component)
-Component* createMainContentComponent()    { return new MainContentComponent(); }
+Component* createMainContentComponent()    { return new chuMainComponent(); }
 
 
 #endif  // MAINCOMPONENT_H_INCLUDED

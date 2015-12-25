@@ -1,107 +1,34 @@
+/*
+ ==============================================================================
+
+ chuApplication.cpp
+ Created: 24 Dec 2015 11:32:55pm
+ Author:  Michael Dewberry
+
+ ==============================================================================
+ */
+
+#include "chuApplication.h"
+#include "chuPreferencesDialog.h"
+#include "chuMainWindow.h"
+#include "chuMenuBar.h"
 
 
-#include "Main.h"
-
-
-
-class coherunceMenuBar : public MenuBarModel
+void chuApplication::initialise(const String& commandLine)
 {
-public:
-    coherunceMenuBar()
-    {
-        setApplicationCommandManagerToWatch(&getApp()->getApplicationCommandManager());
-    }
-
-    void initialize()
-    {
-#if JUCE_MAC
-        appleItems = new PopupMenu();
-        ApplicationCommandManager* commandManager = &getApp()->getApplicationCommandManager();
-        appleItems->addCommandItem(commandManager, CommandIDs::About);
-        appleItems->addSeparator();
-        appleItems->addCommandItem(commandManager, CommandIDs::Preferences);
-
-        MenuBarModel::setMacMainMenu(this, appleItems, "Open Recent");
-#endif
-    }
-
-    virtual StringArray getMenuBarNames() override
-    {
-        const char* const names[] = { "File", "Edit", "Help", nullptr };
-        return StringArray (names);
-    }
-
-    virtual PopupMenu getMenuForIndex(int topLevelMenuIndex, const String &menuName)
-    {
-        PopupMenu menu;
-        ApplicationCommandManager* commandManager = &getApp()->getApplicationCommandManager();
-        if (menuName == "File") {
-            menu.addCommandItem(commandManager, CommandIDs::Open);
-            PopupMenu recentFiles;
-            // TODO: implement for Windows (OSX will populate automatically)
-            //settings->recentFiles.createPopupMenuItems (recentFiles, recentProjectsBaseID, true, true);
-            menu.addSubMenu("Open Recent", recentFiles);
-            menu.addSeparator();
-            menu.addCommandItem(commandManager, CommandIDs::Save);
-            menu.addSeparator();
-#if !JUCE_MAC
-            menu.addSeparator();
-            menu.addCommandItem(commandManager, StandardApplicationCommandIDs::quit);
-#endif
-        } else if (menuName == "Edit") {
-            menu.addCommandItem(commandManager, StandardApplicationCommandIDs::undo);
-            menu.addCommandItem(commandManager, StandardApplicationCommandIDs::redo);
-            menu.addSeparator();
-            menu.addCommandItem(commandManager, StandardApplicationCommandIDs::cut);
-            menu.addCommandItem(commandManager, StandardApplicationCommandIDs::copy);
-            menu.addCommandItem(commandManager, StandardApplicationCommandIDs::paste);
-#if !JUCE_MAC
-            menu.addSeparator();
-            menu.addCommandItem(commandManager, CommandIDs::Preferences);
-#endif
-        } else if (menuName == "Help") {
-            menu.addCommandItem(commandManager, CommandIDs::HelpContents);
-#if !JUCE_MAC
-            menu.addSeparator();
-            menu.addCommandItem(commandManager, CommandIDs::About);
-#endif
-        }
-        return menu;
-    }
-
-    virtual void menuItemSelected(int menuItemID, int topLevelMenuIndex)
-    {
-
-    }
-
-    ~coherunceMenuBar()
-    {
-#if JUCE_MAC
-        MenuBarModel::setMacMainMenu(nullptr, nullptr);
-#endif
-    }
-
-    ScopedPointer<PopupMenu> appleItems;
-};
-
-
-Component* createMainContentComponent();
-
-void coherunceApplication::initialise(const String& commandLine)
-{
-    mainWindow = new MainWindow(getApplicationName());
-    settingsWindow = new SettingsWindow();
+    mainWindow = new chuMainWindow(getApplicationName());
+    settingsWindow = new chuPreferencesDialog();
 
     laserThread = new LaserOutputThread();
     laserThread->startThread();
 
-    auto menu = new coherunceMenuBar();
+    auto menu = new chuMenuBar();
     getApplicationCommandManager().registerAllCommandsForTarget(this);
     menu->initialize();
     mainMenu = menu;
 }
 
-void coherunceApplication::shutdown()
+void chuApplication::shutdown()
 {
     laserThread->stopThread(600);
 
@@ -113,16 +40,16 @@ void coherunceApplication::shutdown()
     sharedAudioDeviceManager = nullptr;
 }
 
-void coherunceApplication::systemRequestedQuit()
+void chuApplication::systemRequestedQuit()
 {
     quit();
 }
 
-void coherunceApplication::anotherInstanceStarted (const String& commandLine)
+void chuApplication::anotherInstanceStarted (const String& commandLine)
 {
 }
 
-ApplicationCommandManager& coherunceApplication::getApplicationCommandManager()
+ApplicationCommandManager& chuApplication::getApplicationCommandManager()
 {
     if (applicationCommandManager == nullptr)
         applicationCommandManager = new ApplicationCommandManager();
@@ -130,7 +57,7 @@ ApplicationCommandManager& coherunceApplication::getApplicationCommandManager()
     return *applicationCommandManager;
 }
 
-AudioDeviceManager& coherunceApplication::getSharedAudioDeviceManager()
+AudioDeviceManager& chuApplication::getSharedAudioDeviceManager()
 {
     if (sharedAudioDeviceManager == nullptr)
     {
@@ -141,17 +68,17 @@ AudioDeviceManager& coherunceApplication::getSharedAudioDeviceManager()
     return *sharedAudioDeviceManager;
 }
 
-SettingsWindow& coherunceApplication::getSettingsWindow()
+Component& chuApplication::getSettingsWindow()
 {
     return *settingsWindow;
 }
 
-ApplicationCommandTarget* coherunceApplication::getNextCommandTarget()
+ApplicationCommandTarget* chuApplication::getNextCommandTarget()
 {
     return nullptr;
 }
 
-void coherunceApplication::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result)
+void chuApplication::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result)
 {
     switch (commandID)
     {
@@ -200,7 +127,7 @@ void coherunceApplication::getCommandInfo(CommandID commandID, ApplicationComman
     JUCEApplication::getCommandInfo(commandID, result);
 }
 
-void coherunceApplication::getAllCommands(Array<CommandID>& commands)
+void chuApplication::getAllCommands(Array<CommandID>& commands)
 {
     commands.add(CommandIDs::About);
     commands.add(CommandIDs::Preferences);
@@ -216,7 +143,7 @@ void coherunceApplication::getAllCommands(Array<CommandID>& commands)
     JUCEApplication::getAllCommands(commands);
 }
 
-bool coherunceApplication::perform(const InvocationInfo& info)
+bool chuApplication::perform(const InvocationInfo& info)
 {
     switch (info.commandID)
     {
@@ -256,28 +183,5 @@ bool coherunceApplication::perform(const InvocationInfo& info)
 }
 
 
-MainWindow::MainWindow(String name)
-: DocumentWindow(name, Colours::lightgrey, DocumentWindow::allButtons)
-{
-    setUsingNativeTitleBar(true);
-    setContentOwned (createMainContentComponent(), true);
-    setResizable(true, true);
-
-    addKeyListener(getApp()->getApplicationCommandManager().getKeyMappings());
-
-    centreWithSize(getWidth(), getHeight());
-    setVisible(true);
-}
-
-MainWindow::~MainWindow()
-{
-}
-
-void MainWindow::closeButtonPressed()
-{
-    JUCEApplication::getInstance()->systemRequestedQuit();
-}
-
-
-START_JUCE_APPLICATION(coherunceApplication)
+START_JUCE_APPLICATION(chuApplication)
 

@@ -9,16 +9,16 @@
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "SettingsWindow.h"
-#include "AudioSettingsPage.h"
+#include "chuPreferencesDialog.h"
+#include "chuPreferencesPageAudio.h"
 
 //==============================================================================
-SettingsWindow::SettingsWindow()
+chuPreferencesDialog::chuPreferencesDialog()
 : DocumentWindow("Preferences", Colours::lightgrey, DocumentWindow::closeButton)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
-    auto audioPage = new AudioSettingsPage();
+    auto audioPage = new chuPreferencesPageAudio();
     audioPage->setBounds(0, 0, 400, 600);
 
     setUsingNativeTitleBar(true);
@@ -30,12 +30,12 @@ SettingsWindow::SettingsWindow()
     centreWithSize(getWidth(), getHeight());
 }
 
-SettingsWindow::~SettingsWindow()
+chuPreferencesDialog::~chuPreferencesDialog()
 {
     deleteAllChildren();
 }
 
-void SettingsWindow::paint (Graphics& g)
+void chuPreferencesDialog::paint(Graphics& g)
 {
     /* This demo code just fills the component's background and
        draws some placeholder text to get you started.
@@ -55,13 +55,13 @@ void SettingsWindow::paint (Graphics& g)
                 Justification::centred, true);   // draw some placeholder text
 }
 
-void SettingsWindow::resized()
+void chuPreferencesDialog::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..
 }
 
-void SettingsWindow::closeButtonPressed()
+void chuPreferencesDialog::closeButtonPressed()
 {
     setVisible(false);
 }

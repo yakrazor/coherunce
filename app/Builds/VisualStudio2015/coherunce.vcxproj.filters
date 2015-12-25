@@ -331,13 +331,19 @@
     <ClCompile Include="..\..\Source\LaserOutputThread.cpp">
       <Filter>coherunce\Output</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\SettingsWindow.cpp">
+    <ClCompile Include="..\..\Source\chuApplication.cpp">
       <Filter>coherunce\Application</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\MainComponent.cpp">
+    <ClCompile Include="..\..\Source\chuMainWindow.cpp">
       <Filter>coherunce\Application</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Main.cpp">
+    <ClCompile Include="..\..\Source\chuMenuBar.cpp">
+      <Filter>coherunce\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\chuMainComponent.cpp">
+      <Filter>coherunce\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\chuPreferencesDialog.cpp">
       <Filter>coherunce\Application</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
@@ -1635,13 +1641,19 @@
     <ClInclude Include="..\..\Source\protocol.h">
       <Filter>coherunce\Output</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Main.h">
+    <ClInclude Include="..\..\Source\chuApplication.h">
       <Filter>coherunce\Application</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\AudioSettingsPage.h">
+    <ClInclude Include="..\..\Source\chuMainWindow.h">
       <Filter>coherunce\Application</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SettingsWindow.h">
+    <ClInclude Include="..\..\Source\chuMenuBar.h">
+      <Filter>coherunce\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\chuPreferencesDialog.h">
+      <Filter>coherunce\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\chuPreferencesPageAudio.h">
       <Filter>coherunce\Application</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">

@@ -13,13 +13,12 @@
 #ifndef AUDIOSETTINGSPAGE_H_INCLUDED
 #define AUDIOSETTINGSPAGE_H_INCLUDED
 
-#include "Main.h"
+#include "chuApplication.h"
 
-class AudioSettingsPage  : public Component,
-                           public ChangeListener
+class chuPreferencesPageAudio : public Component, public ChangeListener
 {
 public:
-    AudioSettingsPage()
+    chuPreferencesPageAudio()
     {
         setOpaque(true);
 
@@ -47,7 +46,7 @@ public:
         dumpDeviceInfo();
     }
 
-    ~AudioSettingsPage()
+    ~chuPreferencesPageAudio()
     {
         getApp()->getSharedAudioDeviceManager().removeChangeListener(this);
         diagnosticsBox.clear();
@@ -120,7 +119,7 @@ private:
         return bits.joinIntoString(", ");
     }
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioSettingsPage)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuPreferencesPageAudio)
 };
 
 

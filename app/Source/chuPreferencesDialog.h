@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    SettingsWindow.h
+    chuPreferencesDialog.h
     Created: 24 Dec 2015 10:54:15pm
     Author:  Michael Dewberry
 
@@ -16,11 +16,11 @@
 //==============================================================================
 /*
 */
-class SettingsWindow : public DocumentWindow
+class chuPreferencesDialog : public DocumentWindow
 {
 public:
-    SettingsWindow();
-    ~SettingsWindow();
+    chuPreferencesDialog();
+    ~chuPreferencesDialog();
 
     void paint (Graphics&);
     void resized();
@@ -28,7 +28,7 @@ public:
     void closeButtonPressed() override;
 
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SettingsWindow)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuPreferencesDialog)
 };
 
 

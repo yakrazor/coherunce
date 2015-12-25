@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    Main.h
+    chuApplication.h
     Created: 24 Dec 2015 11:32:55pm
     Author:  Michael Dewberry
 
@@ -13,8 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "LaserOutputThread.h"
-#include "SettingsWindow.h"
-
+#include "chuMainWindow.h"
 
 
 Component* createMainContentComponent();
@@ -28,25 +27,11 @@ enum CommandIDs {
     HelpContents
 };
 
-class MainWindow : public DocumentWindow
+
+class chuApplication  : public JUCEApplication
 {
 public:
-    MainWindow(String name);
-    ~MainWindow();
-
-    void closeButtonPressed() override;
-
-    static MainWindow* getMainWindow();
-
-private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)
-};
-
-
-class coherunceApplication  : public JUCEApplication
-{
-public:
-    coherunceApplication() {}
+    chuApplication() {}
 
     const String getApplicationName() override       { return CharPointer_UTF8("coher\xc3\xbcnce") ; }
     const String getApplicationVersion() override    { return ProjectInfo::versionString; }
@@ -61,7 +46,8 @@ public:
 
     ApplicationCommandManager& getApplicationCommandManager();
     AudioDeviceManager& getSharedAudioDeviceManager();
-    SettingsWindow& getSettingsWindow();
+
+    Component& getSettingsWindow();
 
     // ApplicationCommandTarget interface
     ApplicationCommandTarget* getNextCommandTarget() override;
@@ -71,8 +57,8 @@ public:
 
 
 private:
-    ScopedPointer<MainWindow> mainWindow;
-    ScopedPointer<SettingsWindow> settingsWindow;
+    ScopedPointer<Component> mainWindow;
+    ScopedPointer<Component> settingsWindow;
     ScopedPointer<MenuBarModel> mainMenu;
     ScopedPointer<LaserOutputThread> laserThread;
     ScopedPointer<ApplicationCommandManager> applicationCommandManager;
@@ -80,15 +66,15 @@ private:
 
 };
 
-inline coherunceApplication* getApp()
+inline chuApplication* getApp()
 {
-    return static_cast<coherunceApplication*>(JUCEApplication::getInstance());
+    return static_cast<chuApplication*>(JUCEApplication::getInstance());
 }
 
-inline MainWindow* getMainWindow()
+inline chuMainWindow* getMainWindow()
 {
     for (int i = TopLevelWindow::getNumTopLevelWindows(); --i >= 0;)
-        if (MainWindow* maw = dynamic_cast<MainWindow*> (TopLevelWindow::getTopLevelWindow (i)))
+        if (chuMainWindow* maw = dynamic_cast<chuMainWindow*> (TopLevelWindow::getTopLevelWindow (i)))
             return maw;
 
     return nullptr;
