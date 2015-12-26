@@ -5,6 +5,9 @@
     <Filter Include="coherunce">
       <UniqueIdentifier>{C735DC11-D3CD-903B-ED6A-1297C2161BB8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="coherunce\Resources">
+      <UniqueIdentifier>{55CD52FD-A5F2-4F51-C3A5-EEA7779064BD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="coherunce\Input">
       <UniqueIdentifier>{B34CC912-69CF-CD40-CB88-8CD0774C374C}</UniqueIdentifier>
     </Filter>
@@ -1585,6 +1588,9 @@
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_video\native\juce_win32_QuickTimeMovieComponent.cpp">
       <Filter>Juce Modules\juce_video\native</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
+      <Filter>Juce Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_audio_basics\juce_audio_basics.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
@@ -3078,11 +3084,17 @@
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
       <Filter>Juce Library Code</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h">
+      <Filter>Juce Library Code</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>Juce Library Code</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\u-logo.svg">
+      <Filter>coherunce\Resources</Filter>
+    </None>
     <None Include="..\..\..\..\JUCE\modules\juce_audio_basics\juce_module_info">
       <Filter>Juce Modules\juce_audio_basics</Filter>
     </None>
@@ -3127,6 +3139,9 @@
     </None>
     <None Include="..\..\..\..\JUCE\modules\juce_video\juce_module_info">
       <Filter>Juce Modules\juce_video</Filter>
+    </None>
+    <None Include=".\icon.ico">
+      <Filter>Juce Library Code</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
