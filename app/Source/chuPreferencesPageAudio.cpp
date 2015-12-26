@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    AudioSettingsPage.h
+    chuPreferencesPageAudio.cpp
     Created: 24 Dec 2015 10:54:29pm
     Author:  Michael Dewberry
  
@@ -10,10 +10,8 @@
   ==============================================================================
 */
 
-#ifndef AUDIOSETTINGSPAGE_H_INCLUDED
-#define AUDIOSETTINGSPAGE_H_INCLUDED
-
 #include "chuApplication.h"
+#include "chuPreferencesDialog.h"
 
 class chuPreferencesPageAudio : public Component, public ChangeListener
 {
@@ -120,5 +118,4 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuPreferencesPageAudio)
 };
 
-
-#endif  // AUDIOSETTINGSPAGE_H_INCLUDED
+static chuPreferencePageProvider<chuPreferencesPageAudio> page("Audio/MIDI");

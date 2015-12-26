@@ -29,14 +29,18 @@
       <FILE id="La1zlg" name="chuMenuBar.cpp" compile="1" resource="0" file="Source/chuMenuBar.cpp"/>
       <FILE id="B3mg78" name="chuMainComponent.cpp" compile="1" resource="0"
             file="Source/chuMainComponent.cpp"/>
-      <FILE id="gyZhv7" name="chuPreferencesDialog.h" compile="0" resource="0"
-            file="Source/chuPreferencesDialog.h"/>
-      <FILE id="lIJ6wG" name="chuPreferencesDialog.cpp" compile="1" resource="0"
-            file="Source/chuPreferencesDialog.cpp"/>
-      <FILE id="Bn2UoX" name="chuPreferencesPageLaser.h" compile="0" resource="0"
-            file="Source/chuPreferencesPageLaser.h"/>
-      <FILE id="ZpALtc" name="chuPreferencesPageAudio.h" compile="0" resource="0"
-            file="Source/chuPreferencesPageAudio.h"/>
+      <GROUP id="{37F6BC25-4574-8313-0C31-247A2D741A98}" name="Preferences">
+        <FILE id="gyZhv7" name="chuPreferencesDialog.h" compile="0" resource="0"
+              file="Source/chuPreferencesDialog.h"/>
+        <FILE id="lIJ6wG" name="chuPreferencesDialog.cpp" compile="1" resource="0"
+              file="Source/chuPreferencesDialog.cpp"/>
+        <FILE id="Rm0HiD" name="chuPreferencesPageAudio.cpp" compile="1" resource="0"
+              file="Source/chuPreferencesPageAudio.cpp"/>
+        <FILE id="jDcp1p" name="chuPreferencesPageLaser.cpp" compile="1" resource="0"
+              file="Source/chuPreferencesPageLaser.cpp"/>
+        <FILE id="EjsiQR" name="chuPreferencesPageOSC.cpp" compile="1" resource="0"
+              file="Source/chuPreferencesPageOSC.cpp"/>
+      </GROUP>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

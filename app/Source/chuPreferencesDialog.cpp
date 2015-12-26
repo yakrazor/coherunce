@@ -10,16 +10,31 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "chuPreferencesDialog.h"
-#include "chuPreferencesPageLaser.h"
-#include "chuPreferencesPageAudio.h"
+#include "chuApplication.h"
 
+chuPreferencePageProviderBase::chuPreferencePageProviderBase(const String& pageName)
+: name(pageName)
+{
+    getPageTypeList().add(this);
+}
+
+chuPreferencePageProviderBase::~chuPreferencePageProviderBase()
+{
+    getPageTypeList().removeFirstMatchingValue(this);
+}
+
+Array<chuPreferencePageProviderBase*>& chuPreferencePageProviderBase::getPageTypeList()
+{
+    static Array<chuPreferencePageProviderBase*> list;
+    return list;
+}
 
 class chuPreferencesDialogContent : public Component, public ListBoxModel
 {
 public:
 
-    const unsigned int sidebarWidth = 110;
-    const unsigned int contentWidth = 440;
+    const unsigned int sidebarWidth = 90;
+    const unsigned int contentWidth = 450;
     const unsigned int height = 600;
     const unsigned int margin = 4;
 
@@ -31,20 +46,19 @@ public:
         pageList->setColour(ListBox::ColourIds::backgroundColourId, Colours::transparentBlack);
         addAndMakeVisible(pageList);
 
-        audioPage = new chuPreferencesPageAudio();
-        audioPage->setBounds(sidebarWidth, margin, contentWidth, height);
-        addChildComponent(audioPage);
-
-        laserPage = new chuPreferencesPageLaser();
-        laserPage->setBounds(sidebarWidth, margin, contentWidth, height);
-        addChildComponent(laserPage);
+        for (auto& pageProvider : chuPreferencePageProviderBase::getPageTypeList()) {
+            Component* page = pageProvider->createComponent();
+            page->setBounds(sidebarWidth, margin, contentWidth, height);
+            addChildComponent(page);
+            pages.add(page);
+        }
 
         setBounds(0, 0, contentWidth + sidebarWidth + margin * 2, height + margin * 3);
         pageList->selectRow(0);
     }
 
     int getNumRows() override {
-        return 2;
+        return chuPreferencePageProviderBase::getPageTypeList().size();
     }
 
     void paintListBoxItem(int rowNumber, Graphics& g, int width, int height, bool rowIsSelected) override
@@ -65,19 +79,19 @@ public:
         Font font;
         font.setBold(true);
 
-        if (rowNumber == 0) {
+        String pageName = chuPreferencePageProviderBase::getPageTypeList()[rowNumber]->name;
+
+        if (pageName == "Laser") {
             a.append("L", font, Colours::red);
             a.append("a", font, Colours::orange);
             a.append("s", font, Colours::forestgreen);
             a.append("e", font, Colours::blueviolet);
             a.append("r", font, Colours::purple);
-        } else if (rowNumber == 1) {
-            a.append("Audio/MIDI", font, Colours::white);
-
+        } else {
+            a.append(pageName, font, Colours::white);
         }
 
         a.draw(g, Rectangle<int>(width + 10, height - 2).reduced(6, 0).toFloat());
-
     }
 
     void paint(Graphics& g) override
@@ -90,19 +104,16 @@ public:
 
     void selectedRowsChanged(int lastRowSelected) override
     {
-        if (lastRowSelected == 0) {
-            laserPage->setVisible(true);
-            audioPage->setVisible(false);
-        } else {
-            laserPage->setVisible(false);
-            audioPage->setVisible(true);
+        for (auto& page : pages) {
+            page->setVisible(false);
         }
+
+        pages[lastRowSelected]->setVisible(true);
     }
 
 private:
     ScopedPointer<ListBox> pageList;
-    ScopedPointer<Component> audioPage;
-    ScopedPointer<Component> laserPage;
+    OwnedArray<Component> pages;
 };
 
 //==============================================================================

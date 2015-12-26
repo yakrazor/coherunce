@@ -17,6 +17,9 @@
     <Filter Include="coherunce\Application">
       <UniqueIdentifier>{A3AB6FA2-0D4E-C1ED-F6E4-FFCD13DCB5BE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="coherunce\Application\Preferences">
+      <UniqueIdentifier>{8DAFA579-82DD-B8AF-C636-5ED6BAA8F7E7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
     </Filter>
@@ -347,7 +350,16 @@
       <Filter>coherunce\Application</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\chuPreferencesDialog.cpp">
-      <Filter>coherunce\Application</Filter>
+      <Filter>coherunce\Application\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\chuPreferencesPageAudio.cpp">
+      <Filter>coherunce\Application\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\chuPreferencesPageLaser.cpp">
+      <Filter>coherunce\Application\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\chuPreferencesPageOSC.cpp">
+      <Filter>coherunce\Application\Preferences</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
@@ -1657,13 +1669,7 @@
       <Filter>coherunce\Application</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\chuPreferencesDialog.h">
-      <Filter>coherunce\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\chuPreferencesPageLaser.h">
-      <Filter>coherunce\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\chuPreferencesPageAudio.h">
-      <Filter>coherunce\Application</Filter>
+      <Filter>coherunce\Application\Preferences</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>

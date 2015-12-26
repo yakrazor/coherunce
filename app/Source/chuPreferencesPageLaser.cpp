@@ -1,17 +1,15 @@
 /*
   ==============================================================================
 
-    chuPreferencesPageLaser.h
+    chuPreferencesPageLaser.cpp
     Created: 25 Dec 2015 7:56:45pm
     Author:  Michael Dewberry
 
   ==============================================================================
 */
 
-#ifndef CHUPREFERENCESPAGELASER_H_INCLUDED
-#define CHUPREFERENCESPAGELASER_H_INCLUDED
-
 #include "chuApplication.h"
+#include "chuPreferencesDialog.h"
 
 class chuPreferencePageLaserContent : public Component,
     public ChangeListener,
@@ -74,7 +72,6 @@ public:
             }
         }
     }
-
 
     void buttonClicked (Button* button) override
     {
@@ -227,5 +224,4 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (chuPreferencesPageLaser)
 };
 
-
-#endif  // CHUPREFERENCESPAGELASER_H_INCLUDED
+static chuPreferencePageProvider<chuPreferencesPageLaser> page("Laser");
