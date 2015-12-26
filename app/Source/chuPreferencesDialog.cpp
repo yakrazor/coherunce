@@ -17,27 +17,29 @@
 class chuPreferencesDialogContent : public Component, public ListBoxModel
 {
 public:
-    chuPreferencesDialogContent() {
-        const unsigned int sidebarWidth = 160;
-        const unsigned int contentWidth = 400;
-        const unsigned int height = 600;
 
+    const unsigned int sidebarWidth = 110;
+    const unsigned int contentWidth = 440;
+    const unsigned int height = 600;
+    const unsigned int margin = 4;
+
+    chuPreferencesDialogContent() {
         pageList = new ListBox();
         pageList->setModel(this);
-        pageList->setBounds(0, 0, sidebarWidth, height);
+        pageList->setBounds(0, margin, sidebarWidth, height);
         pageList->setRowHeight(35);
         pageList->setColour(ListBox::ColourIds::backgroundColourId, Colours::transparentBlack);
         addAndMakeVisible(pageList);
 
         audioPage = new chuPreferencesPageAudio();
-        audioPage->setBounds(sidebarWidth, 0, contentWidth, height);
+        audioPage->setBounds(sidebarWidth, margin, contentWidth, height);
         addChildComponent(audioPage);
 
         laserPage = new chuPreferencesPageLaser();
-        laserPage->setBounds(sidebarWidth, 0, contentWidth, height);
+        laserPage->setBounds(sidebarWidth, margin, contentWidth, height);
         addChildComponent(laserPage);
 
-        setBounds(0, 0, contentWidth + sidebarWidth, height);
+        setBounds(0, 0, contentWidth + sidebarWidth + margin * 2, height + margin * 3);
         pageList->selectRow(0);
     }
 
@@ -50,6 +52,10 @@ public:
         if (rowIsSelected)
         {
             g.fillAll(Colours::skyblue);
+            g.setColour(Colours::black);
+            g.fillRect(0, height - margin, margin, margin);
+            g.setColour(Colours::grey);
+            g.fillRect((int)margin, height - margin, width - margin, margin);
         } else {
             g.fillAll(Colours::black);
         }
@@ -70,14 +76,16 @@ public:
 
         }
 
-        a.draw(g, Rectangle<int> (width + 10, height).reduced (6, 0).toFloat());
-        
+        a.draw(g, Rectangle<int>(width + 10, height - 2).reduced(6, 0).toFloat());
+
     }
 
     void paint(Graphics& g) override
     {
         g.fillAll(Colours::black);
-
+        g.setColour(Colours::grey);
+        g.fillRect((int)(sidebarWidth + contentWidth), 2 * margin, margin, height - margin);
+        g.fillRect((int)(sidebarWidth + margin), height + margin, contentWidth, margin);
     }
 
     void selectedRowsChanged(int lastRowSelected) override
@@ -117,7 +125,7 @@ chuPreferencesDialog::~chuPreferencesDialog()
 
 void chuPreferencesDialog::paint(Graphics& g)
 {
-     g.fillAll(Colours::silver);
+     g.fillAll(Colours::black);
 }
 
 
