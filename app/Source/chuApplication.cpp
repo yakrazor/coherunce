@@ -100,6 +100,10 @@ void chuApplication::getCommandInfo(CommandID commandID, ApplicationCommandInfo&
         case CommandIDs::HelpContents:
             result.setInfo(CharPointer_UTF8("coher\xc3\xbcnce Manual"), "Open the user manual", "Help", 0);
             return;
+        case CommandIDs::CloseWindow:
+            result.setInfo("Close Window", "Close the active window", "General", 0);
+            result.addDefaultKeypress('W', ModifierKeys::commandModifier);
+            return;
         case StandardApplicationCommandIDs::undo:
             result.setInfo("Undo", "Undoes the last action", "General", 0);
             result.addDefaultKeypress('Z', ModifierKeys::commandModifier);
@@ -134,6 +138,7 @@ void chuApplication::getAllCommands(Array<CommandID>& commands)
     commands.add(CommandIDs::Open);
     commands.add(CommandIDs::Save);
     commands.add(CommandIDs::HelpContents);
+    commands.add(CommandIDs::CloseWindow);
     commands.add(StandardApplicationCommandIDs::undo);
     commands.add(StandardApplicationCommandIDs::redo);
     commands.add(StandardApplicationCommandIDs::cut);
@@ -162,6 +167,15 @@ bool chuApplication::perform(const InvocationInfo& info)
         case CommandIDs::HelpContents:
             // TODO: implement me
             return true;
+        case CommandIDs::CloseWindow:
+            {
+                auto window = TopLevelWindow::getActiveTopLevelWindow();
+                if (window != getMainWindow())
+                {
+                    window->setVisible(false);
+                }
+                return true;
+            }
         case StandardApplicationCommandIDs::undo:
             // TODO: implement me
             return true;

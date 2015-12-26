@@ -46,6 +46,8 @@ PopupMenu chuMenuBar::getMenuForIndex(int topLevelMenuIndex, const String &menuN
         //settings->recentFiles.createPopupMenuItems (recentFiles, recentProjectsBaseID, true, true);
         menu.addSubMenu("Open Recent", recentFiles);
         menu.addSeparator();
+        menu.addCommandItem(commandManager, CommandIDs::CloseWindow);
+        menu.addSeparator();
         menu.addCommandItem(commandManager, CommandIDs::Save);
         menu.addSeparator();
 #if !JUCE_MAC

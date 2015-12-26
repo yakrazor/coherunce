@@ -24,7 +24,8 @@ enum CommandIDs {
     Preferences,
     Open,
     Save,
-    HelpContents
+    HelpContents,
+    CloseWindow
 };
 
 
