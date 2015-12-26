@@ -41,19 +41,19 @@ public:
     chuPreferencesDialogContent() {
         pageList = new ListBox();
         pageList->setModel(this);
-        pageList->setBounds(0, margin, sidebarWidth, height);
+        pageList->setBounds(margin, margin, sidebarWidth, height);
         pageList->setRowHeight(35);
         pageList->setColour(ListBox::ColourIds::backgroundColourId, Colours::transparentBlack);
         addAndMakeVisible(pageList);
 
         for (auto& pageProvider : chuPreferencePageProviderBase::getPageTypeList()) {
             Component* page = pageProvider->createComponent();
-            page->setBounds(sidebarWidth, margin, contentWidth, height);
+            page->setBounds(margin + sidebarWidth, margin, contentWidth, height);
             addChildComponent(page);
             pages.add(page);
         }
 
-        setBounds(0, 0, contentWidth + sidebarWidth + margin * 2, height + margin * 3);
+        setBounds(0, 0, contentWidth + sidebarWidth + margin * 3, height + margin * 3);
         pageList->selectRow(0);
     }
 
@@ -98,8 +98,8 @@ public:
     {
         g.fillAll(Colours::black);
         g.setColour(Colours::grey);
-        g.fillRect((int)(sidebarWidth + contentWidth), 2 * margin, margin, height - margin);
-        g.fillRect((int)(sidebarWidth + margin), height + margin, contentWidth, margin);
+        g.fillRect((int)(sidebarWidth + contentWidth + margin), 2 * margin, margin, height - margin);
+        g.fillRect((int)(sidebarWidth + 2 * margin), height + margin, contentWidth, margin);
     }
 
     void selectedRowsChanged(int lastRowSelected) override
