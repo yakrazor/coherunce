@@ -22,11 +22,9 @@ public:
     {
         setOpaque(true);
 
-        addAndMakeVisible(
-                          audioSetupComp
-                          = new AudioDeviceSelectorComponent(getApp()->getSharedAudioDeviceManager(),
-                                                             0, 256, 0, 256, true, true, true, false)
-                          );
+        audioSetupComp = new AudioDeviceSelectorComponent(getApp()->getSharedAudioDeviceManager(),
+                                                          0, 256, 0, 256, true, true, true, false);
+        addAndMakeVisible(audioSetupComp);
 
         addAndMakeVisible(diagnosticsBox);
         diagnosticsBox.setMultiLine(true);
@@ -54,7 +52,7 @@ public:
 
     void paint (Graphics& g) override
     {
-        g.fillAll(Colours::grey);   // clear the background
+        g.fillAll(Colours::skyblue);   // clear the background
 
     }
 

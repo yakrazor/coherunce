@@ -1653,6 +1653,9 @@
     <ClInclude Include="..\..\Source\chuPreferencesDialog.h">
       <Filter>coherunce\Application</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\chuPreferencesPageLaser.h">
+      <Filter>coherunce\Application</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\chuPreferencesPageAudio.h">
       <Filter>coherunce\Application</Filter>
     </ClInclude>

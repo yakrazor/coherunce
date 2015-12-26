@@ -30,6 +30,8 @@
             file="Source/chuPreferencesDialog.h"/>
       <FILE id="lIJ6wG" name="chuPreferencesDialog.cpp" compile="1" resource="0"
             file="Source/chuPreferencesDialog.cpp"/>
+      <FILE id="Bn2UoX" name="chuPreferencesPageLaser.h" compile="0" resource="0"
+            file="Source/chuPreferencesPageLaser.h"/>
       <FILE id="ZpALtc" name="chuPreferencesPageAudio.h" compile="0" resource="0"
             file="Source/chuPreferencesPageAudio.h"/>
     </GROUP>

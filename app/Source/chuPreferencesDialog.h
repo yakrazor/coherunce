@@ -22,7 +22,7 @@ public:
     chuPreferencesDialog();
     ~chuPreferencesDialog();
 
-    void paint (Graphics&);
+    void paint(Graphics&);
     void resized();
 
     void closeButtonPressed() override;

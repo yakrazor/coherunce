@@ -1317,6 +1317,7 @@
     <ClInclude Include="..\..\Source\chuMainWindow.h"/>
     <ClInclude Include="..\..\Source\chuMenuBar.h"/>
     <ClInclude Include="..\..\Source\chuPreferencesDialog.h"/>
+    <ClInclude Include="..\..\Source\chuPreferencesPageLaser.h"/>
     <ClInclude Include="..\..\Source\chuPreferencesPageAudio.h"/>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioSampleBuffer.h"/>
