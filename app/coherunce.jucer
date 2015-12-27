@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="DbJYCE" name="coherunce" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yakrazor.coherunce" includeBinaryInAppConfig="1"
-              jucerVersion="4.0.2">
+              jucerVersion="4.1.0">
   <MAINGROUP id="dWToof" name="coherunce">
     <GROUP id="{FD4EAC3F-C9BB-120A-5068-22FC87579073}" name="Resources">
       <FILE id="QusNFG" name="u-logo.svg" compile="0" resource="1" file="Resources/u-logo.svg"/>
@@ -18,6 +18,10 @@
       <FILE id="RTmzur" name="protocol.h" compile="0" resource="0" file="Source/protocol.h"/>
     </GROUP>
     <GROUP id="{572DD2B8-3E51-3583-F0F7-5C2847D91469}" name="Application">
+      <FILE id="PiRL5D" name="chuLaserCalibrationComponent.cpp" compile="1"
+            resource="0" file="Source/chuLaserCalibrationComponent.cpp"/>
+      <FILE id="m54cKx" name="chuLaserCalibrationComponent.h" compile="0"
+            resource="0" file="Source/chuLaserCalibrationComponent.h"/>
       <FILE id="J0nBhR" name="chuApplication.h" compile="0" resource="0"
             file="Source/chuApplication.h"/>
       <FILE id="U2c2EU" name="chuApplication.cpp" compile="1" resource="0"
