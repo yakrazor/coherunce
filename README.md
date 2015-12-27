@@ -10,14 +10,13 @@ This is early-stage experimental software, developed in spare hacking time, that
 > No oral or written information or advice given by anyone involved in this project shall create a warranty, or in any way increase the scope of any warranty, and you may not rely on any such information or advice.
 
 #### Initial MVP plan:
-
-- Support improvisational beat-synced laser performance
-- Audio FFT and beat detection
-- MIDI clock sync
-- Controllable via external MIDI and OSC sequencers
-- Support for a single laser
-- Using the EtherDream DAC
-- Mac OS X and Windows support
+- [ ] Support improvisational beat-synced laser performance
+- [ ] Audio FFT and beat detection
+- [ ] MIDI clock sync
+- [ ] Controllable via external MIDI and OSC sequencers
+- [ ] Support for a single laser
+- [ ] Using the EtherDream DAC
+- [ ] Mac OS X and Windows support
 
 #### Build instructions (for project contributors)
 
