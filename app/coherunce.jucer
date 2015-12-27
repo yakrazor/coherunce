@@ -4,6 +4,9 @@
               bundleIdentifier="com.yakrazor.coherunce" includeBinaryInAppConfig="1"
               jucerVersion="4.0.2">
   <MAINGROUP id="dWToof" name="coherunce">
+    <GROUP id="{FD4EAC3F-C9BB-120A-5068-22FC87579073}" name="Resources">
+      <FILE id="QusNFG" name="u-logo.svg" compile="0" resource="1" file="Resources/u-logo.svg"/>
+    </GROUP>
     <GROUP id="{FC597BDF-A594-DAFD-5E88-4BDF3DF7AE4B}" name="Input"/>
     <GROUP id="{0954451C-E5BA-15C3-924D-EE8E6287ED75}" name="Output">
       <FILE id="N3DuAm" name="etherdream_test.h" compile="1" resource="0"
@@ -15,17 +18,38 @@
       <FILE id="RTmzur" name="protocol.h" compile="0" resource="0" file="Source/protocol.h"/>
     </GROUP>
     <GROUP id="{572DD2B8-3E51-3583-F0F7-5C2847D91469}" name="Application">
-      <FILE id="B3mg78" name="MainComponent.cpp" compile="1" resource="0"
-            file="Source/MainComponent.cpp"/>
-      <FILE id="U2c2EU" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="J0nBhR" name="chuApplication.h" compile="0" resource="0"
+            file="Source/chuApplication.h"/>
+      <FILE id="U2c2EU" name="chuApplication.cpp" compile="1" resource="0"
+            file="Source/chuApplication.cpp"/>
+      <FILE id="NLBlDr" name="chuMainWindow.h" compile="0" resource="0" file="Source/chuMainWindow.h"/>
+      <FILE id="z35zEq" name="chuMainWindow.cpp" compile="1" resource="0"
+            file="Source/chuMainWindow.cpp"/>
+      <FILE id="qEN59A" name="chuMenuBar.h" compile="0" resource="0" file="Source/chuMenuBar.h"/>
+      <FILE id="La1zlg" name="chuMenuBar.cpp" compile="1" resource="0" file="Source/chuMenuBar.cpp"/>
+      <FILE id="B3mg78" name="chuMainComponent.cpp" compile="1" resource="0"
+            file="Source/chuMainComponent.cpp"/>
+      <GROUP id="{37F6BC25-4574-8313-0C31-247A2D741A98}" name="Preferences">
+        <FILE id="gyZhv7" name="chuPreferencesDialog.h" compile="0" resource="0"
+              file="Source/chuPreferencesDialog.h"/>
+        <FILE id="lIJ6wG" name="chuPreferencesDialog.cpp" compile="1" resource="0"
+              file="Source/chuPreferencesDialog.cpp"/>
+        <FILE id="Rm0HiD" name="chuPreferencesPageAudio.cpp" compile="1" resource="0"
+              file="Source/chuPreferencesPageAudio.cpp"/>
+        <FILE id="jDcp1p" name="chuPreferencesPageLaser.cpp" compile="1" resource="0"
+              file="Source/chuPreferencesPageLaser.cpp"/>
+        <FILE id="EjsiQR" name="chuPreferencesPageOSC.cpp" compile="1" resource="0"
+              file="Source/chuPreferencesPageOSC.cpp"/>
+      </GROUP>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" externalLibraries="etherdream" prebuildCommand=""
-               postbuildCommand="if [[ ! -f &quot;${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries/libetherdream.dylib&quot; ]]; then&#10;mkdir ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries&#10;cp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries&#10;fi&#10;install_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/MacOS/coherunce 2&gt;/dev/null || true&#10;">
+    <XCODE_MAC targetFolder="Builds/MacOSX" externalLibraries="etherdream" prebuildCommand="/usr/libexec/PlistBuddy ${SRCROOT}/Info.plist -c &quot;Set CFBundleName coher&#252;nce&quot;"
+               postbuildCommand="if [[ ! -f &quot;${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries/libetherdream.dylib&quot; ]]; then&#10;mkdir ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries&#10;cp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries&#10;fi&#10;install_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/MacOS/coherunce 2&gt;/dev/null || true&#10;"
+               smallIcon="QusNFG" bigIcon="QusNFG">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="0" optimisation="1" targetName="coherunce" headerPath="$(PROJECT_DIR)/../../lib/libetherdream"
+                       isDebug="1" optimisation="1" targetName="coherunce" headerPath="$(PROJECT_DIR)/../../lib/libetherdream"
                        libraryPath="$(PROJECT_DIR)/../../lib/libetherdream/osx"/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
                        isDebug="0" optimisation="3" targetName="coherunce" headerPath="$(PROJECT_DIR)/../../lib/libetherdream&#10;"
@@ -46,9 +70,10 @@
         <MODULEPATH id="juce_audio_formats" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <VS2015 targetFolder="Builds/VisualStudio2015">
+    <VS2015 targetFolder="Builds/VisualStudio2015" smallIcon="QusNFG" bigIcon="QusNFG">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="coherunce"/>
@@ -70,6 +95,7 @@
         <MODULEPATH id="juce_audio_formats" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2015>
   </EXPORTFORMATS>
@@ -78,6 +104,7 @@
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>

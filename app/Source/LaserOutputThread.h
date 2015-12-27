@@ -19,6 +19,7 @@ class LaserOutputThread : public Thread
 {
 public:
     LaserOutputThread();
+    ~LaserOutputThread();
     bool init();
     void run() override;
 private:
