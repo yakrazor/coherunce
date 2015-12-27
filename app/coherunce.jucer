@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="DbJYCE" name="coherunce" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yakrazor.coherunce" includeBinaryInAppConfig="1"
-              jucerVersion="4.0.2">
+              jucerVersion="4.1.0">
   <MAINGROUP id="dWToof" name="coherunce">
     <GROUP id="{FD4EAC3F-C9BB-120A-5068-22FC87579073}" name="Resources">
       <FILE id="QusNFG" name="u-logo.svg" compile="0" resource="1" file="Resources/u-logo.svg"/>
