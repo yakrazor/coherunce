@@ -21,7 +21,7 @@ public:
         setOpaque(true);
 
         audioSetupComp = new AudioDeviceSelectorComponent(getApp()->getSharedAudioDeviceManager(),
-                                                          0, 256, 0, 256, true, true, true, false);
+                                                          0, 256, 0, 0, true, true, true, false);
         addAndMakeVisible(audioSetupComp);
 
         addAndMakeVisible(diagnosticsBox);
