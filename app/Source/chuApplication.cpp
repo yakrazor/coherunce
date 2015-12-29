@@ -170,7 +170,7 @@ bool chuApplication::perform(const InvocationInfo& info)
             // TODO: implement me
             return true;
         case CommandIDs::Calibrate:
-            // TODO: implement me
+            getMainWindow()->getContentComponent()->findChildWithID("calibration")->setVisible(true);
             return true;
         case CommandIDs::HelpContents:
             // TODO: implement me

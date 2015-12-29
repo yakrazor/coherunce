@@ -10,7 +10,7 @@
 #define MAINCOMPONENT_H_INCLUDED
 
 #include "chuApplication.h"
-
+#include "chuLaserCalibrationComponent.h"
 
 class chuMainComponent : public OpenGLAppComponent
 {
@@ -19,6 +19,8 @@ public:
     chuMainComponent()
     {
         setSize(1100, 720);
+        calibrationComponent = new chuLaserCalibrationComponent();
+        addChildAndSetID(calibrationComponent, "calibration");
     }
 
     ~chuMainComponent()
@@ -58,6 +60,7 @@ private:
     //==============================================================================
 
     // private member variables
+    ScopedPointer<Component> calibrationComponent;
 
 
 
