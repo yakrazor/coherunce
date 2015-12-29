@@ -31,7 +31,7 @@ void chuMenuBar::initialize()
 
 StringArray chuMenuBar::getMenuBarNames()
 {
-    const char* const names[] = { "File", "Edit", "Help", nullptr };
+    const char* const names[] = { "File", "Edit", "Laser", "Help", nullptr };
     return StringArray (names);
 }
 
@@ -71,6 +71,8 @@ PopupMenu chuMenuBar::getMenuForIndex(int topLevelMenuIndex, const String &menuN
         menu.addSeparator();
         menu.addCommandItem(commandManager, CommandIDs::About);
 #endif
+    } else if (menuName == "Laser") {
+        menu.addCommandItem(commandManager, CommandIDs::Calibrate);
     }
     return menu;
 }

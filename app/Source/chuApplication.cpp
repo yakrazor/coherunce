@@ -97,6 +97,10 @@ void chuApplication::getCommandInfo(CommandID commandID, ApplicationCommandInfo&
             result.setInfo("Save", "Save the current project", "General", 0);
             result.addDefaultKeypress('S', ModifierKeys::commandModifier);
             return;
+        case CommandIDs::Calibrate:
+            result.setInfo("Calibrate", "Show the laser calibration screen", "General", 0);
+            //result.addDefaultKeypress('S', ModifierKeys::commandModifier);
+            return;
         case CommandIDs::HelpContents:
             result.setInfo(CharPointer_UTF8("coher\xc3\xbcnce Manual"), "Open the user manual", "Help", 0);
             return;
@@ -139,6 +143,7 @@ void chuApplication::getAllCommands(Array<CommandID>& commands)
     commands.add(CommandIDs::Save);
     commands.add(CommandIDs::HelpContents);
     commands.add(CommandIDs::CloseWindow);
+    commands.add(CommandIDs::Calibrate);
     commands.add(StandardApplicationCommandIDs::undo);
     commands.add(StandardApplicationCommandIDs::redo);
     commands.add(StandardApplicationCommandIDs::cut);
@@ -162,6 +167,9 @@ bool chuApplication::perform(const InvocationInfo& info)
             // TODO: implement me
             return true;
         case CommandIDs::Save:
+            // TODO: implement me
+            return true;
+        case CommandIDs::Calibrate:
             // TODO: implement me
             return true;
         case CommandIDs::HelpContents:

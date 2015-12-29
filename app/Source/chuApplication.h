@@ -25,7 +25,8 @@ enum CommandIDs {
     Open,
     Save,
     HelpContents,
-    CloseWindow
+    CloseWindow,
+    Calibrate
 };
 
 
