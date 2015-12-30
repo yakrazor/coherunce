@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\chuFrameTimer.cpp"/>
-    <ClCompile Include="..\..\Source\LaserOutputThread.cpp"/>
+    <ClCompile Include="..\..\Source\chuGenerator.cpp"/>
     <ClCompile Include="..\..\Source\chuApplication.cpp"/>
     <ClCompile Include="..\..\Source\chuMainWindow.cpp"/>
     <ClCompile Include="..\..\Source\chuMenuBar.cpp"/>
@@ -139,6 +139,7 @@
     <ClCompile Include="..\..\Source\chuPreferencesPageAudio.cpp"/>
     <ClCompile Include="..\..\Source\chuPreferencesPageLaser.cpp"/>
     <ClCompile Include="..\..\Source\chuPreferencesPageOSC.cpp"/>
+    <ClCompile Include="..\..\Source\LaserOutputThread.cpp"/>
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1348,15 +1349,17 @@
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_video\juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\PatternItem.h"/>
     <ClInclude Include="..\..\Source\chuFrameTimer.h"/>
-    <ClInclude Include="..\..\Source\etherdream_test.h"/>
-    <ClInclude Include="..\..\Source\LaserOutputThread.h"/>
     <ClInclude Include="..\..\Source\chuThreadQueue.h"/>
-    <ClInclude Include="..\..\Source\protocol.h"/>
+    <ClInclude Include="..\..\Source\chuGenerator.h"/>
     <ClInclude Include="..\..\Source\chuApplication.h"/>
     <ClInclude Include="..\..\Source\chuMainWindow.h"/>
     <ClInclude Include="..\..\Source\chuMenuBar.h"/>
     <ClInclude Include="..\..\Source\chuPreferencesDialog.h"/>
+    <ClInclude Include="..\..\Source\etherdream_test.h"/>
+    <ClInclude Include="..\..\Source\LaserOutputThread.h"/>
+    <ClInclude Include="..\..\Source\protocol.h"/>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioSampleBuffer.h"/>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_FloatVectorOperations.h"/>

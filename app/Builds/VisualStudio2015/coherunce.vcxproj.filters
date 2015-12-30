@@ -5,20 +5,23 @@
     <Filter Include="coherunce">
       <UniqueIdentifier>{C735DC11-D3CD-903B-ED6A-1297C2161BB8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="coherunce\Resources">
-      <UniqueIdentifier>{55CD52FD-A5F2-4F51-C3A5-EEA7779064BD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="coherunce\Input">
-      <UniqueIdentifier>{B34CC912-69CF-CD40-CB88-8CD0774C374C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="coherunce\Output">
-      <UniqueIdentifier>{FAE6BEE1-C613-8E37-35B6-141FFF78CA8D}</UniqueIdentifier>
+    <Filter Include="coherunce\Core">
+      <UniqueIdentifier>{EFC7CF92-169B-D997-6F76-ED53CF34DBF0}</UniqueIdentifier>
     </Filter>
     <Filter Include="coherunce\Application">
       <UniqueIdentifier>{A3AB6FA2-0D4E-C1ED-F6E4-FFCD13DCB5BE}</UniqueIdentifier>
     </Filter>
     <Filter Include="coherunce\Application\Preferences">
       <UniqueIdentifier>{8DAFA579-82DD-B8AF-C636-5ED6BAA8F7E7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="coherunce\Output">
+      <UniqueIdentifier>{FAE6BEE1-C613-8E37-35B6-141FFF78CA8D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="coherunce\Input">
+      <UniqueIdentifier>{B34CC912-69CF-CD40-CB88-8CD0774C374C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="coherunce\Resources">
+      <UniqueIdentifier>{55CD52FD-A5F2-4F51-C3A5-EEA7779064BD}</UniqueIdentifier>
     </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
@@ -338,10 +341,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\chuFrameTimer.cpp">
-      <Filter>coherunce\Output</Filter>
+      <Filter>coherunce\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LaserOutputThread.cpp">
-      <Filter>coherunce\Output</Filter>
+    <ClCompile Include="..\..\Source\chuGenerator.cpp">
+      <Filter>coherunce\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\chuApplication.cpp">
       <Filter>coherunce\Application</Filter>
@@ -366,6 +369,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\chuPreferencesPageOSC.cpp">
       <Filter>coherunce\Application\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LaserOutputThread.cpp">
+      <Filter>coherunce\Output</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
@@ -1689,20 +1695,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\PatternItem.h">
+      <Filter>coherunce\Core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\chuFrameTimer.h">
-      <Filter>coherunce\Output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\etherdream_test.h">
-      <Filter>coherunce\Output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\LaserOutputThread.h">
-      <Filter>coherunce\Output</Filter>
+      <Filter>coherunce\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\chuThreadQueue.h">
-      <Filter>coherunce\Output</Filter>
+      <Filter>coherunce\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\protocol.h">
-      <Filter>coherunce\Output</Filter>
+    <ClInclude Include="..\..\Source\chuGenerator.h">
+      <Filter>coherunce\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\chuApplication.h">
       <Filter>coherunce\Application</Filter>
@@ -1715,6 +1718,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\chuPreferencesDialog.h">
       <Filter>coherunce\Application\Preferences</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\etherdream_test.h">
+      <Filter>coherunce\Output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LaserOutputThread.h">
+      <Filter>coherunce\Output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\protocol.h">
+      <Filter>coherunce\Output</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
