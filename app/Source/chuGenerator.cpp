@@ -9,11 +9,39 @@
 */
 
 #include "chuGenerator.h"
+#include "chuOSCManager.h"
 
 
 GeneratorParameterFloat::GeneratorParameterFloat(String _name, float _min, float _max, float _defaultValue)
 : name(_name), minValue(_min), maxValue(_max), defaultValue(_defaultValue), value(_defaultValue)
 {
+}
+
+void GeneratorParameterFloat::oscMessageReceived(const OSCMessage& message)
+{
+    OSCArgument* arg = message.begin();
+    if (arg && arg->isFloat32())
+    {
+        value = arg->getFloat32();
+    }
+    else if (arg && arg->isInt32())
+    {
+        value = (float)arg->getInt32();
+    }
+}
+
+void chuGenerator::setOSCAddress(const String& addr)
+{
+    std::vector<GeneratorParameterFloat*> params;
+    getParams(params);
+    for (auto& param : params)
+    {
+        if (chuOSCManager::getReceiver())
+        {
+            chuOSCManager::getReceiver()->removeListener(param);
+            chuOSCManager::getReceiver()->addListener(param, addr + "/param/" + param->name);
+        }
+    }
 }
 
 chuGenPolygonPinwheel::chuGenPolygonPinwheel()

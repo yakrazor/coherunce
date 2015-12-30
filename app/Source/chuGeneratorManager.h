@@ -17,7 +17,7 @@
 class chuGeneratorManager
 {
 public:
-    chuGeneratorManager();
+    static void initialize();
     
     static OwnedArray<chuGenerator>& getAllGenerators() { return allGenerators; }
 private:

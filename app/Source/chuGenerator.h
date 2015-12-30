@@ -15,9 +15,11 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PatternItem.h"
 
-class GeneratorParameterFloat {
+class GeneratorParameterFloat : public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::MessageLoopCallback> {
 public:
     GeneratorParameterFloat(String _name, float _min, float _max, float _defaultValue);
+    virtual void oscMessageReceived(const OSCMessage &message) override;
+
     String name;
     float minValue;
     float maxValue;
@@ -33,6 +35,8 @@ public:
     String getName() const { return name; }
     bool isActive() const { return active; }
     void setActive(bool b) { active = b; }
+
+    void setOSCAddress(const String& addr);
 
     virtual void init() {};
     virtual std::vector<PatternItem> getPatterns() = 0;

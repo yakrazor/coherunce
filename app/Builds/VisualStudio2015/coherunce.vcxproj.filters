@@ -349,6 +349,9 @@
     <ClCompile Include="..\..\Source\chuGeneratorManager.cpp">
       <Filter>coherunce\Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\chuOSCManager.cpp">
+      <Filter>coherunce\Core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\chuApplication.cpp">
       <Filter>coherunce\Application</Filter>
     </ClCompile>
@@ -1711,6 +1714,9 @@
       <Filter>coherunce\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\chuGeneratorManager.h">
+      <Filter>coherunce\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\chuOSCManager.h">
       <Filter>coherunce\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\chuApplication.h">

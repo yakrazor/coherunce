@@ -18,6 +18,9 @@
             file="Source/chuGeneratorManager.h"/>
       <FILE id="moTBqQ" name="chuGeneratorManager.cpp" compile="1" resource="0"
             file="Source/chuGeneratorManager.cpp"/>
+      <FILE id="uezu9I" name="chuOSCManager.h" compile="0" resource="0" file="Source/chuOSCManager.h"/>
+      <FILE id="KPqnt4" name="chuOSCManager.cpp" compile="1" resource="0"
+            file="Source/chuOSCManager.cpp"/>
     </GROUP>
     <GROUP id="{572DD2B8-3E51-3583-F0F7-5C2847D91469}" name="Application">
       <FILE id="J0nBhR" name="chuApplication.h" compile="0" resource="0"

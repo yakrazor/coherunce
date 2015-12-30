@@ -92,7 +92,7 @@ int patterns_to_points(chuThreadQueue<PatternItem>& patterns, etherdream_point* 
         for (auto& item : frame) {
             if (item.type == PatternType::RegularPolygon) {
                 int s = 2 * item.radius * sin(PI / item.sides) * scale;
-                int numSegments = s / (scale / 50);
+                int numSegments = std::max(1, s / (scale / 50));
                 int pointsInPattern = item.sides * (numSegments + 1 + dwellPoints * 2);
                 if (pointsInPattern + pointIndex > num_points) {
                     return;

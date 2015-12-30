@@ -65,6 +65,7 @@ private:
 };
 */
 
+#include "chuOSCManager.h"
 #include "chuGeneratorManager.h"
 
 class GeneratorButton : public TextButton
@@ -83,6 +84,9 @@ public:
     chuMainComponent()
     {
         setSize(1100, 720);
+
+        chuOSCManager::initialize(7900);
+        chuGeneratorManager::initialize();
 
         int generatorCount = 0;
         for (auto& generator : chuGeneratorManager::getAllGenerators())

@@ -13,6 +13,7 @@
 #include "chuMainWindow.h"
 #include "chuMenuBar.h"
 #include "chuFrameTimer.h"
+#include "chuOSCManager.h"
 
 #define FRAME_RATE 30
 
