@@ -6,14 +6,18 @@
   <MAINGROUP id="dWToof" name="coherunce">
     <GROUP id="{6BC089EB-636E-5AF4-43B5-94FB4D9264BC}" name="Core">
       <FILE id="mM0sox" name="PatternItem.h" compile="0" resource="0" file="Source/PatternItem.h"/>
+      <FILE id="C8JIKw" name="chuThreadQueue.h" compile="0" resource="0"
+            file="Source/chuThreadQueue.h"/>
       <FILE id="BiHNzH" name="chuFrameTimer.h" compile="0" resource="0" file="Source/chuFrameTimer.h"/>
       <FILE id="hUqHBz" name="chuFrameTimer.cpp" compile="1" resource="0"
             file="Source/chuFrameTimer.cpp"/>
-      <FILE id="C8JIKw" name="chuThreadQueue.h" compile="0" resource="0"
-            file="Source/chuThreadQueue.h"/>
+      <FILE id="DuTmIV" name="chuGenerator.h" compile="0" resource="0" file="Source/chuGenerator.h"/>
       <FILE id="aSeYE9" name="chuGenerator.cpp" compile="1" resource="0"
             file="Source/chuGenerator.cpp"/>
-      <FILE id="DuTmIV" name="chuGenerator.h" compile="0" resource="0" file="Source/chuGenerator.h"/>
+      <FILE id="ATwDoW" name="chuGeneratorManager.h" compile="0" resource="0"
+            file="Source/chuGeneratorManager.h"/>
+      <FILE id="moTBqQ" name="chuGeneratorManager.cpp" compile="1" resource="0"
+            file="Source/chuGeneratorManager.cpp"/>
     </GROUP>
     <GROUP id="{572DD2B8-3E51-3583-F0F7-5C2847D91469}" name="Application">
       <FILE id="J0nBhR" name="chuApplication.h" compile="0" resource="0"
@@ -43,10 +47,10 @@
     <GROUP id="{0954451C-E5BA-15C3-924D-EE8E6287ED75}" name="Output">
       <FILE id="N3DuAm" name="etherdream_test.h" compile="1" resource="0"
             file="Source/etherdream_test.h"/>
-      <FILE id="K3CvKr" name="LaserOutputThread.cpp" compile="1" resource="0"
-            file="Source/LaserOutputThread.cpp"/>
       <FILE id="uHxvsG" name="LaserOutputThread.h" compile="0" resource="0"
             file="Source/LaserOutputThread.h"/>
+      <FILE id="K3CvKr" name="LaserOutputThread.cpp" compile="1" resource="0"
+            file="Source/LaserOutputThread.cpp"/>
       <FILE id="RTmzur" name="protocol.h" compile="0" resource="0" file="Source/protocol.h"/>
     </GROUP>
     <GROUP id="{FC597BDF-A594-DAFD-5E88-4BDF3DF7AE4B}" name="Input"/>

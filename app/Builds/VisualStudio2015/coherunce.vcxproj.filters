@@ -346,6 +346,9 @@
     <ClCompile Include="..\..\Source\chuGenerator.cpp">
       <Filter>coherunce\Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\chuGeneratorManager.cpp">
+      <Filter>coherunce\Core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\chuApplication.cpp">
       <Filter>coherunce\Application</Filter>
     </ClCompile>
@@ -1698,13 +1701,16 @@
     <ClInclude Include="..\..\Source\PatternItem.h">
       <Filter>coherunce\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\chuFrameTimer.h">
-      <Filter>coherunce\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\chuThreadQueue.h">
       <Filter>coherunce\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\chuFrameTimer.h">
+      <Filter>coherunce\Core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\chuGenerator.h">
+      <Filter>coherunce\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\chuGeneratorManager.h">
       <Filter>coherunce\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\chuApplication.h">

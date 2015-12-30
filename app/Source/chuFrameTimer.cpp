@@ -11,19 +11,15 @@
 #include "chuFrameTimer.h"
 #include "LaserOutputThread.h"
 #include "chuGenerator.h"
+#include "chuGeneratorManager.h"
 
 void chuFrameTimer::timerCallback() {
     if (laserThread) {
         printf("Ticked timer at time %f\n", Time::getMillisecondCounterHiRes());
 
-        OwnedArray<chuGenerator> allGenerators;
-        auto pinwheel = new chuGenPolygonPinwheel();
-        pinwheel->setActive(true);
-        allGenerators.add(pinwheel);
-
         laserThread->patterns.start_frame();
 
-        for (auto& generator : allGenerators)
+        for (auto& generator : chuGeneratorManager::getAllGenerators())
         {
             if (generator->isActive())
             {

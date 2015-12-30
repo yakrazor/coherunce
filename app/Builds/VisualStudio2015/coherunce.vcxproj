@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\chuFrameTimer.cpp"/>
     <ClCompile Include="..\..\Source\chuGenerator.cpp"/>
+    <ClCompile Include="..\..\Source\chuGeneratorManager.cpp"/>
     <ClCompile Include="..\..\Source\chuApplication.cpp"/>
     <ClCompile Include="..\..\Source\chuMainWindow.cpp"/>
     <ClCompile Include="..\..\Source\chuMenuBar.cpp"/>
@@ -1350,9 +1351,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\PatternItem.h"/>
-    <ClInclude Include="..\..\Source\chuFrameTimer.h"/>
     <ClInclude Include="..\..\Source\chuThreadQueue.h"/>
+    <ClInclude Include="..\..\Source\chuFrameTimer.h"/>
     <ClInclude Include="..\..\Source\chuGenerator.h"/>
+    <ClInclude Include="..\..\Source\chuGeneratorManager.h"/>
     <ClInclude Include="..\..\Source\chuApplication.h"/>
     <ClInclude Include="..\..\Source\chuMainWindow.h"/>
     <ClInclude Include="..\..\Source\chuMenuBar.h"/>

@@ -65,14 +65,75 @@ private:
 };
 */
 
-class chuMainComponent : public Component
+#include "chuGeneratorManager.h"
+
+class GeneratorButton : public TextButton
+{
+public:
+    GeneratorButton(int index) : generatorIndex(index) {
+
+    }
+    int generatorIndex;
+};
+
+class chuMainComponent : public Component, public Button::Listener
 {
 public:
     //==============================================================================
     chuMainComponent()
     {
         setSize(1100, 720);
+
+        int generatorCount = 0;
+        for (auto& generator : chuGeneratorManager::getAllGenerators())
+        {
+            std::vector<GeneratorParameterFloat*> params;
+            generator->getParams(params);
+
+            auto button = new GeneratorButton(generatorCount);
+
+            String description = generator->getName();
+            if (params.size() > 0) {
+                description += "\n";
+            }
+            for (auto& param : params)
+            {
+                description += " ";
+                description += param->name;
+                description += "=";
+                description += String(param->value);
+            }
+            button->setButtonText(description);
+
+            button->setToggleState(generator->isActive(), dontSendNotification);
+            button->setClickingTogglesState(true);
+            button->setBounds(10, 10 + 110 * generatorCount, 200, 100);
+            button->addListener(this);
+            addAndMakeVisible(button);
+
+            generatorCount++;
+        }
     }
+
+    virtual void buttonClicked(Button* button) override
+    {
+
+    }
+
+    virtual void buttonStateChanged(Button* button) override
+    {
+        auto gb = static_cast<GeneratorButton*>(button);
+        if (gb)
+        {
+            auto& generators = chuGeneratorManager::getAllGenerators();
+            if (gb->generatorIndex >= 0 && gb->generatorIndex < generators.size())
+            {
+                generators[gb->generatorIndex]->setActive(button->getToggleState());
+            }
+        }
+    }
+
+    OwnedArray<Component> generatorButtons;
 };
 
 // (This function is called by the app startup code to create our main component)

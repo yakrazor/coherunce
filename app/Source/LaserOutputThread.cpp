@@ -140,13 +140,18 @@ void LaserOutputThread::run() {
         }
         if (connected) {
             int count = patterns_to_points(patterns, points, NUM_POINTS);
-            etherdream_wait_for_ready(dac_device);
+            if (count <= 0) {
+                etherdream_stop(dac_device);
+                continue;
+            } else {
+                etherdream_wait_for_ready(dac_device);
 
-            printf("Writing %d points...\n", count);
-            log_extents(points, count);
-            int res = etherdream_write(dac_device, points, count, 40000, -1);
-            if (res != 0) {
-                printf("ERROR: write returned %d\n", res);
+                printf("Writing %d points...\n", count);
+                log_extents(points, count);
+                int res = etherdream_write(dac_device, points, count, 40000, -1);
+                if (res != 0) {
+                    printf("ERROR: write returned %d\n", res);
+                }
             }
         } else {
             wait(250);
