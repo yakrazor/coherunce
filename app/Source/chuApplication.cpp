@@ -12,7 +12,9 @@
 #include "chuPreferencesDialog.h"
 #include "chuMainWindow.h"
 #include "chuMenuBar.h"
+#include "chuFrameTimer.h"
 
+#define FRAME_RATE 30
 
 void chuApplication::initialise(const String& commandLine)
 {
@@ -22,6 +24,9 @@ void chuApplication::initialise(const String& commandLine)
     laserThread = new LaserOutputThread();
     laserThread->startThread();
 
+    frameTimer = new chuFrameTimer(laserThread);
+    frameTimer->startTimerHz(FRAME_RATE);
+
     auto menu = new chuMenuBar();
     getApplicationCommandManager().registerAllCommandsForTarget(this);
     menu->initialize();
@@ -30,7 +35,7 @@ void chuApplication::initialise(const String& commandLine)
 
 void chuApplication::shutdown()
 {
-    laserThread->stopThread(600);
+    laserThread->stopThread(1200);
 
     mainMenu = nullptr;
     mainWindow = nullptr;

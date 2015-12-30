@@ -129,6 +129,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\chuFrameTimer.cpp"/>
     <ClCompile Include="..\..\Source\LaserOutputThread.cpp"/>
     <ClCompile Include="..\..\Source\chuApplication.cpp"/>
     <ClCompile Include="..\..\Source\chuMainWindow.cpp"/>
@@ -1347,8 +1348,10 @@
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_video\juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\chuFrameTimer.h"/>
     <ClInclude Include="..\..\Source\etherdream_test.h"/>
     <ClInclude Include="..\..\Source\LaserOutputThread.h"/>
+    <ClInclude Include="..\..\Source\chuThreadQueue.h"/>
     <ClInclude Include="..\..\Source\protocol.h"/>
     <ClInclude Include="..\..\Source\chuApplication.h"/>
     <ClInclude Include="..\..\Source\chuMainWindow.h"/>

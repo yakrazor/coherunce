@@ -337,6 +337,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\chuFrameTimer.cpp">
+      <Filter>coherunce\Output</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LaserOutputThread.cpp">
       <Filter>coherunce\Output</Filter>
     </ClCompile>
@@ -1686,10 +1689,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\chuFrameTimer.h">
+      <Filter>coherunce\Output</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\etherdream_test.h">
       <Filter>coherunce\Output</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LaserOutputThread.h">
+      <Filter>coherunce\Output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\chuThreadQueue.h">
       <Filter>coherunce\Output</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\protocol.h">

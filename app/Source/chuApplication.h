@@ -64,7 +64,7 @@ private:
     ScopedPointer<LaserOutputThread> laserThread;
     ScopedPointer<ApplicationCommandManager> applicationCommandManager;
     ScopedPointer<AudioDeviceManager> sharedAudioDeviceManager;
-
+    ScopedPointer<Timer> frameTimer;
 };
 
 inline chuApplication* getApp()
