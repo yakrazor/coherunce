@@ -15,7 +15,7 @@
 #include "chuFrameTimer.h"
 #include "chuOSCManager.h"
 
-#define FRAME_RATE 20
+#define FRAME_RATE 24
 
 void chuApplication::initialise(const String& commandLine)
 {

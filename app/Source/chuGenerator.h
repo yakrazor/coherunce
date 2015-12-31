@@ -64,10 +64,10 @@ public:
     virtual std::vector<PatternItem> getPatterns() override;
     virtual void getParams(std::vector<GeneratorParameterFloat*>& params) override;
 
-    static constexpr float leapXMin = -130.0;
-    static constexpr float leapXMax = 130.0;
-    static constexpr float leapYMin = 0.0;
-    static constexpr float leapYMax = 300.0;
+    static constexpr float leapXMin = -300.0;
+    static constexpr float leapXMax = 300.0;
+    static constexpr float leapYMin = 60.0;
+    static constexpr float leapYMax = 360.0;
 
     ScopedPointer<GeneratorParameterFloat> sides;
     ScopedPointer<GeneratorParameterFloat> radius;

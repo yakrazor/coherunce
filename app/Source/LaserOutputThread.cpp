@@ -86,24 +86,30 @@ int add_line(etherdream_point* points, int startIndex, int dwellPoints, int numS
     return startIndex + dwellPoints + numSegments - 1 + dwellPoints;
 }
 
-int patterns_to_points(chuThreadQueue<PatternItem>& patterns, etherdream_point* points, int num_points)
+int patterns_to_points(uint16_t lastFrameX, uint16_t lastFrameY, chuThreadQueue<PatternItem>& patterns, etherdream_point* points, int num_points)
 {
-    int scale = 20000;
+    int scale = 24000;
     int longestUnbrokenLine = scale / 50;
     int internalShapeDwellPoints = 5;
     int dwellPoints = 15; // this is at each end of a line, so there will actually be 30 per vertex
     int pointIndex = 0;
     int intensity = 32767;
-    uint16_t prevItemX = 0;
-    uint16_t prevItemY = 0;
+    int16_t prevItemX = lastFrameX;
+    int16_t prevItemY = lastFrameY;
     patterns.process_frame([&](chuThreadQueue<PatternItem>::frame_type frame) {
         for (auto& item : frame) {
             if (item.type == PatternType::RegularPolygon) {
 
+                // clamp input point
+                if (item.origin.x < -1.0) { item.origin.x = -1.0; }
+                if (item.origin.x > 1.0)  { item.origin.x = 1.0; }
+                if (item.origin.y < -1.0) { item.origin.y = -1.0; }
+                if (item.origin.y > 1.0)  { item.origin.y = 1.0; }
+
                 // Find the start point
                 float rad = item.rotation * PI/180.0;
-                uint16_t origX = (item.origin.x + item.radius * cos(rad)) * scale;
-                uint16_t origY = (item.origin.y + item.radius * sin(rad)) * scale;
+                int16_t origX = (item.origin.x + item.radius * cos(rad)) * scale;
+                int16_t origY = (item.origin.y + item.radius * sin(rad)) * scale;
 
                 // Find the length of the polygon sides and the initial move vector
                 int s = 2 * item.radius * sin(PI / item.sides) * scale;
@@ -119,12 +125,12 @@ int patterns_to_points(chuThreadQueue<PatternItem>& patterns, etherdream_point* 
                 // move from end of last item to start of this item
                 pointIndex = add_line(points, pointIndex, dwellPoints, numMoveSegments, prevItemX, prevItemY, origX, origY, 0, 0, 0, 0);
 
-                uint16_t lastX = origX;
-                uint16_t lastY = origY;
+                int16_t lastX = origX;
+                int16_t lastY = origY;
 
                 for (int i = 1; i < item.sides; i++) {
-                    uint16_t nextX = (item.origin.x + item.radius * cos(2 * PI * i / item.sides + rad)) * scale;
-                    uint16_t nextY = (item.origin.y + item.radius * sin(2 * PI * i / item.sides + rad)) * scale;
+                    int16_t nextX = (item.origin.x + item.radius * cos(2 * PI * i / item.sides + rad)) * scale;
+                    int16_t nextY = (item.origin.y + item.radius * sin(2 * PI * i / item.sides + rad)) * scale;
                     pointIndex = add_line(points, pointIndex, internalShapeDwellPoints, numSegments, lastX, lastY, nextX, nextY, item.red, item.green, item.blue, intensity);
                     lastX = nextX;
                     lastY = nextY;
@@ -135,7 +141,7 @@ int patterns_to_points(chuThreadQueue<PatternItem>& patterns, etherdream_point* 
                 prevItemY = origY;
             }
         }
-
+/*
         // Move back to 0,0
         int finalMoveDistance = sqrt(pow(prevItemX, 2) + pow(prevItemY, 2));
         int numFinalMoveSegments = std::max(1, finalMoveDistance / longestUnbrokenLine);
@@ -143,7 +149,7 @@ int patterns_to_points(chuThreadQueue<PatternItem>& patterns, etherdream_point* 
         {
             pointIndex = add_line(points, pointIndex, dwellPoints, numFinalMoveSegments, prevItemX, prevItemY, 0, 0, 0, 0, 0, 0);
         }
-
+*/
         printf("Generated %d DAC points from %lu pattern items\n", pointIndex, frame.size());
     });
     return pointIndex > 0 ? pointIndex : 0;
@@ -165,14 +171,18 @@ void log_extents(etherdream_point* points, int count)
 }
 
 void LaserOutputThread::run() {
+    int16_t lastFrameX = 0;
+    int16_t lastFrameY = 0;
     while(true) {
         if (threadShouldExit()) {
             return;
         }
         if (connected) {
-            int count = patterns_to_points(patterns, points, NUM_POINTS);
+            int count = patterns_to_points(lastFrameX, lastFrameY, patterns, points, NUM_POINTS);
             if (count <= 0) {
                 etherdream_stop(dac_device);
+                lastFrameX = 0;
+                lastFrameY = 0;
                 continue;
             } else {
                 etherdream_wait_for_ready(dac_device);
@@ -183,6 +193,8 @@ void LaserOutputThread::run() {
                 if (res != 0) {
                     printf("ERROR: write returned %d\n", res);
                 }
+                lastFrameX = points[count - 1].x;
+                lastFrameY = points[count - 1].y;
             }
         } else {
             wait(250);

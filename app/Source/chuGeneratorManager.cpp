@@ -16,13 +16,14 @@ void chuGeneratorManager::initialize()
     auto pinwheel = new chuGenPolygonPinwheel();
     pinwheel->setActive(true);
     pinwheel->sides->value = 6;
+    pinwheel->radius->value = 0.75;
     pinwheel->setOSCAddress("/generator/1");
     allGenerators.add(pinwheel);
 
     auto pinwheel2 = new chuGenPolygonPinwheel();
     pinwheel2->setActive(false);
     pinwheel2->sides->value = 3;
-    pinwheel2->radius->value = 1.0;
+    pinwheel2->radius->value = 0.6;
     pinwheel2->setOSCAddress("/generator/2");
     allGenerators.add(pinwheel2);
 
