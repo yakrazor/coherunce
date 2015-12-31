@@ -36,14 +36,17 @@ void chuApplication::initialise(const String& commandLine)
 
 void chuApplication::shutdown()
 {
-    laserThread->stopThread(1200);
-
     mainMenu = nullptr;
     mainWindow = nullptr;
     settingsWindow = nullptr;
+
+    laserThread->patterns.finish_frame();
+    laserThread->stopThread(200);
     laserThread = nullptr;
+
     applicationCommandManager = nullptr;
     sharedAudioDeviceManager = nullptr;
+
 }
 
 void chuApplication::systemRequestedQuit()
