@@ -32,7 +32,7 @@ typedef enum {
 struct PatternItem
 {
     PatternItem()
-    : type(PatternType::Point), origin(0,0), rotation(0), red(65536), green(65536), blue(65536), width(0), radius(0), height(0), sides(0) {}
+    : type(PatternType::Point), origin(0,0), rotation(0), red(65535), green(0), blue(0), width(0), radius(0), height(0), sides(0) {}
 
     PatternType type;
     Vector2f origin;
