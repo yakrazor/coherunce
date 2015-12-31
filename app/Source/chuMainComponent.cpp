@@ -77,7 +77,20 @@ public:
     int generatorIndex;
 };
 
-class chuMainComponent : public Component, public Button::Listener
+class GeneratorParameterSlider : public Slider
+{
+public:
+    GeneratorParameterSlider(GeneratorParameterFloat* pParam) : param(pParam)
+    {
+        setRange(param->minValue, param->maxValue);
+        setValue(param->value);
+    }
+    void updateParam() { param->value = (float)getValue(); }
+private:
+    GeneratorParameterFloat* param;
+};
+
+class chuMainComponent : public Component, public Button::Listener, public Slider::Listener
 {
 public:
     //==============================================================================
@@ -95,25 +108,40 @@ public:
             generator->getParams(params);
 
             auto button = new GeneratorButton(generatorCount);
+            generatorControls.add(button);
 
-            String description = generator->getName();
-            if (params.size() > 0) {
-                description += "\n";
-            }
-            for (auto& param : params)
-            {
-                description += " ";
-                description += param->name;
-                description += "=";
-                description += String(param->value);
-            }
+            String description = generator->getName() + " " + String(generatorCount + 1);
             button->setButtonText(description);
 
             button->setToggleState(generator->isActive(), dontSendNotification);
             button->setClickingTogglesState(true);
-            button->setBounds(10, 10 + 110 * generatorCount, 200, 100);
+            button->setBounds(10 + 160 * generatorCount, 10, 150, 60);
             button->addListener(this);
             addAndMakeVisible(button);
+
+            int paramCount = 0;
+            for (auto& param : params)
+            {
+                if (!param->userVisible)
+                    continue;
+
+                auto slider = new GeneratorParameterSlider(param);
+                slider->setSliderStyle(Slider::LinearBar);
+                auto label = new Label();
+                label->setText(param->name, dontSendNotification);
+                label->setBounds(10 + 160 * generatorCount, 80 + paramCount * 45, 150, 15);
+                slider->setBounds(10 + 160 * generatorCount, 95 + paramCount * 45, 150, 20);
+
+                slider->addListener(this);
+
+                generatorControls.add(label);
+                generatorControls.add(slider);
+                addAndMakeVisible(label);
+                addAndMakeVisible(slider);
+
+                paramCount++;
+            }
+
 
             generatorCount++;
         }
@@ -137,7 +165,16 @@ public:
         }
     }
 
-    OwnedArray<Component> generatorButtons;
+    virtual void sliderValueChanged (Slider* slider) override
+    {
+        GeneratorParameterSlider* gps = static_cast<GeneratorParameterSlider*>(slider);
+        if (gps)
+        {
+            gps->updateParam();
+        }
+    }
+
+    OwnedArray<Component> generatorControls;
 };
 
 // (This function is called by the app startup code to create our main component)

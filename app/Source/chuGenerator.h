@@ -17,7 +17,7 @@
 
 class GeneratorParameterFloat : public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::RealtimeCallback> {
 public:
-    GeneratorParameterFloat(String _name, float _min, float _max, float _defaultValue);
+    GeneratorParameterFloat(String _name, float _min, float _max, float _defaultValue, bool _userVisible = true);
     virtual void oscMessageReceived(const OSCMessage &message) override;
 
     String name;
@@ -25,6 +25,7 @@ public:
     float maxValue;
     float defaultValue;
     float value;
+    bool userVisible;
 };
 
 class chuGenerator {
@@ -67,6 +68,9 @@ public:
     static constexpr float leapXMax = 130.0;
     static constexpr float leapYMin = 0.0;
     static constexpr float leapYMax = 300.0;
+
+    ScopedPointer<GeneratorParameterFloat> sides;
+    ScopedPointer<GeneratorParameterFloat> radius;
 
     ScopedPointer<GeneratorParameterFloat> pt1x;
     ScopedPointer<GeneratorParameterFloat> pt1y;
