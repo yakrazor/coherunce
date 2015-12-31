@@ -30,7 +30,7 @@ public:
 
 class chuGenerator {
 public:
-    chuGenerator(String generatorName) : name(generatorName) { init(); };
+    chuGenerator(String generatorName);
     virtual ~chuGenerator() {}
 
     String getName() const { return name; }

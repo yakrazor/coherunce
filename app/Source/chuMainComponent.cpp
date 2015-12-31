@@ -93,13 +93,43 @@ private:
 class chuMainComponent : public Component, public Button::Listener, public Slider::Listener
 {
 public:
-    //==============================================================================
+
+    ScopedPointer<TextButton> stopButton;
+    ScopedPointer<Slider> intensitySlider;
+    ScopedPointer<Label> intensityLabel;
+    ScopedPointer<TextButton> enableButton;
+
     chuMainComponent()
     {
-        setSize(1100, 720);
-
         chuOSCManager::initialize(7900);
         chuGeneratorManager::initialize();
+
+        stopButton = new TextButton;
+        stopButton->setButtonText("Stop Output");
+        stopButton->setName("STOP");
+        stopButton->setColour(TextButton::buttonColourId, Colours::red);
+        stopButton->addListener(this);
+        stopButton->setConnectedEdges(
+            Button::ConnectedEdgeFlags::ConnectedOnLeft|Button::ConnectedEdgeFlags::ConnectedOnBottom);
+        addAndMakeVisible(stopButton);
+
+        intensitySlider = new Slider();
+        intensityLabel = new Label();
+        intensityLabel->setText("Intensity", dontSendNotification);
+        intensitySlider->setRange(0.0, 1.0);
+        intensitySlider->setValue(0.0);
+        intensitySlider->setSliderStyle(Slider::LinearBar);
+        intensitySlider->setName("INTENSITY");
+        intensitySlider->addListener(this);
+        addAndMakeVisible(intensitySlider);
+        addAndMakeVisible(intensityLabel);
+
+        enableButton = new TextButton;
+        enableButton->setButtonText("Enable\nLaser");
+        enableButton->setName("GO");
+        enableButton->setColour(TextButton::buttonColourId, Colours::green);
+        enableButton->addListener(this);
+        addAndMakeVisible(enableButton);
 
         int generatorCount = 0;
         for (auto& generator : chuGeneratorManager::getAllGenerators())
@@ -108,13 +138,12 @@ public:
             generator->getParams(params);
 
             auto button = new GeneratorButton(generatorCount);
-            generatorControls.add(button);
+            childControls.add(button);
 
             String description = generator->getName() + " " + String(generatorCount + 1);
             button->setButtonText(description);
 
             button->setToggleState(generator->isActive(), dontSendNotification);
-            button->setClickingTogglesState(true);
             button->setBounds(10 + 160 * generatorCount, 10, 150, 60);
             button->addListener(this);
             addAndMakeVisible(button);
@@ -134,8 +163,8 @@ public:
 
                 slider->addListener(this);
 
-                generatorControls.add(label);
-                generatorControls.add(slider);
+                childControls.add(label);
+                childControls.add(slider);
                 addAndMakeVisible(label);
                 addAndMakeVisible(slider);
 
@@ -145,6 +174,17 @@ public:
 
             generatorCount++;
         }
+
+        setSize(1100, 720);
+    }
+
+    void resized() override
+    {
+        int windowHeight = this->getHeight();
+        stopButton->setBounds(-5, windowHeight - 70, 115, 75);
+        intensitySlider->setBounds(120, windowHeight - 40, 300, 30);
+        intensityLabel->setBounds(120, windowHeight - 65, 300, 25);
+        enableButton->setBounds(430, windowHeight - 70, 60, 60);
     }
 
     ~chuMainComponent()
@@ -155,24 +195,36 @@ public:
 
     virtual void buttonClicked(Button* button) override
     {
+        if (button->getName() == "STOP")
+        {
+            getApp()->getLaserOutputThread()->disableOutput();
+        }
+        else if (button->getName() == "GO")
+        {
+            getApp()->getLaserOutputThread()->enableOutput();
+        }
 
-    }
-
-    virtual void buttonStateChanged(Button* button) override
-    {
-        auto gb = static_cast<GeneratorButton*>(button);
+        GeneratorButton* gb = dynamic_cast<GeneratorButton*>(button);
         if (gb)
         {
             auto& generators = chuGeneratorManager::getAllGenerators();
             if (gb->generatorIndex >= 0 && gb->generatorIndex < generators.size())
             {
-                generators[gb->generatorIndex]->setActive(button->getToggleState());
+                bool genState = generators[gb->generatorIndex]->isActive();
+                generators[gb->generatorIndex]->setActive(!genState);
+                gb->setToggleState(!genState, dontSendNotification);
             }
         }
     }
 
     virtual void sliderValueChanged (Slider* slider) override
     {
+        if (slider && slider->getName() == "INTENSITY")
+        {
+            getApp()->getLaserOutputThread()->setGlobalIntensity(slider->getValue());
+            return;
+        }
+
         GeneratorParameterSlider* gps = static_cast<GeneratorParameterSlider*>(slider);
         if (gps)
         {
@@ -180,7 +232,7 @@ public:
         }
     }
 
-    OwnedArray<Component> generatorControls;
+    OwnedArray<Component> childControls;
 };
 
 // (This function is called by the app startup code to create our main component)

@@ -31,6 +31,11 @@ void GeneratorParameterFloat::oscMessageReceived(const OSCMessage& message)
     }
 }
 
+chuGenerator::chuGenerator(String generatorName) : name(generatorName), active(false)
+{
+    init();
+};
+
 void chuGenerator::setOSCAddress(const String& addr)
 {
     std::vector<GeneratorParameterFloat*> params;

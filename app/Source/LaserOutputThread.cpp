@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include <algorithm>
+
 #include "LaserOutputThread.h"
 #include <etherdream.h>
 #include "etherdream_test.h"
@@ -21,10 +23,11 @@ struct etherdream_point points[NUM_POINTS];
 
 
 LaserOutputThread::LaserOutputThread() : Thread("Laser Output Thread") {
-   connected = false;
-   if (init()) {
-       connected = true;
-   }
+    connected = false;
+    enabled = false;
+    if (init()) {
+        connected = true;
+    }
 }
 
 LaserOutputThread::~LaserOutputThread() {
@@ -49,6 +52,17 @@ bool LaserOutputThread::init() {
     } else {
         return true;
     }
+}
+
+void LaserOutputThread::disableOutput()
+{
+    etherdream_stop(dac_device);
+    enabled = false;
+}
+
+void LaserOutputThread::enableOutput()
+{
+    enabled = true;
 }
 
 void add_point(etherdream_point* point, int16_t x, int16_t y, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
@@ -86,14 +100,17 @@ int add_line(etherdream_point* points, int startIndex, int dwellPoints, int numS
     return startIndex + dwellPoints + numSegments - 1 + dwellPoints;
 }
 
-int patterns_to_points(uint16_t lastFrameX, uint16_t lastFrameY, chuThreadQueue<PatternItem>& patterns, etherdream_point* points, int num_points)
+int patterns_to_points(uint16_t lastFrameX, uint16_t lastFrameY, float globalIntensity, chuThreadQueue<PatternItem>& patterns, etherdream_point* points, int num_points)
 {
     int scale = 24000;
     int longestUnbrokenLine = scale / 50;
     int internalShapeDwellPoints = 5;
     int dwellPoints = 15; // this is at each end of a line, so there will actually be 30 per vertex
     int pointIndex = 0;
-    int intensity = 32767;
+    int intensityMax = 32767;
+
+    uint16_t intensity = intensityMax * std::max(0.0f, std::min(globalIntensity, 1.0f));
+
     int16_t prevItemX = lastFrameX;
     int16_t prevItemY = lastFrameY;
     patterns.process_frame([&](chuThreadQueue<PatternItem>::frame_type frame) {
@@ -177,8 +194,12 @@ void LaserOutputThread::run() {
         if (threadShouldExit()) {
             return;
         }
-        if (connected) {
-            int count = patterns_to_points(lastFrameX, lastFrameY, patterns, points, NUM_POINTS);
+        if (!enabled) {
+            etherdream_stop(dac_device);
+            continue;
+        }
+        if (connected && enabled) {
+            int count = patterns_to_points(lastFrameX, lastFrameY, globalIntensity, patterns, points, NUM_POINTS);
             if (count <= 0) {
                 etherdream_stop(dac_device);
                 lastFrameX = 0;

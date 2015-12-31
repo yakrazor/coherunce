@@ -25,11 +25,20 @@ public:
     bool init();
     void run() override;
 
+    void enableOutput();
+    void disableOutput();
+    bool isOutputEnabled();
+
+    void setGlobalIntensity(float intensity) { globalIntensity = intensity; }
+
     chuThreadQueue<PatternItem> patterns;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LaserOutputThread)
     bool connected;
+
+    float globalIntensity;
+    bool enabled;
 };
 
 

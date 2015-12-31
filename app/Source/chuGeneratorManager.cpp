@@ -14,7 +14,7 @@
 void chuGeneratorManager::initialize()
 {
     auto pinwheel = new chuGenPolygonPinwheel();
-    pinwheel->setActive(true);
+    pinwheel->setActive(false);
     pinwheel->sides->value = 6;
     pinwheel->radius->value = 0.75;
     pinwheel->setOSCAddress("/generator/1");

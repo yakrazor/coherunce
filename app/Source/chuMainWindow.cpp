@@ -17,8 +17,9 @@ chuMainWindow::chuMainWindow(String name)
 : DocumentWindow(name, Colours::lightgrey, DocumentWindow::allButtons)
 {
     setUsingNativeTitleBar(true);
-    setContentOwned (createMainContentComponent(), true);
+    setContentOwned(createMainContentComponent(), true);
     setResizable(true, true);
+    setResizeLimits(750, 500, 250000, 250000);
 
     addKeyListener(getApp()->getApplicationCommandManager().getKeyMappings());
 

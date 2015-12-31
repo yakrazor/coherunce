@@ -56,7 +56,8 @@ public:
     void getAllCommands(Array<CommandID>& commands) override;
     bool perform(const InvocationInfo& info) override;
 
-
+    LaserOutputThread* getLaserOutputThread() { return laserThread; }
+    
 private:
     ScopedPointer<Component> mainWindow;
     ScopedPointer<Component> settingsWindow;
