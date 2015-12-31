@@ -38,6 +38,11 @@ void chuOSCManager::initialize(int port)
     setPort(port);
 }
 
+void chuOSCManager::deinitialize()
+{
+    receiver = nullptr;
+}
+
 void chuOSCManager::setPort(int port)
 {
     if (receiver)

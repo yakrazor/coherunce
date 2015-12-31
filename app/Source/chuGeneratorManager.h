@@ -18,10 +18,13 @@ class chuGeneratorManager
 {
 public:
     static void initialize();
+    static void deinitialize();
     
     static OwnedArray<chuGenerator>& getAllGenerators() { return allGenerators; }
 private:
     static OwnedArray<chuGenerator> allGenerators;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuGeneratorManager)
 };
 
 

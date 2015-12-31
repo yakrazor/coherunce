@@ -17,10 +17,14 @@ class chuOSCManager
 {
 public:
     static void initialize(int port);
+    static void deinitialize();
+    
     static void setPort(int port);
     static OSCReceiver* getReceiver() { return receiver; }
 private:
     static ScopedPointer<OSCReceiver> receiver;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuOSCManager)
 };
 
 

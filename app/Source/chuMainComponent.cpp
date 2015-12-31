@@ -147,6 +147,12 @@ public:
         }
     }
 
+    ~chuMainComponent()
+    {
+        chuGeneratorManager::deinitialize();
+        chuOSCManager::deinitialize();
+    }
+
     virtual void buttonClicked(Button* button) override
     {
 

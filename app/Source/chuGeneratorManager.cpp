@@ -37,4 +37,9 @@ void chuGeneratorManager::initialize()
     allGenerators.add(fivePoints2);
 }
 
+void chuGeneratorManager::deinitialize()
+{
+    allGenerators.clear();
+}
+
 OwnedArray<chuGenerator> chuGeneratorManager::allGenerators;

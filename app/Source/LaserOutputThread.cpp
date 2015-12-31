@@ -16,7 +16,7 @@
 
 struct etherdream *dac_device = nullptr;
 
-#define NUM_POINTS 3000
+#define NUM_POINTS 3500
 struct etherdream_point points[NUM_POINTS];
 
 
@@ -90,6 +90,7 @@ int patterns_to_points(chuThreadQueue<PatternItem>& patterns, etherdream_point* 
 {
     int scale = 20000;
     int longestUnbrokenLine = scale / 50;
+    int internalShapeDwellPoints = 5;
     int dwellPoints = 15; // this is at each end of a line, so there will actually be 30 per vertex
     int pointIndex = 0;
     int intensity = 32767;
@@ -124,11 +125,11 @@ int patterns_to_points(chuThreadQueue<PatternItem>& patterns, etherdream_point* 
                 for (int i = 1; i < item.sides; i++) {
                     uint16_t nextX = (item.origin.x + item.radius * cos(2 * PI * i / item.sides + rad)) * scale;
                     uint16_t nextY = (item.origin.y + item.radius * sin(2 * PI * i / item.sides + rad)) * scale;
-                    pointIndex = add_line(points, pointIndex, dwellPoints, numSegments, lastX, lastY, nextX, nextY, item.red, item.green, item.blue, intensity);
+                    pointIndex = add_line(points, pointIndex, internalShapeDwellPoints, numSegments, lastX, lastY, nextX, nextY, item.red, item.green, item.blue, intensity);
                     lastX = nextX;
                     lastY = nextY;
                 }
-                pointIndex = add_line(points, pointIndex, dwellPoints, numSegments, lastX, lastY, origX, origY, item.red, item.green, item.blue, intensity);
+                pointIndex = add_line(points, pointIndex, internalShapeDwellPoints, numSegments, lastX, lastY, origX, origY, item.red, item.green, item.blue, intensity);
 
                 prevItemX = origX;
                 prevItemY = origY;
@@ -178,7 +179,7 @@ void LaserOutputThread::run() {
 
                 printf("Writing %d points...\n", count);
                 log_extents(points, count);
-                int res = etherdream_write(dac_device, points, count, 40000, -1);
+                int res = etherdream_write(dac_device, points, count, 35000, count < 1500 ? -1 : 1);
                 if (res != 0) {
                     printf("ERROR: write returned %d\n", res);
                 }
