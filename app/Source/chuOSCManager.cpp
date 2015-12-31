@@ -9,6 +9,7 @@
 */
 
 #include "chuOSCManager.h"
+#define LOG_OSC 0
 
 ScopedPointer<OSCReceiver> chuOSCManager::receiver = nullptr;
 
@@ -29,7 +30,10 @@ void chuOSCManager::initialize(int port)
     if (!receiver)
     {
         receiver = new OSCReceiver();
-        receiver->addListener(&theLogger);
+        if (LOG_OSC)
+        {
+            receiver->addListener(&theLogger);
+        }
     }
     setPort(port);
 }

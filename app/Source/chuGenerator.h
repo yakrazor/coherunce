@@ -15,7 +15,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PatternItem.h"
 
-class GeneratorParameterFloat : public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::MessageLoopCallback> {
+class GeneratorParameterFloat : public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::RealtimeCallback> {
 public:
     GeneratorParameterFloat(String _name, float _min, float _max, float _defaultValue);
     virtual void oscMessageReceived(const OSCMessage &message) override;
@@ -57,10 +57,32 @@ public:
     ScopedPointer<GeneratorParameterFloat> copies;
 };
 
-class chuGenTenPoints : public chuGenerator {
+class chuGenFivePoints : public chuGenerator {
 public:
-    chuGenTenPoints() : chuGenerator("TenPoints") {}
+    chuGenFivePoints();
     virtual std::vector<PatternItem> getPatterns() override;
+    virtual void getParams(std::vector<GeneratorParameterFloat*>& params) override;
+
+    static constexpr float leapXMin = -130.0;
+    static constexpr float leapXMax = 130.0;
+    static constexpr float leapYMin = 0.0;
+    static constexpr float leapYMax = 300.0;
+
+    ScopedPointer<GeneratorParameterFloat> pt1x;
+    ScopedPointer<GeneratorParameterFloat> pt1y;
+    ScopedPointer<GeneratorParameterFloat> pt1on;
+    ScopedPointer<GeneratorParameterFloat> pt2x;
+    ScopedPointer<GeneratorParameterFloat> pt2y;
+    ScopedPointer<GeneratorParameterFloat> pt2on;
+    ScopedPointer<GeneratorParameterFloat> pt3x;
+    ScopedPointer<GeneratorParameterFloat> pt3y;
+    ScopedPointer<GeneratorParameterFloat> pt3on;
+    ScopedPointer<GeneratorParameterFloat> pt4x;
+    ScopedPointer<GeneratorParameterFloat> pt4y;
+    ScopedPointer<GeneratorParameterFloat> pt4on;
+    ScopedPointer<GeneratorParameterFloat> pt5x;
+    ScopedPointer<GeneratorParameterFloat> pt5y;
+    ScopedPointer<GeneratorParameterFloat> pt5on;
 };
 
 class chuGenSpirograph : public chuGenerator {
