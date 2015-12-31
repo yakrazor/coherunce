@@ -51,19 +51,19 @@ bool LaserOutputThread::init() {
     }
 }
 
-void add_point(etherdream_point* point, int16_t x, int16_t y, uint16_t r, uint16_t g, uint16_t b)
+void add_point(etherdream_point* point, int16_t x, int16_t y, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
 {
     point->x = x;
     point->y = y;
     point->r = r;
     point->g = g;
     point->b = b;
-    point->i = 0;
+    point->i = i;
     point->u1 = 0;
     point->u2 = 0;
 }
 
-void add_line(etherdream_point* points, int startIndex, int dwellPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t r, uint16_t g, uint16_t b)
+int add_line(etherdream_point* points, int startIndex, int dwellPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
 {
     //printf("Line: %d,%d -> %d,%d\n", x1, y1, x2, y2);
 
@@ -71,48 +71,78 @@ void add_line(etherdream_point* points, int startIndex, int dwellPoints, int num
     int dy = (y2 - y1) / numSegments;
     for (int i = 0; i < dwellPoints; i++)
     {
-        add_point(&points[startIndex + i], x1, y1, r, g, b);
+        add_point(&points[startIndex + i], x1, y1, r, g, b, 0);
     }
     for (int i = 1; i < numSegments; i++)
     {
-        add_point(&points[startIndex + dwellPoints + i - 1], x1 + dx * i, y1 + dy * i, r, g, b);
+        add_point(&points[startIndex + dwellPoints + i - 1], x1 + dx * i, y1 + dy * i, r, g, b, i);
     }
     for (int i = 0; i < dwellPoints; i++)
     {
-        add_point(&points[startIndex + dwellPoints + numSegments - 1 + i], x2, y2, r, g, b);
+        add_point(&points[startIndex + dwellPoints + numSegments - 1 + i], x2, y2, r, g, b, 0);
     }
+
+    // return next point index
+    return startIndex + dwellPoints + numSegments - 1 + dwellPoints;
 }
 
 int patterns_to_points(chuThreadQueue<PatternItem>& patterns, etherdream_point* points, int num_points)
 {
     int scale = 20000;
-    int dwellPoints = 3;
+    int longestUnbrokenLine = scale / 50;
+    int dwellPoints = 15; // this is at each end of a line, so there will actually be 30 per vertex
     int pointIndex = 0;
+    int intensity = 32767;
+    uint16_t prevItemX = 0;
+    uint16_t prevItemY = 0;
     patterns.process_frame([&](chuThreadQueue<PatternItem>::frame_type frame) {
         for (auto& item : frame) {
             if (item.type == PatternType::RegularPolygon) {
-                int s = 2 * item.radius * sin(PI / item.sides) * scale;
-                int numSegments = std::max(1, s / (scale / 50));
-                int pointsInPattern = item.sides * (numSegments + 1 + dwellPoints * 2);
-                if (pointsInPattern + pointIndex > num_points) {
-                    return;
-                }
+
+                // Find the start point
                 float rad = item.rotation * PI/180.0;
                 uint16_t origX = (item.origin.x + item.radius * cos(rad)) * scale;
                 uint16_t origY = (item.origin.y + item.radius * sin(rad)) * scale;
+
+                // Find the length of the polygon sides and the initial move vector
+                int s = 2 * item.radius * sin(PI / item.sides) * scale;
+                int move_distance = sqrt(pow(prevItemX - origX, 2) + pow(prevItemY - origY, 2));
+
+                int numMoveSegments = std::max(1, move_distance / longestUnbrokenLine);
+                int numSegments = std::max(1, s / longestUnbrokenLine);
+                int pointsInPattern = (item.sides + 1) * (numSegments + 1 + dwellPoints * 2) + numMoveSegments;
+                if (pointsInPattern + pointIndex > num_points) {
+                    continue;
+                }
+
+                // move from end of last item to start of this item
+                pointIndex = add_line(points, pointIndex, dwellPoints, numMoveSegments, prevItemX, prevItemY, origX, origY, 0, 0, 0, 0);
+
                 uint16_t lastX = origX;
                 uint16_t lastY = origY;
+
                 for (int i = 1; i < item.sides; i++) {
                     uint16_t nextX = (item.origin.x + item.radius * cos(2 * PI * i / item.sides + rad)) * scale;
                     uint16_t nextY = (item.origin.y + item.radius * sin(2 * PI * i / item.sides + rad)) * scale;
-                    add_line(points, pointIndex + (i - 1) * (numSegments + 1), dwellPoints, numSegments, lastX, lastY, nextX, nextY, item.red, item.green, item.blue);
+                    pointIndex = add_line(points, pointIndex, dwellPoints, numSegments, lastX, lastY, nextX, nextY, item.red, item.green, item.blue, intensity);
                     lastX = nextX;
                     lastY = nextY;
                 }
-                add_line(points, pointIndex + (item.sides - 1) * (numSegments + 1), dwellPoints, numSegments, lastX, lastY, origX, origY, item.red, item.green, item.blue);
-                pointIndex += pointsInPattern;
+                pointIndex = add_line(points, pointIndex, dwellPoints, numSegments, lastX, lastY, origX, origY, item.red, item.green, item.blue, intensity);
+
+                prevItemX = origX;
+                prevItemY = origY;
             }
         }
+
+        // Move back to 0,0
+        int finalMoveDistance = sqrt(pow(prevItemX, 2) + pow(prevItemY, 2));
+        int numFinalMoveSegments = std::max(1, finalMoveDistance / longestUnbrokenLine);
+        if (pointIndex + dwellPoints * 2 + numFinalMoveSegments <= num_points)
+        {
+            pointIndex = add_line(points, pointIndex, dwellPoints, numFinalMoveSegments, prevItemX, prevItemY, 0, 0, 0, 0, 0, 0);
+        }
+
         printf("Generated %d DAC points from %lu pattern items\n", pointIndex, frame.size());
     });
     return pointIndex > 0 ? pointIndex : 0;
