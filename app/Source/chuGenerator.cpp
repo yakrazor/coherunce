@@ -52,7 +52,7 @@ void chuGenPolygonPinwheel::getParamList(std::vector<chuParameter*>& params)
     params.push_back(color);
 }
 
-std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns()
+std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns(float barClock)
 {
     std::vector<PatternItem> items;
     PatternItem item;
@@ -60,7 +60,7 @@ std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns()
     item.sides = sides->value;
     item.radius = radius->value;
     item.origin = Vector2f(0, 0);
-    item.rotation = Time::getMillisecondCounterHiRes() * 180/1200.0;
+    item.rotation = barClock * 360;
     item.red = color->value.getRed() << 8;
     item.green = color->value.getGreen() << 8;
     item.blue = color->value.getBlue() << 8;
@@ -135,13 +135,13 @@ inline float rescale(float value, float inputMin, float inputMax, float outputMi
     return outputMin + s * (outputMax - outputMin);
 }
 
-std::vector<PatternItem> chuGenFivePoints::getPatterns()
+std::vector<PatternItem> chuGenFivePoints::getPatterns(float barClock)
 {
     PatternItem item;
     item.type = PatternType::RegularPolygon;
     item.sides = sides->value;
     item.radius = radius->value;
-    item.rotation = Time::getMillisecondCounterHiRes() * 180/800.0;
+    item.rotation = barClock * 360;
     item.red = color->value.getRed() << 8;
     item.green = color->value.getGreen() << 8;
     item.blue = color->value.getBlue() << 8;
@@ -180,7 +180,7 @@ std::vector<PatternItem> chuGenFivePoints::getPatterns()
     return items;
 }
 
-std::vector<PatternItem> chuGenSpirograph::getPatterns()
+std::vector<PatternItem> chuGenSpirograph::getPatterns(float barClock)
 {
     std::vector<PatternItem> items;
     return items;

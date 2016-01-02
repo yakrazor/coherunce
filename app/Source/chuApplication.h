@@ -14,6 +14,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "LaserOutputThread.h"
 #include "chuMainWindow.h"
+#include "chuFrameTimer.h"
 
 
 Component* createMainContentComponent();
@@ -65,7 +66,7 @@ private:
     ScopedPointer<LaserOutputThread> laserThread;
     ScopedPointer<ApplicationCommandManager> applicationCommandManager;
     ScopedPointer<AudioDeviceManager> sharedAudioDeviceManager;
-    ScopedPointer<Timer> frameTimer;
+    ScopedPointer<chuFrameTimer> frameTimer;
 };
 
 inline chuApplication* getApp()

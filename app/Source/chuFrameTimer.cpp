@@ -23,7 +23,7 @@ void chuFrameTimer::timerCallback() {
         {
             if (generator->isActive())
             {
-                auto items = generator->getPatterns();
+                auto items = generator->getPatterns(barClock);
                 for (auto& item : items)
                 {
                     laserThread->patterns.push_item(item);
@@ -32,5 +32,18 @@ void chuFrameTimer::timerCallback() {
         }
 
         laserThread->patterns.finish_frame();
+    }
+}
+
+void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& message)
+{
+    if (message.isMidiClock())
+    {
+        numPulses++;
+        if (numPulses > pulsesPerBar) {
+            numPulses -= pulsesPerBar;
+        }
+
+        setBarClock(numPulses / (pulsesPerBar * 1.0));
     }
 }

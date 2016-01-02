@@ -12,10 +12,12 @@
 #include "chuPreferencesDialog.h"
 #include "chuMainWindow.h"
 #include "chuMenuBar.h"
-#include "chuFrameTimer.h"
 #include "chuOSCManager.h"
 
 #define FRAME_RATE 24
+
+
+
 
 void chuApplication::initialise(const String& commandLine)
 {
@@ -27,6 +29,12 @@ void chuApplication::initialise(const String& commandLine)
 
     frameTimer = new chuFrameTimer(laserThread);
     frameTimer->startTimerHz(FRAME_RATE);
+
+    const StringArray list (MidiInput::getDevices());
+    String midiInput = list[0];
+    if (!getSharedAudioDeviceManager().isMidiInputEnabled(midiInput))
+        getSharedAudioDeviceManager().setMidiInputEnabled(midiInput, true);
+    getSharedAudioDeviceManager().addMidiInputCallback(midiInput, frameTimer);
 
     auto menu = new chuMenuBar();
     getApplicationCommandManager().registerAllCommandsForTarget(this);
@@ -41,6 +49,7 @@ void chuApplication::shutdown()
     settingsWindow = nullptr;
 
     laserThread->patterns.finish_frame();
+    laserThread->disableOutput();
     laserThread->stopThread(200);
     laserThread = nullptr;
 

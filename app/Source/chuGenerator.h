@@ -29,7 +29,7 @@ public:
     void setOSCAddress(const String& addr);
 
     virtual void init() {};
-    virtual std::vector<PatternItem> getPatterns() = 0;
+    virtual std::vector<PatternItem> getPatterns(float barClock) = 0;
     virtual void getParamList(std::vector<chuParameter*>& params) {};
 
 private:
@@ -40,7 +40,7 @@ private:
 class chuGenPolygonPinwheel : public chuGenerator {
 public:
     chuGenPolygonPinwheel();
-    virtual std::vector<PatternItem> getPatterns() override;
+    virtual std::vector<PatternItem> getPatterns(float barClock) override;
     virtual void getParamList(std::vector<chuParameter*>& params) override;
     ScopedPointer<chuParameterFloat> sides;
     ScopedPointer<chuParameterFloat> radius;
@@ -51,7 +51,7 @@ public:
 class chuGenFivePoints : public chuGenerator {
 public:
     chuGenFivePoints();
-    virtual std::vector<PatternItem> getPatterns() override;
+    virtual std::vector<PatternItem> getPatterns(float barClock) override;
     virtual void getParamList(std::vector<chuParameter*>& params) override;
 
     static constexpr float leapXMin = -300.0;
@@ -83,7 +83,7 @@ public:
 class chuGenSpirograph : public chuGenerator {
 public:
     chuGenSpirograph() : chuGenerator("Spirograph") {}
-    virtual std::vector<PatternItem> getPatterns() override;
+    virtual std::vector<PatternItem> getPatterns(float barClock) override;
 };
 
 
