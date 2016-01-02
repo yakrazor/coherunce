@@ -56,7 +56,10 @@ bool LaserOutputThread::init() {
 
 void LaserOutputThread::disableOutput()
 {
-    etherdream_stop(dac_device);
+    if (connected)
+    {
+        etherdream_stop(dac_device);
+    }
     enabled = false;
 }
 
@@ -194,7 +197,10 @@ void LaserOutputThread::run() {
         if (threadShouldExit()) {
             return;
         }
-        if (!enabled) {
+        if (!connected) {
+            wait(250);
+        }
+        if (connected && !enabled) {
             etherdream_stop(dac_device);
             continue;
         }
@@ -217,8 +223,6 @@ void LaserOutputThread::run() {
                 lastFrameX = points[count - 1].x;
                 lastFrameY = points[count - 1].y;
             }
-        } else {
-            wait(250);
         }
     }
 }
