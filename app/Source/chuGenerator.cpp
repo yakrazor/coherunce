@@ -12,24 +12,7 @@
 #include "chuOSCManager.h"
 
 
-GeneratorParameterFloat::GeneratorParameterFloat(String _name, float _min, float _max, float _defaultValue,
-                                                 bool _userVisible)
-: name(_name), minValue(_min), maxValue(_max), defaultValue(_defaultValue), value(_defaultValue), userVisible(_userVisible)
-{
-}
 
-void GeneratorParameterFloat::oscMessageReceived(const OSCMessage& message)
-{
-    OSCArgument* arg = message.begin();
-    if (arg && arg->isFloat32())
-    {
-        value = arg->getFloat32();
-    }
-    else if (arg && arg->isInt32())
-    {
-        value = (float)arg->getInt32();
-    }
-}
 
 chuGenerator::chuGenerator(String generatorName) : name(generatorName), active(false)
 {
@@ -38,8 +21,8 @@ chuGenerator::chuGenerator(String generatorName) : name(generatorName), active(f
 
 void chuGenerator::setOSCAddress(const String& addr)
 {
-    std::vector<GeneratorParameterFloat*> params;
-    getParams(params);
+    std::vector<chuParameter*> params;
+    getParamList(params);
     for (auto& param : params)
     {
         if (chuOSCManager::getReceiver())
@@ -53,14 +36,14 @@ void chuGenerator::setOSCAddress(const String& addr)
 chuGenPolygonPinwheel::chuGenPolygonPinwheel()
 : chuGenerator("PolygonPinwheel")
 {
-    sides = new GeneratorParameterFloat("Sides", 3.0, 8.0, 5.0);
-    radius = new GeneratorParameterFloat("Radius", 0.1, 1.0, 1.0);
-    copies = new GeneratorParameterFloat("Copies", 1.0, 5.0, 3.0);
+    sides = new chuParameterFloat("Sides", 3.0, 8.0, 5.0);
+    radius = new chuParameterFloat("Radius", 0.1, 1.0, 1.0);
+    copies = new chuParameterFloat("Copies", 1.0, 5.0, 3.0);
 }
 
-void chuGenPolygonPinwheel::getParams(std::vector<GeneratorParameterFloat*>& params)
+void chuGenPolygonPinwheel::getParamList(std::vector<chuParameter*>& params)
 {
-    chuGenerator::getParams(params); // call superclass
+    chuGenerator::getParamList(params); // call superclass
     
     params.push_back(sides);
     params.push_back(radius);
@@ -92,33 +75,36 @@ std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns()
 chuGenFivePoints::chuGenFivePoints()
 : chuGenerator("FivePoints")
 {
-    sides = new GeneratorParameterFloat("Sides", 3.0, 8.0, 3.0);
-    radius = new GeneratorParameterFloat("Radius", 0.01, 0.1, 0.08);
+    sides = new chuParameterFloat("Sides", 3.0, 8.0, 3.0);
+    radius = new chuParameterFloat("Radius", 0.01, 0.1, 0.08);
 
-    red = new GeneratorParameterFloat("red", 0.0, 1.0, 1.0);
-    green = new GeneratorParameterFloat("green", 0.0, 1.0, 0.0);
-    blue = new GeneratorParameterFloat("blue", 0.0, 1.0, 0.0);
+    red = new chuParameterFloat("red", 0.0, 1.0, 1.0);
+    green = new chuParameterFloat("green", 0.0, 1.0, 0.0);
+    blue = new chuParameterFloat("blue", 0.0, 1.0, 0.0);
 
-    pt1x  = new GeneratorParameterFloat("pt1x",  leapXMin, leapXMax, 0.0, false);
-    pt1y  = new GeneratorParameterFloat("pt1y",  leapYMin, leapYMax, 0.0, false);
-    pt1on = new GeneratorParameterFloat("pt1on", 0.0, 1.0, 0.0, false);
-    pt2x  = new GeneratorParameterFloat("pt2x",  leapXMin, leapXMax, 0.0, false);
-    pt2y  = new GeneratorParameterFloat("pt2y",  leapYMin, leapYMax, 0.0, false);
-    pt2on = new GeneratorParameterFloat("pt2on", 0.0, 1.0, 0.0, false);
-    pt3x  = new GeneratorParameterFloat("pt3x",  leapXMin, leapXMax, 0.0, false);
-    pt3y  = new GeneratorParameterFloat("pt3y",  leapYMin, leapYMax, 0.0, false);
-    pt3on = new GeneratorParameterFloat("pt3on", 0.0, 1.0, 0.0, false);
-    pt4x  = new GeneratorParameterFloat("pt4x",  leapXMin, leapXMax, 0.0, false);
-    pt4y  = new GeneratorParameterFloat("pt4y",  leapYMin, leapYMax, 0.0, false);
-    pt4on = new GeneratorParameterFloat("pt4on", 0.0, 1.0, 0.0, false);
-    pt5x  = new GeneratorParameterFloat("pt5x",  leapXMin, leapXMax, 0.0, false);
-    pt5y  = new GeneratorParameterFloat("pt5y",  leapYMin, leapYMax, 0.0, false);
-    pt5on = new GeneratorParameterFloat("pt5on", 0.0, 1.0, 0.0, false);
+    chuParameterOptions options;
+    options.isUserVisible = false;
+
+    pt1x  = new chuParameterFloat("pt1x",  leapXMin, leapXMax, 0.0, options);
+    pt1y  = new chuParameterFloat("pt1y",  leapYMin, leapYMax, 0.0, options);
+    pt1on = new chuParameterFloat("pt1on", 0.0, 1.0, 0.0, options);
+    pt2x  = new chuParameterFloat("pt2x",  leapXMin, leapXMax, 0.0, options);
+    pt2y  = new chuParameterFloat("pt2y",  leapYMin, leapYMax, 0.0, options);
+    pt2on = new chuParameterFloat("pt2on", 0.0, 1.0, 0.0, options);
+    pt3x  = new chuParameterFloat("pt3x",  leapXMin, leapXMax, 0.0, options);
+    pt3y  = new chuParameterFloat("pt3y",  leapYMin, leapYMax, 0.0, options);
+    pt3on = new chuParameterFloat("pt3on", 0.0, 1.0, 0.0, options);
+    pt4x  = new chuParameterFloat("pt4x",  leapXMin, leapXMax, 0.0, options);
+    pt4y  = new chuParameterFloat("pt4y",  leapYMin, leapYMax, 0.0, options);
+    pt4on = new chuParameterFloat("pt4on", 0.0, 1.0, 0.0, options);
+    pt5x  = new chuParameterFloat("pt5x",  leapXMin, leapXMax, 0.0, options);
+    pt5y  = new chuParameterFloat("pt5y",  leapYMin, leapYMax, 0.0, options);
+    pt5on = new chuParameterFloat("pt5on", 0.0, 1.0, 0.0, options);
 }
 
-void chuGenFivePoints::getParams(std::vector<GeneratorParameterFloat*>& params)
+void chuGenFivePoints::getParamList(std::vector<chuParameter*>& params)
 {
-    chuGenerator::getParams(params); // call superclass
+    chuGenerator::getParamList(params); // call superclass
 
     params.push_back(sides);
     params.push_back(radius);

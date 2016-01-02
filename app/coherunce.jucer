@@ -6,6 +6,9 @@
   <MAINGROUP id="dWToof" name="coherunce">
     <GROUP id="{6BC089EB-636E-5AF4-43B5-94FB4D9264BC}" name="Core">
       <FILE id="mM0sox" name="PatternItem.h" compile="0" resource="0" file="Source/PatternItem.h"/>
+      <FILE id="RW39hs" name="chuParameter.h" compile="0" resource="0" file="Source/chuParameter.h"/>
+      <FILE id="Z7XqJa" name="chuParameter.cpp" compile="1" resource="0"
+            file="Source/chuParameter.cpp"/>
       <FILE id="C8JIKw" name="chuThreadQueue.h" compile="0" resource="0"
             file="Source/chuThreadQueue.h"/>
       <FILE id="BiHNzH" name="chuFrameTimer.h" compile="0" resource="0" file="Source/chuFrameTimer.h"/>

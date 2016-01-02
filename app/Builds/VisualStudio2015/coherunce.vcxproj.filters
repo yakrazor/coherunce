@@ -340,6 +340,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\chuParameter.cpp">
+      <Filter>coherunce\Core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\chuFrameTimer.cpp">
       <Filter>coherunce\Core</Filter>
     </ClCompile>
@@ -1702,6 +1705,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\PatternItem.h">
+      <Filter>coherunce\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\chuParameter.h">
       <Filter>coherunce\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\chuThreadQueue.h">

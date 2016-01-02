@@ -77,18 +77,6 @@ public:
     int generatorIndex;
 };
 
-class GeneratorParameterSlider : public Slider
-{
-public:
-    GeneratorParameterSlider(GeneratorParameterFloat* pParam) : param(pParam)
-    {
-        setRange(param->minValue, param->maxValue);
-        setValue(param->value);
-    }
-    void updateParam() { param->value = (float)getValue(); }
-private:
-    GeneratorParameterFloat* param;
-};
 
 class chuMainComponent : public Component, public Button::Listener, public Slider::Listener
 {
@@ -134,8 +122,8 @@ public:
         int generatorCount = 0;
         for (auto& generator : chuGeneratorManager::getAllGenerators())
         {
-            std::vector<GeneratorParameterFloat*> params;
-            generator->getParams(params);
+            std::vector<chuParameter*> params;
+            generator->getParamList(params);
 
             auto button = new GeneratorButton(generatorCount);
             childControls.add(button);
@@ -151,17 +139,14 @@ public:
             int paramCount = 0;
             for (auto& param : params)
             {
-                if (!param->userVisible)
+                if (!param->options.isUserVisible)
                     continue;
 
-                auto slider = new GeneratorParameterSlider(param);
-                slider->setSliderStyle(Slider::LinearBar);
+                auto slider = param->createComponent();
                 auto label = new Label();
                 label->setText(param->name, dontSendNotification);
                 label->setBounds(10 + 160 * generatorCount, 80 + paramCount * 45, 150, 15);
                 slider->setBounds(10 + 160 * generatorCount, 95 + paramCount * 45, 150, 20);
-
-                slider->addListener(this);
 
                 childControls.add(label);
                 childControls.add(slider);
@@ -223,12 +208,6 @@ public:
         {
             getApp()->getLaserOutputThread()->setGlobalIntensity(slider->getValue());
             return;
-        }
-
-        GeneratorParameterSlider* gps = static_cast<GeneratorParameterSlider*>(slider);
-        if (gps)
-        {
-            gps->updateParam();
         }
     }
 

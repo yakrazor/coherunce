@@ -14,19 +14,8 @@
 #include <vector>
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PatternItem.h"
+#include "chuParameter.h"
 
-class GeneratorParameterFloat : public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::RealtimeCallback> {
-public:
-    GeneratorParameterFloat(String _name, float _min, float _max, float _defaultValue, bool _userVisible = true);
-    virtual void oscMessageReceived(const OSCMessage &message) override;
-
-    String name;
-    float minValue;
-    float maxValue;
-    float defaultValue;
-    float value;
-    bool userVisible;
-};
 
 class chuGenerator {
 public:
@@ -41,7 +30,7 @@ public:
 
     virtual void init() {};
     virtual std::vector<PatternItem> getPatterns() = 0;
-    virtual void getParams(std::vector<GeneratorParameterFloat*>& params) {};
+    virtual void getParamList(std::vector<chuParameter*>& params) {};
 
 private:
     String name;
@@ -52,46 +41,46 @@ class chuGenPolygonPinwheel : public chuGenerator {
 public:
     chuGenPolygonPinwheel();
     virtual std::vector<PatternItem> getPatterns() override;
-    virtual void getParams(std::vector<GeneratorParameterFloat*>& params) override;
-    ScopedPointer<GeneratorParameterFloat> sides;
-    ScopedPointer<GeneratorParameterFloat> radius;
-    ScopedPointer<GeneratorParameterFloat> copies;
+    virtual void getParamList(std::vector<chuParameter*>& params) override;
+    ScopedPointer<chuParameterFloat> sides;
+    ScopedPointer<chuParameterFloat> radius;
+    ScopedPointer<chuParameterFloat> copies;
 };
 
 class chuGenFivePoints : public chuGenerator {
 public:
     chuGenFivePoints();
     virtual std::vector<PatternItem> getPatterns() override;
-    virtual void getParams(std::vector<GeneratorParameterFloat*>& params) override;
+    virtual void getParamList(std::vector<chuParameter*>& params) override;
 
     static constexpr float leapXMin = -300.0;
     static constexpr float leapXMax = 300.0;
     static constexpr float leapYMin = 60.0;
     static constexpr float leapYMax = 360.0;
 
-    ScopedPointer<GeneratorParameterFloat> sides;
-    ScopedPointer<GeneratorParameterFloat> radius;
+    ScopedPointer<chuParameterFloat> sides;
+    ScopedPointer<chuParameterFloat> radius;
 
-    ScopedPointer<GeneratorParameterFloat> red;
-    ScopedPointer<GeneratorParameterFloat> green;
-    ScopedPointer<GeneratorParameterFloat> blue;
+    ScopedPointer<chuParameterFloat> red;
+    ScopedPointer<chuParameterFloat> green;
+    ScopedPointer<chuParameterFloat> blue;
 
 
-    ScopedPointer<GeneratorParameterFloat> pt1x;
-    ScopedPointer<GeneratorParameterFloat> pt1y;
-    ScopedPointer<GeneratorParameterFloat> pt1on;
-    ScopedPointer<GeneratorParameterFloat> pt2x;
-    ScopedPointer<GeneratorParameterFloat> pt2y;
-    ScopedPointer<GeneratorParameterFloat> pt2on;
-    ScopedPointer<GeneratorParameterFloat> pt3x;
-    ScopedPointer<GeneratorParameterFloat> pt3y;
-    ScopedPointer<GeneratorParameterFloat> pt3on;
-    ScopedPointer<GeneratorParameterFloat> pt4x;
-    ScopedPointer<GeneratorParameterFloat> pt4y;
-    ScopedPointer<GeneratorParameterFloat> pt4on;
-    ScopedPointer<GeneratorParameterFloat> pt5x;
-    ScopedPointer<GeneratorParameterFloat> pt5y;
-    ScopedPointer<GeneratorParameterFloat> pt5on;
+    ScopedPointer<chuParameterFloat> pt1x;
+    ScopedPointer<chuParameterFloat> pt1y;
+    ScopedPointer<chuParameterFloat> pt1on;
+    ScopedPointer<chuParameterFloat> pt2x;
+    ScopedPointer<chuParameterFloat> pt2y;
+    ScopedPointer<chuParameterFloat> pt2on;
+    ScopedPointer<chuParameterFloat> pt3x;
+    ScopedPointer<chuParameterFloat> pt3y;
+    ScopedPointer<chuParameterFloat> pt3on;
+    ScopedPointer<chuParameterFloat> pt4x;
+    ScopedPointer<chuParameterFloat> pt4y;
+    ScopedPointer<chuParameterFloat> pt4on;
+    ScopedPointer<chuParameterFloat> pt5x;
+    ScopedPointer<chuParameterFloat> pt5y;
+    ScopedPointer<chuParameterFloat> pt5on;
 };
 
 class chuGenSpirograph : public chuGenerator {

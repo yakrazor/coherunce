@@ -129,6 +129,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\chuParameter.cpp"/>
     <ClCompile Include="..\..\Source\chuFrameTimer.cpp"/>
     <ClCompile Include="..\..\Source\chuGenerator.cpp"/>
     <ClCompile Include="..\..\Source\chuGeneratorManager.cpp"/>
@@ -1352,6 +1353,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\PatternItem.h"/>
+    <ClInclude Include="..\..\Source\chuParameter.h"/>
     <ClInclude Include="..\..\Source\chuThreadQueue.h"/>
     <ClInclude Include="..\..\Source\chuFrameTimer.h"/>
     <ClInclude Include="..\..\Source\chuGenerator.h"/>

@@ -1,0 +1,61 @@
+/*
+  ==============================================================================
+
+    chuParameter.h
+    Created: 2 Jan 2016 11:47:13am
+    Author:  Michael Dewberry
+
+  ==============================================================================
+*/
+
+#ifndef CHUPARAMETER_H_INCLUDED
+#define CHUPARAMETER_H_INCLUDED
+
+#include "../JuceLibraryCode/JuceHeader.h"
+
+
+class chuParameterOptions
+{
+public:
+    chuParameterOptions() : isUserVisible(true) {}
+    bool isUserVisible;
+
+    static chuParameterOptions Default;
+};
+
+class chuParameter : public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::RealtimeCallback> {
+public:
+    chuParameter(String _name, const chuParameterOptions& _options = chuParameterOptions::Default);
+
+    // Parameter subclasses must override these two methods:
+    virtual Component* createComponent() = 0;
+    virtual void oscMessageReceived(const OSCMessage &message) = 0;
+
+    String name;
+    chuParameterOptions options;
+};
+
+class chuParameterFloat : public chuParameter {
+public:
+    chuParameterFloat(String _name, float _min, float _max, float _defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
+
+    virtual Component* createComponent() override;
+    virtual void oscMessageReceived(const OSCMessage &message) override;
+
+    float minValue;
+    float maxValue;
+    float value;
+};
+
+class chuParameterColor : public chuParameter {
+public:
+    chuParameterColor(String _name, Colour& _color, const chuParameterOptions& _options = chuParameterOptions::Default)
+    : chuParameter(_name, _options), color(_color) {}
+    virtual void oscMessageReceived(const OSCMessage &message) override;
+
+    Colour color;
+};
+
+
+
+#endif  // CHUPARAMETER_H_INCLUDED
