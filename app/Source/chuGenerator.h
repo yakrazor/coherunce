@@ -72,6 +72,11 @@ public:
     ScopedPointer<GeneratorParameterFloat> sides;
     ScopedPointer<GeneratorParameterFloat> radius;
 
+    ScopedPointer<GeneratorParameterFloat> red;
+    ScopedPointer<GeneratorParameterFloat> green;
+    ScopedPointer<GeneratorParameterFloat> blue;
+
+
     ScopedPointer<GeneratorParameterFloat> pt1x;
     ScopedPointer<GeneratorParameterFloat> pt1y;
     ScopedPointer<GeneratorParameterFloat> pt1on;

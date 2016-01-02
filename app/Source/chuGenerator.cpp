@@ -93,7 +93,11 @@ chuGenFivePoints::chuGenFivePoints()
 : chuGenerator("FivePoints")
 {
     sides = new GeneratorParameterFloat("Sides", 3.0, 8.0, 3.0);
-    radius = new GeneratorParameterFloat("Radius", 0.1, 1.0, 0.15);
+    radius = new GeneratorParameterFloat("Radius", 0.01, 0.1, 0.08);
+
+    red = new GeneratorParameterFloat("red", 0.0, 1.0, 1.0);
+    green = new GeneratorParameterFloat("green", 0.0, 1.0, 0.0);
+    blue = new GeneratorParameterFloat("blue", 0.0, 1.0, 0.0);
 
     pt1x  = new GeneratorParameterFloat("pt1x",  leapXMin, leapXMax, 0.0, false);
     pt1y  = new GeneratorParameterFloat("pt1y",  leapYMin, leapYMax, 0.0, false);
@@ -118,6 +122,9 @@ void chuGenFivePoints::getParams(std::vector<GeneratorParameterFloat*>& params)
 
     params.push_back(sides);
     params.push_back(radius);
+    params.push_back(red);
+    params.push_back(green);
+    params.push_back(blue);
     params.push_back(pt1x);
     params.push_back(pt1y);
     params.push_back(pt1on);
@@ -148,6 +155,9 @@ std::vector<PatternItem> chuGenFivePoints::getPatterns()
     item.sides = sides->value;
     item.radius = radius->value;
     item.rotation = Time::getMillisecondCounterHiRes() * 180/800.0;
+    item.red = 65535 * red->value;
+    item.green = 65535 * green->value;
+    item.blue = 65535 * blue->value;
 
     std::vector<PatternItem> items;
     if (pt1on->value)
