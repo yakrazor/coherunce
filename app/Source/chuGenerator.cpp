@@ -39,6 +39,7 @@ chuGenPolygonPinwheel::chuGenPolygonPinwheel()
     sides = new chuParameterFloat("Sides", 3.0, 8.0, 5.0);
     radius = new chuParameterFloat("Radius", 0.1, 1.0, 1.0);
     copies = new chuParameterFloat("Copies", 1.0, 5.0, 3.0);
+    color = new chuParameterColor("Color", Colors::red);
 }
 
 void chuGenPolygonPinwheel::getParamList(std::vector<chuParameter*>& params)
@@ -48,6 +49,7 @@ void chuGenPolygonPinwheel::getParamList(std::vector<chuParameter*>& params)
     params.push_back(sides);
     params.push_back(radius);
     params.push_back(copies);
+    params.push_back(color);
 }
 
 std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns()
@@ -59,6 +61,9 @@ std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns()
     item.radius = radius->value;
     item.origin = Vector2f(0, 0);
     item.rotation = Time::getMillisecondCounterHiRes() * 180/1200.0;
+    item.red = color->value.getRed() << 8;
+    item.green = color->value.getGreen() << 8;
+    item.blue = color->value.getBlue() << 8;
 
     int count = 1;
     items.push_back(item);
@@ -78,9 +83,7 @@ chuGenFivePoints::chuGenFivePoints()
     sides = new chuParameterFloat("Sides", 3.0, 8.0, 3.0);
     radius = new chuParameterFloat("Radius", 0.01, 0.1, 0.08);
 
-    red = new chuParameterFloat("red", 0.0, 1.0, 1.0);
-    green = new chuParameterFloat("green", 0.0, 1.0, 0.0);
-    blue = new chuParameterFloat("blue", 0.0, 1.0, 0.0);
+    color = new chuParameterColor("Color", Colors::red);
 
     chuParameterOptions options;
     options.isUserVisible = false;
@@ -108,9 +111,7 @@ void chuGenFivePoints::getParamList(std::vector<chuParameter*>& params)
 
     params.push_back(sides);
     params.push_back(radius);
-    params.push_back(red);
-    params.push_back(green);
-    params.push_back(blue);
+    params.push_back(color);
     params.push_back(pt1x);
     params.push_back(pt1y);
     params.push_back(pt1on);
@@ -141,9 +142,9 @@ std::vector<PatternItem> chuGenFivePoints::getPatterns()
     item.sides = sides->value;
     item.radius = radius->value;
     item.rotation = Time::getMillisecondCounterHiRes() * 180/800.0;
-    item.red = 65535 * red->value;
-    item.green = 65535 * green->value;
-    item.blue = 65535 * blue->value;
+    item.red = color->value.getRed() << 8;
+    item.green = color->value.getGreen() << 8;
+    item.blue = color->value.getBlue() << 8;
 
     std::vector<PatternItem> items;
     if (pt1on->value)

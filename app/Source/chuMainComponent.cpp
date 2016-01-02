@@ -10,61 +10,6 @@
 #define MAINCOMPONENT_H_INCLUDED
 
 #include "chuApplication.h"
-
-/*
-class chuMainComponent : public OpenGLAppComponent
-{
-public:
-    //==============================================================================
-    chuMainComponent()
-    {
-        setSize(1100, 720);
-    }
-
-    ~chuMainComponent()
-    {
-        shutdownOpenGL();
-    }
-
-    void initialise() override
-    {
-    }
-
-    void shutdown() override
-    {
-    }
-
-    void render() override
-    {
-        OpenGLHelpers::clear (Colours::black);
-
-    }
-
-    void paint (Graphics& g) override
-    {
-        // You can add your component specific drawing code here!
-        // This will draw over the top of the openGL background.
-    }
-
-    void resized() override
-    {
-        // This is called when the MainContentComponent is resized.
-        // If you add any child components, this is where you should
-        // update their positions.
-    }
-
-
-private:
-    //==============================================================================
-
-    // private member variables
-
-
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (chuMainComponent)
-};
-*/
-
 #include "chuOSCManager.h"
 #include "chuGeneratorManager.h"
 
@@ -145,7 +90,7 @@ public:
                 auto slider = param->createComponent();
                 auto label = new Label();
                 label->setText(param->name, dontSendNotification);
-                label->setBounds(10 + 160 * generatorCount, 80 + paramCount * 45, 150, 15);
+                label->setBounds(10 + 160 * generatorCount, 79 + paramCount * 45, 150, 15);
                 slider->setBounds(10 + 160 * generatorCount, 95 + paramCount * 45, 150, 20);
 
                 childControls.add(label);

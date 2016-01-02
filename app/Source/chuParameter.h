@@ -25,7 +25,7 @@ public:
 
 class chuParameter : public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::RealtimeCallback> {
 public:
-    chuParameter(String _name, const chuParameterOptions& _options = chuParameterOptions::Default);
+    chuParameter(const String& _name, const chuParameterOptions& _options = chuParameterOptions::Default);
 
     // Parameter subclasses must override these two methods:
     virtual Component* createComponent() = 0;
@@ -37,7 +37,7 @@ public:
 
 class chuParameterFloat : public chuParameter {
 public:
-    chuParameterFloat(String _name, float _min, float _max, float _defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
+    chuParameterFloat(const String& _name, float _min, float _max, float _defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
 
     virtual Component* createComponent() override;
     virtual void oscMessageReceived(const OSCMessage &message) override;
@@ -47,13 +47,17 @@ public:
     float value;
 };
 
+typedef Colour Color;
+typedef Colours Colors;
+
 class chuParameterColor : public chuParameter {
 public:
-    chuParameterColor(String _name, Colour& _color, const chuParameterOptions& _options = chuParameterOptions::Default)
-    : chuParameter(_name, _options), color(_color) {}
+    chuParameterColor(const String& _name, const Color& _color, const chuParameterOptions& _options = chuParameterOptions::Default);
+
+    virtual Component* createComponent() override;
     virtual void oscMessageReceived(const OSCMessage &message) override;
 
-    Colour color;
+    Color value;
 };
 
 

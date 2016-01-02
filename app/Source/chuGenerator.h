@@ -45,6 +45,7 @@ public:
     ScopedPointer<chuParameterFloat> sides;
     ScopedPointer<chuParameterFloat> radius;
     ScopedPointer<chuParameterFloat> copies;
+    ScopedPointer<chuParameterColor> color;
 };
 
 class chuGenFivePoints : public chuGenerator {
@@ -60,11 +61,7 @@ public:
 
     ScopedPointer<chuParameterFloat> sides;
     ScopedPointer<chuParameterFloat> radius;
-
-    ScopedPointer<chuParameterFloat> red;
-    ScopedPointer<chuParameterFloat> green;
-    ScopedPointer<chuParameterFloat> blue;
-
+    ScopedPointer<chuParameterColor> color;
 
     ScopedPointer<chuParameterFloat> pt1x;
     ScopedPointer<chuParameterFloat> pt1y;

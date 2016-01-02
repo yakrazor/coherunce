@@ -24,16 +24,19 @@ void chuGeneratorManager::initialize()
     pinwheel2->setActive(false);
     pinwheel2->sides->value = 3;
     pinwheel2->radius->value = 0.6;
+    pinwheel2->color->value = Color::fromRGB(255, 0, 255);
     pinwheel2->setOSCAddress("/generator/2");
     allGenerators.add(pinwheel2);
 
     auto fivePoints = new chuGenFivePoints();
     fivePoints->setActive(false);
+    fivePoints->color->value = Color::fromRGB(0, 255, 0);
     fivePoints->setOSCAddress("/generator/3");
     allGenerators.add(fivePoints);
 
     auto fivePoints2 = new chuGenFivePoints();
     fivePoints2->setActive(false);
+    fivePoints2->color->value = Color::fromRGB(0, 0, 255);
     fivePoints2->setOSCAddress("/generator/4");
     allGenerators.add(fivePoints2);
 }
