@@ -108,8 +108,8 @@ Component* chuParameterInt::createComponent()
 }
 
 
-
 // -------------------------------------
+
 
 chuParameterColor::chuParameterColor(const String& _name, const Color& _color, const chuParameterOptions& _options)
 : chuParameter(_name, _options), value(_color)

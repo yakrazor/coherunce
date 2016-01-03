@@ -15,8 +15,30 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "chuThreadQueue.h"
 #include "PatternItem.h"
+#include "chuParameter.h"
 
 extern bool logging;
+
+class LaserConfig : public chuParameterProvider
+{
+public:
+    LaserConfig();
+
+    const int ildaXMin = -32768;
+    const int ildaXMax = 32767;
+    const int ildaYMin = -32768;
+    const int ildaYMax = 32767;
+    const int ildaIntensityMin = 0;
+    const int ildaIntensityMax = 65535;
+
+    chuParameterInt pointsPerSecond;
+    chuParameterInt longestUnbrokenLine;
+    chuParameterInt internalDwellPoints;
+    chuParameterInt dwellOffPoints;
+    chuParameterInt dwellOnPoints;
+
+    virtual void getParamList(std::vector<chuParameter*>& params) override;
+};
 
 class LaserOutputThread : public Thread
 {
@@ -30,6 +52,8 @@ public:
     void disableOutput();
     bool isOutputEnabled();
 
+    LaserConfig& getLaserConfig() { return laserConfig; }
+
     void setGlobalIntensity(float intensity) { globalIntensity = intensity; }
 
     chuThreadQueue<PatternItem> patterns;
@@ -40,6 +64,8 @@ private:
 
     float globalIntensity;
     bool enabled;
+
+    LaserConfig laserConfig;
 };
 
 

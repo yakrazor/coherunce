@@ -24,6 +24,25 @@ struct etherdream_point points[NUM_POINTS];
 bool logging = false;
 
 
+LaserConfig::LaserConfig()
+: pointsPerSecond("Points Per Second", 200, 100000, 30000)
+, longestUnbrokenLine("Longest Unbroken Line", 50, 25000, 1000)
+, internalDwellPoints("Internal Dwell Points", 0, 50, 1)
+, dwellOffPoints("Dwell Points (Off)", 0, 50, 10)
+, dwellOnPoints("Dwell Points (On)", 0, 50, 2)
+{
+}
+
+void LaserConfig::getParamList(std::vector<chuParameter*>& params)
+{
+    params.push_back(&pointsPerSecond);
+    params.push_back(&longestUnbrokenLine);
+    params.push_back(&internalDwellPoints);
+    params.push_back(&dwellOffPoints);
+    params.push_back(&dwellOnPoints);
+}
+
+
 LaserOutputThread::LaserOutputThread() : Thread("Laser Output Thread") {
     connected = false;
     enabled = false;
@@ -70,19 +89,19 @@ void LaserOutputThread::enableOutput()
     enabled = true;
 }
 
-void add_point(etherdream_point* point, int16_t x, int16_t y, uint16_t r, uint16_t g, uint16_t b, uint16_t i, int diodeGalvOffset)
+void add_point(etherdream_point* point, int16_t x, int16_t y, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
 {
     point->x = x;
     point->y = y;
-    (point + diodeGalvOffset)->r = r;
-    (point + diodeGalvOffset)->g = g;
-    (point + diodeGalvOffset)->b = b;
-    (point + diodeGalvOffset)->i = i;
+    point->r = r;
+    point->g = g;
+    point->b = b;
+    point->i = i;
     point->u1 = 0;
     point->u2 = 0;
 }
 
-int add_line(etherdream_point* points, int startIndex, int dwellOffPoints, int dwellOnPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t r, uint16_t g, uint16_t b, uint16_t i, int diodeGalvOffset)
+int add_line(etherdream_point* points, int startIndex, int dwellOffPoints, int dwellOnPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
 {
     //printf("Line: %d,%d -> %d,%d\n", x1, y1, x2, y2);
 
@@ -90,39 +109,39 @@ int add_line(etherdream_point* points, int startIndex, int dwellOffPoints, int d
     int dy = (y2 - y1) / numSegments;
     for (int i = 0; i < dwellOffPoints; i++)
     {
-        add_point(&points[startIndex++], x1, y1, 0, 0, 0, 0, diodeGalvOffset);
+        add_point(&points[startIndex++], x1, y1, 0, 0, 0, 0);
     }
     for (int i = 0; i < dwellOnPoints; i++)
     {
-        add_point(&points[startIndex++], x1, y1, r, g, b, i, diodeGalvOffset);
+        add_point(&points[startIndex++], x1, y1, r, g, b, i);
     }
     for (int i = 0; i <= numSegments; i++)
     {
-        add_point(&points[startIndex++], x1 + dx * i, y1 + dy * i, r, g, b, i, diodeGalvOffset);
+        add_point(&points[startIndex++], x1 + dx * i, y1 + dy * i, r, g, b, i);
     }
     for (int i = 0; i < dwellOnPoints; i++)
     {
-        add_point(&points[startIndex++], x2, y2, r, g, b, i, diodeGalvOffset);
+        add_point(&points[startIndex++], x2, y2, r, g, b, i);
     }
     for (int i = 0; i < dwellOffPoints; i++)
     {
-        add_point(&points[startIndex++], x2, y2, 0, 0, 0, 0, diodeGalvOffset);
+        add_point(&points[startIndex++], x2, y2, 0, 0, 0, 0);
     }
 
     // return next point index
     return startIndex;
 }
 
-int patterns_to_points(uint16_t lastFrameX, uint16_t lastFrameY, float globalIntensity, chuThreadQueue<PatternItem>& patterns, etherdream_point* points, int num_points)
+int patterns_to_points(const LaserConfig& config, uint16_t lastFrameX, uint16_t lastFrameY, float globalIntensity, chuThreadQueue<PatternItem>& patterns, etherdream_point* points, int num_points)
 {
-    int scale = 24000;
-    int longestUnbrokenLine = scale / 25;
-    int internalShapeDwellPoints = 1;
-    int dwellOffPoints = 10;
-    int dwellOnPoints = 2;
-    int diodeGalvOffset = 12;
-    int pointIndex = diodeGalvOffset < 0 ? diodeGalvOffset : 0;
-    int intensityMax = 32767;
+    int scale = config.ildaXMax;
+    int longestUnbrokenLine = config.longestUnbrokenLine.value;
+    int internalShapeDwellPoints = config.internalDwellPoints.value;
+    int dwellOffPoints = config.dwellOffPoints.value;
+    int dwellOnPoints = config.dwellOnPoints.value;
+    int intensityMax = config.ildaIntensityMax;
+
+    int pointIndex = 0;
 
     uint16_t intensity = intensityMax * std::max(0.0f, std::min(globalIntensity, 1.0f));
 
@@ -155,7 +174,7 @@ int patterns_to_points(uint16_t lastFrameX, uint16_t lastFrameY, float globalInt
                 }
 
                 // move from end of last item to start of this item
-                pointIndex = add_line(points, pointIndex, dwellOffPoints, dwellOnPoints, numMoveSegments, prevItemX, prevItemY, origX, origY, 0, 0, 0, 0, diodeGalvOffset);
+                pointIndex = add_line(points, pointIndex, dwellOffPoints, dwellOnPoints, numMoveSegments, prevItemX, prevItemY, origX, origY, 0, 0, 0, 0);
 
                 int16_t lastX = origX;
                 int16_t lastY = origY;
@@ -163,11 +182,11 @@ int patterns_to_points(uint16_t lastFrameX, uint16_t lastFrameY, float globalInt
                 for (int i = 0; i < item.sides; i++) {
                     int16_t nextX = (item.origin.x + item.radius * cos(2 * PI * i / item.sides + rad)) * scale;
                     int16_t nextY = (item.origin.y + item.radius * sin(2 * PI * i / item.sides + rad)) * scale;
-                    pointIndex = add_line(points, pointIndex, 0, internalShapeDwellPoints, numSegments, lastX, lastY, nextX, nextY, item.red, item.green, item.blue, intensity, diodeGalvOffset);
+                    pointIndex = add_line(points, pointIndex, 0, internalShapeDwellPoints, numSegments, lastX, lastY, nextX, nextY, item.red, item.green, item.blue, intensity);
                     lastX = nextX;
                     lastY = nextY;
                 }
-                pointIndex = add_line(points, pointIndex, 0, internalShapeDwellPoints, numSegments, lastX, lastY, origX, origY, item.red, item.green, item.blue, intensity, diodeGalvOffset);
+                pointIndex = add_line(points, pointIndex, 0, internalShapeDwellPoints, numSegments, lastX, lastY, origX, origY, item.red, item.green, item.blue, intensity);
 
                 prevItemX = origX;
                 prevItemY = origY;
@@ -182,9 +201,6 @@ int patterns_to_points(uint16_t lastFrameX, uint16_t lastFrameY, float globalInt
             pointIndex = add_line(points, pointIndex, dwellPoints, numFinalMoveSegments, prevItemX, prevItemY, 0, 0, 0, 0, 0, 0);
         }
 */
-
-        for (int i = 0; i < diodeGalvOffset; i++)
-            add_point(&points[pointIndex++], prevItemX, prevItemY, 0, 0, 0, 0, diodeGalvOffset);
 
         if (logging)
             printf("Generated %d DAC points from %lu pattern items\n", pointIndex, frame.size());
@@ -226,7 +242,7 @@ void LaserOutputThread::run() {
             continue;
         }
         if (connected && enabled) {
-            count = patterns_to_points(lastFrameX, lastFrameY, globalIntensity, patterns, points, NUM_POINTS);
+            count = patterns_to_points(laserConfig, lastFrameX, lastFrameY, globalIntensity, patterns, points, NUM_POINTS);
             if (count <= 0) {
                 etherdream_stop(dac_device);
                 lastFrameX = 0;
@@ -241,7 +257,7 @@ void LaserOutputThread::run() {
                     log_extents(points, count);
                 }
 
-                int res = etherdream_write(dac_device, points, count, 10000, count < 200 ? -1 : 1);
+                int res = etherdream_write(dac_device, points, count, laserConfig.pointsPerSecond.value, count < 600 ? -1 : 1);
                 if (res != 0) {
                     printf("ERROR: write returned %d\n", res);
                 }

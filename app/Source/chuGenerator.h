@@ -17,7 +17,7 @@
 #include "chuParameter.h"
 
 
-class chuGenerator {
+class chuGenerator : public chuParameterProvider {
 public:
     chuGenerator(String generatorName);
     virtual ~chuGenerator() {}
@@ -30,7 +30,7 @@ public:
 
     virtual void init() {};
     virtual std::vector<PatternItem> getPatterns(float barClock) = 0;
-    virtual void getParamList(std::vector<chuParameter*>& params) {};
+    virtual void getParamList(std::vector<chuParameter*>& params) override {};
 
 private:
     String name;

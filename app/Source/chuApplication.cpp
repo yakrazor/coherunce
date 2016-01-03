@@ -22,7 +22,6 @@
 void chuApplication::initialise(const String& commandLine)
 {
     mainWindow = new chuMainWindow(getApplicationName());
-    settingsWindow = new chuPreferencesDialog();
 
     laserThread = new LaserOutputThread();
     laserThread->startThread();
@@ -35,6 +34,8 @@ void chuApplication::initialise(const String& commandLine)
     if (!getSharedAudioDeviceManager().isMidiInputEnabled(midiInput))
         getSharedAudioDeviceManager().setMidiInputEnabled(midiInput, true);
     getSharedAudioDeviceManager().addMidiInputCallback(midiInput, frameTimer);
+
+    settingsWindow = new chuPreferencesDialog();
 
     auto menu = new chuMenuBar();
     getApplicationCommandManager().registerAllCommandsForTarget(this);

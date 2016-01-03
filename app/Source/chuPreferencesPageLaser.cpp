@@ -87,6 +87,7 @@ public:
     {
         updateOutputsComboBox();
         updateButtons();
+        updatePropertyPanel();
     }
 
     void changeListenerCallback (ChangeBroadcaster*) override
@@ -100,6 +101,8 @@ private:
     ScopedPointer<ComboBox> outputDeviceDropDown;
     ScopedPointer<TextButton> calibrateButton, testButton;
     ScopedPointer<Label> outputDeviceLabel;
+    ScopedPointer<PropertyPanel> laserProperties;
+    OwnedArray<Component> childControls;
 
     static String getNoDeviceString()   { return "<< " + TRANS("none") + " >>"; }
 
@@ -149,6 +152,41 @@ private:
         {
             testButton = new TextButton("Show Test Pattern");
             addAndMakeVisible(testButton);
+        }
+    }
+
+    void updatePropertyPanel()
+    {
+        if (laserProperties == nullptr)
+        {
+            laserProperties = new PropertyPanel();
+
+            // TODO: integrate this with PropertyPanel
+            std::vector<chuParameter*> params;
+            getApp()->getLaserOutputThread()->getLaserConfig().getParamList(params);
+
+            int paramCount = 0;
+            for (auto& param : params)
+            {
+                if (!param->options.isUserVisible)
+                    continue;
+
+                auto slider = param->createComponent();
+                auto label = new Label();
+                label->setText(param->name, dontSendNotification);
+                label->setBounds(5, 130 + paramCount * 45, 150, 15);
+                slider->setBounds(155, 130 + paramCount * 45, 150, 20);
+
+                childControls.add(label);
+                childControls.add(slider);
+                addAndMakeVisible(label);
+                addAndMakeVisible(slider);
+
+                paramCount++;
+            }
+
+            //addAndMakeVisible(laserProperties);
+            
         }
     }
 };

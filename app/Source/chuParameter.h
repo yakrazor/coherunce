@@ -14,6 +14,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 
+
 class chuParameterOptions
 {
 public:
@@ -33,6 +34,13 @@ public:
 
     String name;
     chuParameterOptions options;
+};
+
+class chuParameterProvider
+{
+public:
+    virtual ~chuParameterProvider() {}
+    virtual void getParamList(std::vector<chuParameter*>& params) = 0;
 };
 
 class chuParameterFloat : public chuParameter {
