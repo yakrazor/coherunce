@@ -146,35 +146,42 @@ std::vector<PatternItem> chuGenFivePoints::getPatterns(float barClock)
     item.green = color->value.getGreen() << 8;
     item.blue = color->value.getBlue() << 8;
 
+    bool flipX = false;
+    float laserXMin = flipX ? 1.0 : -1.0;
+    float laserXMax = flipX ? -1.0 : 1.0;
+    bool flipY = true;
+    float laserYMin = flipY ? 1.0 : -1.0;
+    float laserYMax = flipY ? -1.0 : 1.0;
+
     std::vector<PatternItem> items;
     if (pt1on->value)
     {
-        item.origin.x = rescale(pt1x->value, leapXMin, leapXMax, -1.0, 1.0);
-        item.origin.y = rescale(pt1y->value, leapYMin, leapYMax, -1.0, 1.0);
+        item.origin.x = rescale(pt1x->value, leapXMin, leapXMax, laserXMin, laserXMax);
+        item.origin.y = rescale(pt1y->value, leapYMin, leapYMax, laserYMin, laserYMax);
         items.push_back(item);
     }
     if (pt2on->value)
     {
-        item.origin.x = rescale(pt2x->value, leapXMin, leapXMax, -1.0, 1.0);
-        item.origin.y = rescale(pt2y->value, leapYMin, leapYMax, -1.0, 1.0);
+        item.origin.x = rescale(pt2x->value, leapXMin, leapXMax, laserXMin, laserXMax);
+        item.origin.y = rescale(pt2y->value, leapYMin, leapYMax, laserYMin, laserYMax);
         items.push_back(item);
     }
     if (pt3on->value)
     {
-        item.origin.x = rescale(pt3x->value, leapXMin, leapXMax, -1.0, 1.0);
-        item.origin.y = rescale(pt3y->value, leapYMin, leapYMax, -1.0, 1.0);
+        item.origin.x = rescale(pt3x->value, leapXMin, leapXMax, laserXMin, laserXMax);
+        item.origin.y = rescale(pt3y->value, leapYMin, leapYMax, laserYMin, laserYMax);
         items.push_back(item);
     }
     if (pt4on->value)
     {
-        item.origin.x = rescale(pt4x->value, leapXMin, leapXMax, -1.0, 1.0);
-        item.origin.y = rescale(pt4y->value, leapYMin, leapYMax, -1.0, 1.0);
+        item.origin.x = rescale(pt4x->value, leapXMin, leapXMax, laserXMin, laserXMax);
+        item.origin.y = rescale(pt4y->value, leapYMin, leapYMax, laserYMin, laserYMax);
         items.push_back(item);
     }
     if (pt5on->value)
     {
-        item.origin.x = rescale(pt5x->value, leapXMin, leapXMax, -1.0, 1.0);
-        item.origin.y = rescale(pt5y->value, leapYMin, leapYMax, -1.0, 1.0);
+        item.origin.x = rescale(pt5x->value, leapXMin, leapXMax, laserXMin, laserXMax);
+        item.origin.y = rescale(pt5y->value, leapYMin, leapYMax, laserYMin, laserYMax);
         items.push_back(item);
     }
     return items;
