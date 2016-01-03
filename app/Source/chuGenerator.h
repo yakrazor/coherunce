@@ -42,9 +42,10 @@ public:
     chuGenPolygonPinwheel();
     virtual std::vector<PatternItem> getPatterns(float barClock) override;
     virtual void getParamList(std::vector<chuParameter*>& params) override;
-    ScopedPointer<chuParameterFloat> sides;
+    ScopedPointer<chuParameterInt> sides;
     ScopedPointer<chuParameterFloat> radius;
-    ScopedPointer<chuParameterFloat> copies;
+    ScopedPointer<chuParameterInt> copies;
+    ScopedPointer<chuParameterFloat> scale;
     ScopedPointer<chuParameterColor> color;
 };
 
@@ -59,7 +60,7 @@ public:
     static constexpr float leapYMin = 60.0;
     static constexpr float leapYMax = 360.0;
 
-    ScopedPointer<chuParameterFloat> sides;
+    ScopedPointer<chuParameterInt> sides;
     ScopedPointer<chuParameterFloat> radius;
     ScopedPointer<chuParameterColor> color;
 

@@ -47,6 +47,18 @@ public:
     float value;
 };
 
+class chuParameterInt : public chuParameter {
+public:
+    chuParameterInt(const String& _name, int _min, int _max, int _defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
+
+    virtual Component* createComponent() override;
+    virtual void oscMessageReceived(const OSCMessage &message) override;
+
+    int minValue;
+    int maxValue;
+    int value;
+};
+
 typedef Colour Color;
 typedef Colours Colors;
 

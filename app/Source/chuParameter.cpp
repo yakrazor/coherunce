@@ -62,6 +62,55 @@ Component* chuParameterFloat::createComponent()
     return new chuParameterFloatSlider(this);
 }
 
+// -------------------------------------
+
+
+class chuParameterIntSlider : public Slider
+{
+public:
+    chuParameterIntSlider(chuParameterInt* pParam) : param(pParam)
+    {
+        setSliderStyle(Slider::LinearBar);
+        setRange(param->minValue, param->maxValue, 1.0);
+        setValue(param->value);
+    }
+    virtual void valueChanged() override
+    {
+        param->value = (int)getValue();
+    }
+
+private:
+    chuParameterInt* param;
+};
+
+chuParameterInt::chuParameterInt(const String& _name, int _min, int _max, int _defaultValue,
+                                     const chuParameterOptions& _options)
+: chuParameter(_name, _options), minValue(_min), maxValue(_max), value(_defaultValue)
+{
+}
+
+void chuParameterInt::oscMessageReceived(const OSCMessage& message)
+{
+    OSCArgument* arg = message.begin();
+    if (arg && arg->isInt32())
+    {
+        value = (float)arg->getInt32();
+    }
+    else if (arg && arg->isFloat32())
+    {
+        value = (int)arg->getFloat32();
+    }
+}
+
+Component* chuParameterInt::createComponent()
+{
+    return new chuParameterIntSlider(this);
+}
+
+
+
+// -------------------------------------
+
 chuParameterColor::chuParameterColor(const String& _name, const Color& _color, const chuParameterOptions& _options)
 : chuParameter(_name, _options), value(_color)
 {

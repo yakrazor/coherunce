@@ -12,8 +12,6 @@
 #include "chuOSCManager.h"
 
 
-
-
 chuGenerator::chuGenerator(String generatorName) : name(generatorName), active(false)
 {
     init();
@@ -36,9 +34,10 @@ void chuGenerator::setOSCAddress(const String& addr)
 chuGenPolygonPinwheel::chuGenPolygonPinwheel()
 : chuGenerator("PolygonPinwheel")
 {
-    sides = new chuParameterFloat("Sides", 3.0, 8.0, 5.0);
+    sides = new chuParameterInt("Sides", 3, 12, 5);
     radius = new chuParameterFloat("Radius", 0.1, 1.0, 1.0);
-    copies = new chuParameterFloat("Copies", 1.0, 5.0, 3.0);
+    copies = new chuParameterInt("Copies", 1, 6, 3);
+    scale = new chuParameterFloat("Scale", 0.01, 1.0, 0.618);
     color = new chuParameterColor("Color", Colors::red);
 }
 
@@ -49,6 +48,7 @@ void chuGenPolygonPinwheel::getParamList(std::vector<chuParameter*>& params)
     params.push_back(sides);
     params.push_back(radius);
     params.push_back(copies);
+    params.push_back(scale);
     params.push_back(color);
 }
 
@@ -69,7 +69,7 @@ std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns(float barClock)
     items.push_back(item);
     while (count++ < copies->value)
     {
-        item.radius *= 1 - 1 / copies->value;
+        item.radius *= scale->value;
         item.rotation *= -1;
         items.push_back(item);
     }
@@ -80,7 +80,7 @@ std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns(float barClock)
 chuGenFivePoints::chuGenFivePoints()
 : chuGenerator("FivePoints")
 {
-    sides = new chuParameterFloat("Sides", 3.0, 8.0, 3.0);
+    sides = new chuParameterInt("Sides", 3, 8, 3);
     radius = new chuParameterFloat("Radius", 0.01, 0.1, 0.08);
 
     color = new chuParameterColor("Color", Colors::red);
