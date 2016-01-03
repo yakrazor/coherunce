@@ -84,23 +84,33 @@ int add_line(etherdream_point* points, int startIndex, int dwellPoints, int numS
 {
     //printf("Line: %d,%d -> %d,%d\n", x1, y1, x2, y2);
 
+    int syncOffset = 4;
+
     int dx = (x2 - x1) / numSegments;
     int dy = (y2 - y1) / numSegments;
-    for (int i = 0; i < dwellPoints; i++)
+    for (int i = 0; i < dwellPoints - syncOffset; i++)
     {
-        add_point(&points[startIndex + i], x1, y1, r, g, b, 0);
+        add_point(&points[startIndex++], x1, y1, 0, 0, 0, 0);
+    }
+    for (int i = 0; i < syncOffset; i++)
+    {
+        add_point(&points[startIndex++], x1, y1, r, g, b, i);
     }
     for (int i = 1; i < numSegments; i++)
     {
-        add_point(&points[startIndex + dwellPoints + i - 1], x1 + dx * i, y1 + dy * i, r, g, b, i);
+        add_point(&points[startIndex++], x1 + dx * i, y1 + dy * i, r, g, b, i);
     }
-    for (int i = 0; i < dwellPoints; i++)
+    for (int i = 0; i < syncOffset; i++)
     {
-        add_point(&points[startIndex + dwellPoints + numSegments - 1 + i], x2, y2, r, g, b, 0);
+        add_point(&points[startIndex++], x2, y2, r, g, b, i);
     }
+    //for (int i = 0; i < dwellPoints - syncOffset; i++)
+    //{
+    //    add_point(&points[startIndex++], x2, y2, 0, 0, 0, 0);
+    //}
 
     // return next point index
-    return startIndex + dwellPoints + numSegments - 1 + dwellPoints;
+    return startIndex;
 }
 
 int patterns_to_points(uint16_t lastFrameX, uint16_t lastFrameY, float globalIntensity, chuThreadQueue<PatternItem>& patterns, etherdream_point* points, int num_points)
@@ -216,7 +226,7 @@ void LaserOutputThread::run() {
 
                 printf("Writing %d points...\n", count);
                 log_extents(points, count);
-                int res = etherdream_write(dac_device, points, count, 35000, count < 1500 ? -1 : 1);
+                int res = etherdream_write(dac_device, points, count, 10000, count < 1500 ? -1 : 1);
                 if (res != 0) {
                     printf("ERROR: write returned %d\n", res);
                 }
