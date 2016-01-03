@@ -16,6 +16,7 @@
 #include "chuThreadQueue.h"
 #include "PatternItem.h"
 
+extern bool logging;
 
 class LaserOutputThread : public Thread
 {

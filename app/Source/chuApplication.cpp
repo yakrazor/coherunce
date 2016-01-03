@@ -14,7 +14,7 @@
 #include "chuMenuBar.h"
 #include "chuOSCManager.h"
 
-#define FRAME_RATE 24
+#define FRAME_RATE 30
 
 
 

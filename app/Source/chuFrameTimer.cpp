@@ -15,8 +15,10 @@
 
 void chuFrameTimer::timerCallback() {
     if (laserThread) {
-        printf("Ticked timer at time %f\n", Time::getMillisecondCounterHiRes());
-
+        if (logging) {
+            printf("Ticked timer at time %f\n", Time::getMillisecondCounterHiRes());
+        }
+        
         laserThread->patterns.start_frame();
 
         for (auto& generator : chuGeneratorManager::getAllGenerators())

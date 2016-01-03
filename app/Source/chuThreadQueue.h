@@ -49,6 +49,7 @@ public:
 
     void process_frame(std::function<void(frame_type)> action) {
         std::unique_lock<std::mutex> guard(mutex);
+
         while (!frame_complete) {
             cv.wait(guard);
         }
