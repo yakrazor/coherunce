@@ -13,6 +13,28 @@
 chuParameterOptions chuParameterOptions::Default;
 
 
+PropertyPanel* chuParameterProvider::createPanel()
+{
+    Array<PropertyComponent*> propertyComponents;
+    std::vector<chuParameter*> params;
+
+    getParamList(params);
+    for (auto& param : params)
+    {
+        if (!param->getOptions().isUserVisible)
+            continue;
+        auto pc = param->createComponent();
+        pc->setColour(PropertyComponent::backgroundColourId, Colours::transparentBlack);
+        propertyComponents.add(pc);
+    }
+
+    auto panel = new PropertyPanel();
+    panel->addProperties(propertyComponents);
+    return panel;
+}
+
+
+
 chuParameter::chuParameter(const String& _name, const chuParameterOptions& _options)
 : name(_name), options(_options)
 {
@@ -20,18 +42,23 @@ chuParameter::chuParameter(const String& _name, const chuParameterOptions& _opti
 }
 
 
-class chuParameterFloatSlider : public Slider
+class chuParameterFloatSlider : public SliderPropertyComponent
 {
 public:
-    chuParameterFloatSlider(chuParameterFloat* pParam) : param(pParam)
+    chuParameterFloatSlider(chuParameterFloat* pParam)
+    : SliderPropertyComponent(pParam->getName(), pParam->getMinValue(), pParam->getMaxValue(), 0)
+    , param(pParam)
     {
-        setSliderStyle(Slider::LinearBar);
-        setRange(param->getMinValue(), param->getMaxValue());
-        setValue(param->getValue());
+        slider.setSliderStyle(Slider::LinearBar);
+        slider.setValue(param->getValue());
     }
-    virtual void valueChanged() override
+    virtual double getValue() const override
     {
-        param->setValue((float)this->getValue());
+        return param->getValue();
+    }
+    virtual void setValue(double newValue) override
+    {
+        param->setValue((float)newValue);
     }
 
 private:
@@ -57,31 +84,36 @@ void chuParameterFloat::oscMessageReceived(const OSCMessage& message)
     }
 }
 
-Component* chuParameterFloat::createComponent()
+PropertyComponent* chuParameterFloat::createComponent()
 {
     return new chuParameterFloatSlider(this);
 }
 
 // -------------------------------------
 
-
-class chuParameterIntSlider : public Slider
+class chuParameterIntSlider : public SliderPropertyComponent
 {
 public:
-    chuParameterIntSlider(chuParameterInt* pParam) : param(pParam)
+    chuParameterIntSlider(chuParameterInt* pParam)
+    : SliderPropertyComponent(pParam->getName(), pParam->getMinValue(), pParam->getMaxValue(), 1.0)
+    , param(pParam)
     {
-        setSliderStyle(Slider::LinearBar);
-        setRange(param->getMinValue(), param->getMaxValue(), 1.0);
-        setValue(param->getValue());
+        slider.setSliderStyle(Slider::LinearBar);
+        slider.setValue(param->getValue());
     }
-    virtual void valueChanged() override
+    virtual double getValue() const override
     {
-        param->setValue((int)this->getValue());
+        return param->getValue();
+    }
+    virtual void setValue(double newValue) override
+    {
+        param->setValue((int)newValue);
     }
 
 private:
     chuParameterInt* param;
 };
+
 
 chuParameterInt::chuParameterInt(const String& _name, int _min, int _max, int _defaultValue,
                                      const chuParameterOptions& _options)
@@ -102,7 +134,7 @@ void chuParameterInt::oscMessageReceived(const OSCMessage& message)
     }
 }
 
-Component* chuParameterInt::createComponent()
+PropertyComponent* chuParameterInt::createComponent()
 {
     return new chuParameterIntSlider(this);
 }
@@ -118,17 +150,24 @@ chuParameterColor::chuParameterColor(const String& _name, const Color& _color, c
 }
 
 
-class chuParameterColorButton  : public TextButton, public ChangeListener
+class chuParameterColorButton : public PropertyComponent, public Button::Listener, public ChangeListener
 {
 public:
     chuParameterColorButton(chuParameterColor* pParam)
-    : TextButton (""), param(pParam)
+    : PropertyComponent(pParam->getName()), param(pParam)
     {
-        setColour(TextButton::buttonColourId, param->getValue());
+        button.setTriggeredOnMouseDown(true);
+        button.addListener(this);
+        button.setColour(TextButton::buttonColourId, param->getValue());
+        addAndMakeVisible(button);
     }
 
-    void clicked() override
+    virtual void buttonClicked(Button* b) override
     {
+        if (b != &button) {
+            return;
+        }
+
         ColourSelector* colorSelector = new ColourSelector();
         colorSelector->setName(param->getName());
         colorSelector->setCurrentColour(param->getValue());
@@ -139,16 +178,22 @@ public:
         CallOutBox::launchAsynchronously(colorSelector, getScreenBounds(), nullptr);
     }
 
-    void changeListenerCallback (ChangeBroadcaster* source) override
+    virtual void changeListenerCallback (ChangeBroadcaster* source) override
     {
         if (ColourSelector* cs = dynamic_cast<ColourSelector*> (source))
         {
             param->setValue(cs->getCurrentColour());
-            setColour(TextButton::buttonColourId, param->getValue());
+            button.setColour(TextButton::buttonColourId, param->getValue());
         }
     }
 
+    virtual void refresh()
+    {
+        
+    }
+
 private:
+    TextButton button;
     chuParameterColor* param;
 };
 
@@ -157,7 +202,7 @@ void chuParameterColor::oscMessageReceived(const OSCMessage& message)
 {
 }
 
-Component* chuParameterColor::createComponent()
+PropertyComponent* chuParameterColor::createComponent()
 {
     return new chuParameterColorButton(this);
 }

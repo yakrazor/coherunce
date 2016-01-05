@@ -29,7 +29,7 @@ public:
     virtual ~chuParameter() {}
 
     // Parameter subclasses must override these two methods:
-    virtual Component* createComponent() = 0;
+    virtual PropertyComponent* createComponent() = 0;
     virtual void oscMessageReceived(const OSCMessage &message) = 0;
 
     const String& getName() { return name; }
@@ -45,6 +45,8 @@ class chuParameterProvider
 public:
     virtual ~chuParameterProvider() {}
     virtual void getParamList(std::vector<chuParameter*>& params) = 0;
+
+    PropertyPanel* createPanel();
 };
 
 class chuParameterFloat : public chuParameter {
@@ -52,7 +54,7 @@ public:
     chuParameterFloat(const String& _name, float _min, float _max, float _defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
     virtual ~chuParameterFloat() {}
 
-    virtual Component* createComponent() override;
+    virtual PropertyComponent* createComponent() override;
     virtual void oscMessageReceived(const OSCMessage &message) override;
 
     float getMinValue() const { return minValue.load(); }
@@ -71,7 +73,7 @@ public:
     chuParameterInt(const String& _name, int _min, int _max, int _defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
     virtual ~chuParameterInt() {}
 
-    virtual Component* createComponent() override;
+    virtual PropertyComponent* createComponent() override;
     virtual void oscMessageReceived(const OSCMessage &message) override;
 
     int getMinValue() const { return minValue.load(); }
@@ -93,7 +95,7 @@ public:
     chuParameterColor(const String& _name, const Color& _color, const chuParameterOptions& _options = chuParameterOptions::Default);
     virtual ~chuParameterColor() {}
 
-    virtual Component* createComponent() override;
+    virtual PropertyComponent* createComponent() override;
     virtual void oscMessageReceived(const OSCMessage &message) override;
 
     Color getValue() const { return Color(value.load()); }
