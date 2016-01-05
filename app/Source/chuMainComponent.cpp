@@ -84,12 +84,12 @@ public:
             int paramCount = 0;
             for (auto& param : params)
             {
-                if (!param->options.isUserVisible)
+                if (!param->getOptions().isUserVisible)
                     continue;
 
                 auto slider = param->createComponent();
                 auto label = new Label();
-                label->setText(param->name, dontSendNotification);
+                label->setText(param->getName(), dontSendNotification);
                 label->setBounds(10 + 160 * generatorCount, 79 + paramCount * 45, 150, 15);
                 slider->setBounds(10 + 160 * generatorCount, 95 + paramCount * 45, 150, 20);
 

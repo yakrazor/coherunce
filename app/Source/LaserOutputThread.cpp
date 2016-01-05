@@ -135,10 +135,10 @@ int add_line(etherdream_point* points, int startIndex, int dwellOffPoints, int d
 int patterns_to_points(const LaserConfig& config, uint16_t lastFrameX, uint16_t lastFrameY, float globalIntensity, chuThreadQueue<PatternItem>& patterns, etherdream_point* points, int num_points)
 {
     int scale = config.ildaXMax;
-    int longestUnbrokenLine = config.longestUnbrokenLine.value;
-    int internalShapeDwellPoints = config.internalDwellPoints.value;
-    int dwellOffPoints = config.dwellOffPoints.value;
-    int dwellOnPoints = config.dwellOnPoints.value;
+    int longestUnbrokenLine = config.longestUnbrokenLine.getValue();
+    int internalShapeDwellPoints = config.internalDwellPoints.getValue();
+    int dwellOffPoints = config.dwellOffPoints.getValue();
+    int dwellOnPoints = config.dwellOnPoints.getValue();
     int intensityMax = config.ildaIntensityMax;
 
     int pointIndex = 0;
@@ -257,7 +257,7 @@ void LaserOutputThread::run() {
                     log_extents(points, count);
                 }
 
-                int res = etherdream_write(dac_device, points, count, laserConfig.pointsPerSecond.value, count < 600 ? -1 : 1);
+                int res = etherdream_write(dac_device, points, count, laserConfig.pointsPerSecond.getValue(), count < 600 ? -1 : 1);
                 if (res != 0) {
                     printf("ERROR: write returned %d\n", res);
                 }

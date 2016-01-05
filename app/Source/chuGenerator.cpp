@@ -26,7 +26,7 @@ void chuGenerator::setOSCAddress(const String& addr)
         if (chuOSCManager::getReceiver())
         {
             chuOSCManager::getReceiver()->removeListener(param);
-            chuOSCManager::getReceiver()->addListener(param, addr + "/param/" + param->name);
+            chuOSCManager::getReceiver()->addListener(param, addr + "/param/" + param->getName());
         }
     }
 }
@@ -57,19 +57,19 @@ std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns(float barClock)
     std::vector<PatternItem> items;
     PatternItem item;
     item.type = PatternType::RegularPolygon;
-    item.sides = sides->value;
-    item.radius = radius->value;
+    item.sides = sides->getValue();
+    item.radius = radius->getValue();
     item.origin = Vector2f(0, 0);
     item.rotation = barClock * 360;
-    item.red = color->value.getRed() << 8;
-    item.green = color->value.getGreen() << 8;
-    item.blue = color->value.getBlue() << 8;
+    item.red = color->getValue().getRed() << 8;
+    item.green = color->getValue().getGreen() << 8;
+    item.blue = color->getValue().getBlue() << 8;
 
     int count = 1;
     items.push_back(item);
-    while (count++ < copies->value)
+    while (count++ < copies->getValue())
     {
-        item.radius *= scale->value;
+        item.radius *= scale->getValue();
         item.rotation *= -1;
         items.push_back(item);
     }
@@ -139,12 +139,12 @@ std::vector<PatternItem> chuGenFivePoints::getPatterns(float barClock)
 {
     PatternItem item;
     item.type = PatternType::RegularPolygon;
-    item.sides = sides->value;
-    item.radius = radius->value;
+    item.sides = sides->getValue();
+    item.radius = radius->getValue();
     item.rotation = barClock * 360;
-    item.red = color->value.getRed() << 8;
-    item.green = color->value.getGreen() << 8;
-    item.blue = color->value.getBlue() << 8;
+    item.red = color->getValue().getRed() << 8;
+    item.green = color->getValue().getGreen() << 8;
+    item.blue = color->getValue().getBlue() << 8;
 
     bool flipX = false;
     float laserXMin = flipX ? 1.0 : -1.0;
@@ -154,34 +154,34 @@ std::vector<PatternItem> chuGenFivePoints::getPatterns(float barClock)
     float laserYMax = flipY ? -1.0 : 1.0;
 
     std::vector<PatternItem> items;
-    if (pt1on->value)
+    if (pt1on->getValue())
     {
-        item.origin.x = rescale(pt1x->value, leapXMin, leapXMax, laserXMin, laserXMax);
-        item.origin.y = rescale(pt1y->value, leapYMin, leapYMax, laserYMin, laserYMax);
+        item.origin.x = rescale(pt1x->getValue(), leapXMin, leapXMax, laserXMin, laserXMax);
+        item.origin.y = rescale(pt1y->getValue(), leapYMin, leapYMax, laserYMin, laserYMax);
         items.push_back(item);
     }
-    if (pt2on->value)
+    if (pt2on->getValue())
     {
-        item.origin.x = rescale(pt2x->value, leapXMin, leapXMax, laserXMin, laserXMax);
-        item.origin.y = rescale(pt2y->value, leapYMin, leapYMax, laserYMin, laserYMax);
+        item.origin.x = rescale(pt2x->getValue(), leapXMin, leapXMax, laserXMin, laserXMax);
+        item.origin.y = rescale(pt2y->getValue(), leapYMin, leapYMax, laserYMin, laserYMax);
         items.push_back(item);
     }
-    if (pt3on->value)
+    if (pt3on->getValue())
     {
-        item.origin.x = rescale(pt3x->value, leapXMin, leapXMax, laserXMin, laserXMax);
-        item.origin.y = rescale(pt3y->value, leapYMin, leapYMax, laserYMin, laserYMax);
+        item.origin.x = rescale(pt3x->getValue(), leapXMin, leapXMax, laserXMin, laserXMax);
+        item.origin.y = rescale(pt3y->getValue(), leapYMin, leapYMax, laserYMin, laserYMax);
         items.push_back(item);
     }
-    if (pt4on->value)
+    if (pt4on->getValue())
     {
-        item.origin.x = rescale(pt4x->value, leapXMin, leapXMax, laserXMin, laserXMax);
-        item.origin.y = rescale(pt4y->value, leapYMin, leapYMax, laserYMin, laserYMax);
+        item.origin.x = rescale(pt4x->getValue(), leapXMin, leapXMax, laserXMin, laserXMax);
+        item.origin.y = rescale(pt4y->getValue(), leapYMin, leapYMax, laserYMin, laserYMax);
         items.push_back(item);
     }
-    if (pt5on->value)
+    if (pt5on->getValue())
     {
-        item.origin.x = rescale(pt5x->value, leapXMin, leapXMax, laserXMin, laserXMax);
-        item.origin.y = rescale(pt5y->value, leapYMin, leapYMax, laserYMin, laserYMax);
+        item.origin.x = rescale(pt5x->getValue(), leapXMin, leapXMax, laserXMin, laserXMax);
+        item.origin.y = rescale(pt5y->getValue(), leapYMin, leapYMax, laserYMin, laserYMax);
         items.push_back(item);
     }
     return items;

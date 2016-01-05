@@ -26,12 +26,12 @@ public:
     chuParameterFloatSlider(chuParameterFloat* pParam) : param(pParam)
     {
         setSliderStyle(Slider::LinearBar);
-        setRange(param->minValue, param->maxValue);
-        setValue(param->value);
+        setRange(param->getMinValue(), param->getMaxValue());
+        setValue(param->getValue());
     }
     virtual void valueChanged() override
     {
-        param->value = (float)getValue();
+        param->setValue((float)this->getValue());
     }
 
 private:
@@ -71,12 +71,12 @@ public:
     chuParameterIntSlider(chuParameterInt* pParam) : param(pParam)
     {
         setSliderStyle(Slider::LinearBar);
-        setRange(param->minValue, param->maxValue, 1.0);
-        setValue(param->value);
+        setRange(param->getMinValue(), param->getMaxValue(), 1.0);
+        setValue(param->getValue());
     }
     virtual void valueChanged() override
     {
-        param->value = (int)getValue();
+        param->setValue((int)this->getValue());
     }
 
 private:
@@ -112,8 +112,9 @@ Component* chuParameterInt::createComponent()
 
 
 chuParameterColor::chuParameterColor(const String& _name, const Color& _color, const chuParameterOptions& _options)
-: chuParameter(_name, _options), value(_color)
+: chuParameter(_name, _options)
 {
+    setValue(_color);
 }
 
 
@@ -123,14 +124,14 @@ public:
     chuParameterColorButton(chuParameterColor* pParam)
     : TextButton (""), param(pParam)
     {
-        setColour(TextButton::buttonColourId, param->value);
+        setColour(TextButton::buttonColourId, param->getValue());
     }
 
     void clicked() override
     {
         ColourSelector* colorSelector = new ColourSelector();
-        colorSelector->setName(param->name);
-        colorSelector->setCurrentColour(param->value);
+        colorSelector->setName(param->getName());
+        colorSelector->setCurrentColour(param->getValue());
         colorSelector->addChangeListener(this);
         colorSelector->setColour(ColourSelector::backgroundColourId, Colors::transparentBlack);
         colorSelector->setSize(300, 400);
@@ -142,8 +143,8 @@ public:
     {
         if (ColourSelector* cs = dynamic_cast<ColourSelector*> (source))
         {
-            param->value = cs->getCurrentColour();
-            setColour(TextButton::buttonColourId, param->value);
+            param->setValue(cs->getCurrentColour());
+            setColour(TextButton::buttonColourId, param->getValue());
         }
     }
 
