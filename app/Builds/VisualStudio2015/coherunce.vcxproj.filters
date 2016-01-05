@@ -355,6 +355,9 @@
     <ClCompile Include="..\..\Source\chuOSCManager.cpp">
       <Filter>coherunce\Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\BeatSyncComponent.cpp">
+      <Filter>coherunce\Application</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\chuApplication.cpp">
       <Filter>coherunce\Application</Filter>
     </ClCompile>
@@ -1724,6 +1727,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\chuOSCManager.h">
       <Filter>coherunce\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BeatSyncComponent.h">
+      <Filter>coherunce\Application</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\chuApplication.h">
       <Filter>coherunce\Application</Filter>
