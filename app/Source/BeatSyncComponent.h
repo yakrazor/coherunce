@@ -34,7 +34,8 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class BeatSyncComponent  : public Component
+class BeatSyncComponent  : public Component,
+                           public ButtonListener
 {
 public:
     //==============================================================================
@@ -47,6 +48,7 @@ public:
 
     void paint (Graphics& g);
     void resized();
+    void buttonClicked (Button* buttonThatWasClicked);
 
 
 
@@ -55,6 +57,9 @@ private:
     //[/UserVariables]
 
     //==============================================================================
+    ScopedPointer<TextButton> tapTempoButton;
+    ScopedPointer<TextButton> syncButton;
+    ScopedPointer<Label> bpmLabel;
 
 
     //==============================================================================

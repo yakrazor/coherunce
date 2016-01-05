@@ -12,6 +12,7 @@
 #include "chuApplication.h"
 #include "chuOSCManager.h"
 #include "chuGeneratorManager.h"
+#include "BeatSyncComponent.h"
 
 class GeneratorButton : public TextButton
 {
@@ -31,6 +32,7 @@ public:
     ScopedPointer<Slider> intensitySlider;
     ScopedPointer<Label> intensityLabel;
     ScopedPointer<TextButton> enableButton;
+    ScopedPointer<Component> beatSyncComponent;
 
     chuMainComponent()
     {
@@ -63,6 +65,8 @@ public:
         enableButton->setColour(TextButton::buttonColourId, Colours::green);
         enableButton->addListener(this);
         addAndMakeVisible(enableButton);
+        beatSyncComponent = new BeatSyncComponent();
+        addAndMakeVisible(beatSyncComponent);
 
         int generatorCount = 0;
         for (auto& generator : chuGeneratorManager::getAllGenerators())
@@ -99,6 +103,7 @@ public:
         intensitySlider->setBounds(120, windowHeight - 40, 300, 30);
         intensityLabel->setBounds(120, windowHeight - 65, 300, 25);
         enableButton->setBounds(430, windowHeight - 70, 60, 60);
+        beatSyncComponent->setBounds(600, windowHeight - 100, 300, 100);;
     }
 
     ~chuMainComponent()
