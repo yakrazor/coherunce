@@ -142,10 +142,13 @@
     <ClCompile Include="..\..\Source\chuPreferencesPageAudio.cpp"/>
     <ClCompile Include="..\..\Source\chuPreferencesPageLaser.cpp"/>
     <ClCompile Include="..\..\Source\chuPreferencesPageOSC.cpp"/>
-    <ClCompile Include="..\..\Source\LaserConfig.cpp"/>
+    <ClCompile Include="..\..\Source\LaserPoint.cpp"/>
     <ClCompile Include="..\..\Source\LaserOutputThread.cpp"/>
-    <ClCompile Include="..\..\Source\LaserOutputBuffer.cpp"/>
     <ClCompile Include="..\..\Source\LaserOutputDriver.cpp"/>
+    <ClCompile Include="..\..\Source\LaserOutputBuffer.cpp"/>
+    <ClCompile Include="..\..\Source\LaserPointOptimizer.cpp"/>
+    <ClCompile Include="..\..\Source\LaserConfig.cpp"/>
+    <ClCompile Include="..\..\Source\LaserState.cpp"/>
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1366,12 +1369,13 @@
     <ClInclude Include="..\..\Source\chuMainWindow.h"/>
     <ClInclude Include="..\..\Source\chuMenuBar.h"/>
     <ClInclude Include="..\..\Source\chuPreferencesDialog.h"/>
-    <ClInclude Include="..\..\Source\LaserConfig.h"/>
+    <ClInclude Include="..\..\Source\LaserPoint.h"/>
     <ClInclude Include="..\..\Source\LaserOutputThread.h"/>
-    <ClInclude Include="..\..\Source\LaserOutputBuffer.h"/>
     <ClInclude Include="..\..\Source\LaserOutputDriver.h"/>
-    <ClInclude Include="..\..\Source\etherdream_test.h"/>
-    <ClInclude Include="..\..\Source\protocol.h"/>
+    <ClInclude Include="..\..\Source\LaserOutputBuffer.h"/>
+    <ClInclude Include="..\..\Source\LaserPointOptimizer.h"/>
+    <ClInclude Include="..\..\Source\LaserConfig.h"/>
+    <ClInclude Include="..\..\Source\LaserState.h"/>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioSampleBuffer.h"/>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_FloatVectorOperations.h"/>

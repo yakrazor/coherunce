@@ -11,9 +11,9 @@
 #include "LaserOutputDriver.h"
 #include "LaserOutputBuffer.h"
 #include "LaserConfig.h"
+#include "LaserState.h"
 
 #include <etherdream.h>
-#include "etherdream_test.h"
 
 
 class EtherdreamOutputDevice : public LaserOutputDevice
@@ -42,26 +42,37 @@ public:
         }
 
         int count = buffer.getPointCount();
+        auto points = buffer.getPoints();
         int res = etherdream_write(thisDevice,
-                                   (etherdream_point*)buffer.getPoints(),
+                                   (etherdream_point*)points,
                                    count,
                                    laserConfig.pointsPerSecond.getValue(), count < 600 ? -1 : 1);
+
         if (res != 0)
         {
+            state.currentPoint = ildaPoint::zero;
             return false;
         }
 
+        state.currentPoint = points[count - 1];
         return true;
     }
 
     virtual void stop() override
     {
         etherdream_stop(thisDevice);
+        state.currentPoint = ildaPoint::zero;
+    }
+
+    virtual LaserState& getState() override
+    {
+        return state;
     }
 
 private:
     struct etherdream* thisDevice;
     LaserOutputDriver* parentDriver;
+    LaserState state;
 };
 
 class EtherdreamOutputDriver : public LaserOutputDriver

@@ -30,6 +30,7 @@ public:
     chuParameterInt internalDwellPoints;
     chuParameterInt dwellOffPoints;
     chuParameterInt dwellOnPoints;
+    chuParameterFloat globalIntensity;
 
     virtual void getParamList(std::vector<chuParameter*>& params) override;
 };

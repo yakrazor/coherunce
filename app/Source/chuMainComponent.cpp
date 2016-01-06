@@ -135,7 +135,7 @@ public:
     {
         if (slider && slider->getName() == "INTENSITY")
         {
-            getApp()->getLaserOutputThread()->setGlobalIntensity(slider->getValue());
+            getApp()->getLaserOutputThread()->getLaserConfig().globalIntensity.setValue(slider->getValue());
             return;
         }
     }

@@ -1,18 +1,11 @@
 /*
   ==============================================================================
 
-    LaserOutputBuffer.cpp
-    Created: 5 Jan 2016 10:03:17pm
+    LaserState.cpp
+    Created: 6 Jan 2016 12:32:21am
     Author:  Michael Dewberry
 
   ==============================================================================
 */
 
-#include "LaserConfig.h"
 #include "LaserState.h"
-#include "LaserOutputBuffer.h"
-#include "LaserPointOptimizer.h"
-
-
-
-struct ildaPoint points[MAX_POINTS];

@@ -11,38 +11,30 @@
 #ifndef LASEROUTPUTBUFFER_H_INCLUDED
 #define LASEROUTPUTBUFFER_H_INCLUDED
 
-#include <stdint.h>
 #include "chuThreadQueue.h"
 #include "PatternItem.h"
+#include "LaserPoint.h"
 
-struct ildaPoint {
-    int16_t x;
-    int16_t y;
-    uint16_t r;
-    uint16_t g;
-    uint16_t b;
-    uint16_t i;
-    uint16_t u1;
-    uint16_t u2;
-};
+class LaserConfig;
+class LaserState;
 
-#define NUM_POINTS 3500
-
+#define MAX_POINTS 3500
 
 class LaserOutputBuffer
 {
 public:
-    ildaPoint* getPoints();
+    const ildaPoint* getPoints() { return points; }
     unsigned getPointCount() { return pointCount; }
-    // TODO: remove this
-    void setPointCount(unsigned count) { pointCount = count; }
 
     typedef chuThreadQueue<PatternItem> PatternQueue;
     PatternQueue& getPatternQueue() { return patternQueue; }
 
 private:
+    friend class LaserPointOptimizer;
+    static const int maxPoints = MAX_POINTS;
+
     PatternQueue patternQueue;
-    struct ildaPoint points[NUM_POINTS];
+    ildaPoint points[MAX_POINTS];
     unsigned int pointCount;
 };
 

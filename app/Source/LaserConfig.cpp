@@ -12,10 +12,11 @@
 
 LaserConfig::LaserConfig()
 : pointsPerSecond("Points Per Second", 200, 100000, 30000)
-, longestUnbrokenLine("Longest Unbroken Line", 200, 25000, 1000)
+, longestUnbrokenLine("Longest Unbroken Line", 200, 10000, 1000)
 , internalDwellPoints("Internal Dwell Points", 0, 50, 1)
 , dwellOffPoints("Dwell Points (Off)", 0, 50, 10)
 , dwellOnPoints("Dwell Points (On)", 0, 50, 2)
+, globalIntensity("Intensity", 0, 1.0, 0.0)
 {
 }
 
@@ -26,4 +27,5 @@ void LaserConfig::getParamList(std::vector<chuParameter*>& params)
     params.push_back(&internalDwellPoints);
     params.push_back(&dwellOffPoints);
     params.push_back(&dwellOnPoints);
+    params.push_back(&globalIntensity);
 }

@@ -13,6 +13,7 @@
 
 class LaserConfig;
 class LaserOutputBuffer;
+class LaserState;
 
 class LaserOutputDevice
 {
@@ -22,6 +23,8 @@ public:
     virtual void waitForDeviceReady() = 0;
     virtual bool writeToDevice(LaserConfig& laserConfig, LaserOutputBuffer& buffer) = 0;
     virtual void stop() = 0;
+
+    virtual LaserState& getState() = 0;
 };
 
 class LaserOutputDriver

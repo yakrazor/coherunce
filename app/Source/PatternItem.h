@@ -11,6 +11,7 @@
 #ifndef PATTERNS_H_INCLUDED
 #define PATTERNS_H_INCLUDED
 
+#include "../JuceLibraryCode/JuceHeader.h"
 
 struct Vector2f
 {
@@ -18,6 +19,22 @@ struct Vector2f
     Vector2f(float _x, float _y) : x(_x), y(_y) {}
     float x;
     float y;
+};
+
+struct Polyline
+{
+    Polyline()
+    {
+    }
+    
+    void addPoint(const Vector2f& point, const Colour& colour)
+    {
+        vertices.push_back(point);
+        colours.push_back(colour);
+    }
+
+    std::vector<Vector2f> vertices;
+    std::vector<Colour> colours;
 };
 
 typedef enum {

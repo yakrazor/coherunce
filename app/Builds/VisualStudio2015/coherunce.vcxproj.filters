@@ -379,16 +379,25 @@
     <ClCompile Include="..\..\Source\chuPreferencesPageOSC.cpp">
       <Filter>coherunce\Application\Preferences</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LaserConfig.cpp">
+    <ClCompile Include="..\..\Source\LaserPoint.cpp">
       <Filter>coherunce\Output</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LaserOutputThread.cpp">
       <Filter>coherunce\Output</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\LaserOutputDriver.cpp">
+      <Filter>coherunce\Output</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LaserOutputBuffer.cpp">
       <Filter>coherunce\Output</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LaserOutputDriver.cpp">
+    <ClCompile Include="..\..\Source\LaserPointOptimizer.cpp">
+      <Filter>coherunce\Output</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LaserConfig.cpp">
+      <Filter>coherunce\Output</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LaserState.cpp">
       <Filter>coherunce\Output</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
@@ -1746,22 +1755,25 @@
     <ClInclude Include="..\..\Source\chuPreferencesDialog.h">
       <Filter>coherunce\Application\Preferences</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LaserConfig.h">
+    <ClInclude Include="..\..\Source\LaserPoint.h">
       <Filter>coherunce\Output</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LaserOutputThread.h">
       <Filter>coherunce\Output</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LaserOutputBuffer.h">
-      <Filter>coherunce\Output</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\LaserOutputDriver.h">
       <Filter>coherunce\Output</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\etherdream_test.h">
+    <ClInclude Include="..\..\Source\LaserOutputBuffer.h">
       <Filter>coherunce\Output</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\protocol.h">
+    <ClInclude Include="..\..\Source\LaserPointOptimizer.h">
+      <Filter>coherunce\Output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LaserConfig.h">
+      <Filter>coherunce\Output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LaserState.h">
       <Filter>coherunce\Output</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">

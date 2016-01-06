@@ -24,6 +24,7 @@ class LaserOutputThread : public Thread
 public:
     LaserOutputThread();
     ~LaserOutputThread();
+
     bool init();
     void run() override;
 
@@ -38,12 +39,8 @@ public:
     LaserOutputBuffer& getOutputBuffer() { return outputBuffer; }
     const LaserStatistics& getStatistics() const { return stats; }
 
-    void setGlobalIntensity(float intensity) { globalIntensity = intensity; }
-
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LaserOutputThread)
-
-    float globalIntensity;
 
     LaserStatistics stats;
     LaserConfig laserConfig;
