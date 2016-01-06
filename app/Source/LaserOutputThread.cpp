@@ -11,85 +11,59 @@
 #include <algorithm>
 
 #include "LaserOutputThread.h"
-#include <etherdream.h>
-#include "etherdream_test.h"
 
 #define PI 3.1415926
-
-struct etherdream *dac_device = nullptr;
-
-#define NUM_POINTS 3500
-struct etherdream_point points[NUM_POINTS];
 
 bool logging = false;
 
 
-LaserConfig::LaserConfig()
-: pointsPerSecond("Points Per Second", 200, 100000, 30000)
-, longestUnbrokenLine("Longest Unbroken Line", 50, 25000, 1000)
-, internalDwellPoints("Internal Dwell Points", 0, 50, 1)
-, dwellOffPoints("Dwell Points (Off)", 0, 50, 10)
-, dwellOnPoints("Dwell Points (On)", 0, 50, 2)
-{
-}
-
-void LaserConfig::getParamList(std::vector<chuParameter*>& params)
-{
-    params.push_back(&pointsPerSecond);
-    params.push_back(&longestUnbrokenLine);
-    params.push_back(&internalDwellPoints);
-    params.push_back(&dwellOffPoints);
-    params.push_back(&dwellOnPoints);
-}
-
-
 LaserOutputThread::LaserOutputThread() : Thread("Laser Output Thread") {
-    connected = false;
-    enabled = false;
-    if (init()) {
-        connected = true;
-    }
+    init();
 }
 
 LaserOutputThread::~LaserOutputThread() {
 }
 
 bool LaserOutputThread::init() {
-    etherdream_lib_start();
-    wait(1200);
-
-	int cc = etherdream_dac_count();
-	if (!cc) {
-		printf("No DACs found.\n");
-		return false;
-	}
-
-	dac_device = etherdream_get(0);
-
-	printf("Connecting...\n");
-    if (etherdream_connect(dac_device) < 0) {
-        printf("Could not connect to DAC!\n");
-        return false;
-    } else {
-        return true;
+    if (outputDriver == nullptr)
+    {
+        outputDriver = createEtherdreamOutputDriver();
+        outputDriver->initialize();
+        wait(1200);
     }
+
+    if (outputDevice == nullptr)
+    {
+        int cc = outputDriver->getDeviceCount();
+        if (!cc) {
+            printf("No DACs found.\n");
+            return false;
+        }
+
+        printf("Connecting...\n");
+        outputDevice = outputDriver->connectToDevice(0);
+
+        if (outputDevice == nullptr)
+        {
+            printf("Could not connect to DAC!\n");
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void LaserOutputThread::disableOutput()
 {
-    if (connected)
-    {
-        etherdream_stop(dac_device);
-    }
-    enabled = false;
+    outputDriver->disableOutput();
 }
 
 void LaserOutputThread::enableOutput()
 {
-    enabled = true;
+    outputDriver->enableOutput();
 }
 
-void add_point(etherdream_point* point, int16_t x, int16_t y, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
+void add_point(ildaPoint* point, int16_t x, int16_t y, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
 {
     point->x = x;
     point->y = y;
@@ -101,7 +75,7 @@ void add_point(etherdream_point* point, int16_t x, int16_t y, uint16_t r, uint16
     point->u2 = 0;
 }
 
-int add_line(etherdream_point* points, int startIndex, int dwellOffPoints, int dwellOnPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
+int add_line(ildaPoint* points, int startIndex, int dwellOffPoints, int dwellOnPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
 {
     //printf("Line: %d,%d -> %d,%d\n", x1, y1, x2, y2);
 
@@ -132,7 +106,7 @@ int add_line(etherdream_point* points, int startIndex, int dwellOffPoints, int d
     return startIndex;
 }
 
-int patterns_to_points(const LaserConfig& config, uint16_t lastFrameX, uint16_t lastFrameY, float globalIntensity, chuThreadQueue<PatternItem>& patterns, etherdream_point* points, int num_points)
+int patterns_to_points(const LaserConfig& config, uint16_t lastFrameX, uint16_t lastFrameY, float globalIntensity, chuThreadQueue<PatternItem>& patterns, ildaPoint* points, int num_points)
 {
     int scale = config.ildaXMax;
     int longestUnbrokenLine = config.longestUnbrokenLine.getValue();
@@ -192,15 +166,6 @@ int patterns_to_points(const LaserConfig& config, uint16_t lastFrameX, uint16_t 
                 prevItemY = origY;
             }
         }
-/*
-        // Move back to 0,0
-        int finalMoveDistance = sqrt(pow(prevItemX, 2) + pow(prevItemY, 2));
-        int numFinalMoveSegments = std::max(1, finalMoveDistance / longestUnbrokenLine);
-        if (pointIndex + dwellPoints * 2 + numFinalMoveSegments <= num_points)
-        {
-            pointIndex = add_line(points, pointIndex, dwellPoints, numFinalMoveSegments, prevItemX, prevItemY, 0, 0, 0, 0, 0, 0);
-        }
-*/
 
         if (logging)
             printf("Generated %d DAC points from %lu pattern items\n", pointIndex, frame.size());
@@ -208,7 +173,7 @@ int patterns_to_points(const LaserConfig& config, uint16_t lastFrameX, uint16_t 
     return pointIndex > 0 ? pointIndex : 0;
 }
 
-void log_extents(etherdream_point* points, int count)
+void log_extents(ildaPoint* points, int count)
 {
     int minX = INT16_MAX;
     int minY = INT16_MAX;
@@ -230,47 +195,55 @@ void LaserOutputThread::run() {
     double clock = Time::getMillisecondCounterHiRes();
     int count = 0;
 
-    while(true) {
-        if (threadShouldExit()) {
+    while(true)
+    {
+        if (threadShouldExit())
+        {
             return;
         }
-        if (!connected) {
+        if (outputDriver == nullptr || outputDevice == nullptr) {
             wait(250);
+            init();
         }
-        if (connected && !enabled) {
-            etherdream_stop(dac_device);
-            continue;
-        }
-        if (connected && enabled) {
-            count = patterns_to_points(laserConfig, lastFrameX, lastFrameY, globalIntensity, patterns, points, NUM_POINTS);
+        if (outputDriver && outputDriver->isOutputEnabled() && outputDevice)
+        {
+            // TODO: move patterns_to_points into LaserOutputBuffer class
+            //outputBuffer.processFrame();
+            //count = outputBuffer.getPointCount();
+
+            count = patterns_to_points(laserConfig, lastFrameX, lastFrameY, globalIntensity, outputBuffer.getPatternQueue(), outputBuffer.getPoints(), NUM_POINTS);
+            outputBuffer.setPointCount(count);
+
             if (count <= 0) {
-                etherdream_stop(dac_device);
+                outputDevice->stop();
+                
                 lastFrameX = 0;
                 lastFrameY = 0;
                 continue;
-            } else {
-                etherdream_wait_for_ready(dac_device);
+            }
+            else
+            {
+                outputDevice->waitForDeviceReady();
 
-                if (logging)
+                if (!outputDevice->writeToDevice(laserConfig, outputBuffer))
                 {
-                    printf("Writing %d points...\n", count);
-                    log_extents(points, count);
+                    printf("ERROR: write failed\n");
                 }
 
-                int res = etherdream_write(dac_device, points, count, laserConfig.pointsPerSecond.getValue(), count < 600 ? -1 : 1);
-                if (res != 0) {
-                    printf("ERROR: write returned %d\n", res);
-                }
-
-                lastFrameX = points[count - 1].x;
-                lastFrameY = points[count - 1].y;
+                lastFrameX = outputBuffer.getPoints()[count - 1].x;
+                lastFrameY = outputBuffer.getPoints()[count - 1].y;
 
                 frameCount++;
                 if (frameCount == 20) {
                     double now = Time::getMillisecondCounterHiRes();
                     double delta = now - clock;
 
-                    printf("Points: %d FPS: %f\n", count, 20000/delta);
+                    stats.framesPerSecond = 20000/delta;
+                    stats.pointsPerFrame = count;
+
+                    // TODO: move this to UI
+                    printf("Points: %d FPS: %f\n", stats.pointsPerFrame, stats.framesPerSecond);
+
                     frameCount = 0;
                     clock = now;
                 }

@@ -51,12 +51,22 @@
       </GROUP>
     </GROUP>
     <GROUP id="{0954451C-E5BA-15C3-924D-EE8E6287ED75}" name="Output">
-      <FILE id="N3DuAm" name="etherdream_test.h" compile="1" resource="0"
-            file="Source/etherdream_test.h"/>
+      <FILE id="aGhLd4" name="LaserConfig.cpp" compile="1" resource="0" file="Source/LaserConfig.cpp"/>
+      <FILE id="MRNscU" name="LaserConfig.h" compile="0" resource="0" file="Source/LaserConfig.h"/>
       <FILE id="uHxvsG" name="LaserOutputThread.h" compile="0" resource="0"
             file="Source/LaserOutputThread.h"/>
       <FILE id="K3CvKr" name="LaserOutputThread.cpp" compile="1" resource="0"
             file="Source/LaserOutputThread.cpp"/>
+      <FILE id="zehDbG" name="LaserOutputBuffer.h" compile="0" resource="0"
+            file="Source/LaserOutputBuffer.h"/>
+      <FILE id="s1lX2I" name="LaserOutputBuffer.cpp" compile="1" resource="0"
+            file="Source/LaserOutputBuffer.cpp"/>
+      <FILE id="TuwGEd" name="LaserOutputDriver.h" compile="0" resource="0"
+            file="Source/LaserOutputDriver.h"/>
+      <FILE id="YEbi8W" name="LaserOutputDriver.cpp" compile="1" resource="0"
+            file="Source/LaserOutputDriver.cpp"/>
+      <FILE id="N3DuAm" name="etherdream_test.h" compile="1" resource="0"
+            file="Source/etherdream_test.h"/>
       <FILE id="RTmzur" name="protocol.h" compile="0" resource="0" file="Source/protocol.h"/>
     </GROUP>
     <GROUP id="{FC597BDF-A594-DAFD-5E88-4BDF3DF7AE4B}" name="Input"/>
