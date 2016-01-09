@@ -11,6 +11,9 @@
     <Filter Include="coherunce\Application">
       <UniqueIdentifier>{A3AB6FA2-0D4E-C1ED-F6E4-FFCD13DCB5BE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="coherunce\Application\Components">
+      <UniqueIdentifier>{F51EA257-4765-A1F9-4331-47C971023203}</UniqueIdentifier>
+    </Filter>
     <Filter Include="coherunce\Application\Preferences">
       <UniqueIdentifier>{8DAFA579-82DD-B8AF-C636-5ED6BAA8F7E7}</UniqueIdentifier>
     </Filter>
@@ -354,6 +357,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\chuOSCManager.cpp">
       <Filter>coherunce\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Application\chuLookAndFeel.cpp">
+      <Filter>coherunce\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Application\Components\chuClipButton.cpp">
+      <Filter>coherunce\Application\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\chuApplication.cpp">
       <Filter>coherunce\Application</Filter>
@@ -1724,6 +1733,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\chuOSCManager.h">
       <Filter>coherunce\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Application\chuLookAndFeel.h">
+      <Filter>coherunce\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Application\Components\chuClipButton.h">
+      <Filter>coherunce\Application\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\chuApplication.h">
       <Filter>coherunce\Application</Filter>

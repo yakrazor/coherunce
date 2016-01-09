@@ -12,15 +12,8 @@
 #include "chuApplication.h"
 #include "chuOSCManager.h"
 #include "chuGeneratorManager.h"
-
-class GeneratorButton : public TextButton
-{
-public:
-    GeneratorButton(int index) : generatorIndex(index) {
-
-    }
-    int generatorIndex;
-};
+#include "chuClipButton.h"
+#include "chuLookAndFeel.h"
 
 
 class chuMainComponent : public Component, public Button::Listener, public Slider::Listener
@@ -32,8 +25,12 @@ public:
     ScopedPointer<Label> intensityLabel;
     ScopedPointer<TextButton> enableButton;
 
+    chuLookAndFeel customLookAndFeel;
+
     chuMainComponent()
     {
+        LookAndFeel::setDefaultLookAndFeel(&customLookAndFeel);
+
         chuOSCManager::initialize(7900);
         chuGeneratorManager::initialize();
 
@@ -67,23 +64,15 @@ public:
         int generatorCount = 0;
         for (auto& generator : chuGeneratorManager::getAllGenerators())
         {
-            std::vector<chuParameter*> params;
-            generator->getParamList(params);
-
-            auto button = new GeneratorButton(generatorCount);
-            childControls.add(button);
-
-            String description = generator->getName() + " " + String(generatorCount + 1);
-            button->setButtonText(description);
-
-            button->setToggleState(generator->isActive(), dontSendNotification);
-            button->setBounds(10 + 160 * generatorCount, 10, 150, 60);
-            button->addListener(this);
-            addAndMakeVisible(button);
+            auto cb = new chuClipButton();
+            cb->setGenerator(generator);
+            cb->setBounds(0 + 120 * generatorCount, 0, 120, 110);
+            addAndMakeVisible(cb);
+            childControls.add(cb);
 
             auto panel = generator->createPanel();
             childControls.add(panel);
-            panel->setBounds(10 + 160 * generatorCount, 79, 150, 500);
+            panel->setBounds(0 + 120 * generatorCount, 113, 120, 500);
             addAndMakeVisible(panel);
 
             generatorCount++;
@@ -107,6 +96,11 @@ public:
         chuOSCManager::deinitialize();
     }
 
+    void paint(Graphics& g) override
+    {
+        g.fillAll(Colours::black);
+    }
+
     virtual void buttonClicked(Button* button) override
     {
         if (button->getName() == "STOP")
@@ -116,18 +110,6 @@ public:
         else if (button->getName() == "GO")
         {
             getApp()->getLaserOutputThread()->enableOutput();
-        }
-
-        GeneratorButton* gb = dynamic_cast<GeneratorButton*>(button);
-        if (gb)
-        {
-            auto& generators = chuGeneratorManager::getAllGenerators();
-            if (gb->generatorIndex >= 0 && gb->generatorIndex < generators.size())
-            {
-                bool genState = generators[gb->generatorIndex]->isActive();
-                generators[gb->generatorIndex]->setActive(!genState);
-                gb->setToggleState(!genState, dontSendNotification);
-            }
         }
     }
 

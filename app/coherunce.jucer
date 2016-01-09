@@ -26,6 +26,15 @@
             file="Source/chuOSCManager.cpp"/>
     </GROUP>
     <GROUP id="{572DD2B8-3E51-3583-F0F7-5C2847D91469}" name="Application">
+      <FILE id="v2EVuK" name="chuLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/Application/chuLookAndFeel.cpp"/>
+      <FILE id="mzw7ey" name="chuLookAndFeel.h" compile="0" resource="0"
+            file="Source/Application/chuLookAndFeel.h"/>
+      <GROUP id="{2EE424BE-D824-ED33-A90D-787A9687C4B3}" name="Components">
+        <FILE id="daQ3Qg" name="chuClipButton.cpp" compile="1" resource="0"
+              file="Source/Application/Components/chuClipButton.cpp"/>
+        <FILE id="NIJ4FT" name="chuClipButton.h" compile="0" resource="0" file="Source/Application/Components/chuClipButton.h"/>
+      </GROUP>
       <FILE id="J0nBhR" name="chuApplication.h" compile="0" resource="0"
             file="Source/chuApplication.h"/>
       <FILE id="U2c2EU" name="chuApplication.cpp" compile="1" resource="0"
