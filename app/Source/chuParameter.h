@@ -45,6 +45,7 @@ class chuParameterProvider
 public:
     virtual ~chuParameterProvider() {}
     virtual void getParamList(std::vector<chuParameter*>& params) = 0;
+    virtual String getName() const = 0;
 
     PropertyPanel* createPanel();
 };

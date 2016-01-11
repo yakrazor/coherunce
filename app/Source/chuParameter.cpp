@@ -29,7 +29,7 @@ PropertyPanel* chuParameterProvider::createPanel()
     }
 
     auto panel = new PropertyPanel();
-    panel->addProperties(propertyComponents);
+    panel->addSection(getName() + " Parameters", propertyComponents);
     return panel;
 }
 

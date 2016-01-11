@@ -22,7 +22,7 @@ public:
     chuGenerator(String generatorName);
     virtual ~chuGenerator() {}
 
-    String getName() const { return name; }
+    virtual String getName() const override { return name; }
     bool isActive() const { return active; }
     void setActive(bool b) { active = b; }
 

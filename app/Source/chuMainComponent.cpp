@@ -24,6 +24,7 @@ public:
     ScopedPointer<Slider> intensitySlider;
     ScopedPointer<Label> intensityLabel;
     ScopedPointer<TextButton> enableButton;
+    ScopedPointer<PropertyPanel> parameters;
 
     chuLookAndFeel customLookAndFeel;
 
@@ -70,13 +71,11 @@ public:
             addAndMakeVisible(cb);
             childControls.add(cb);
 
-            auto panel = generator->createPanel();
-            childControls.add(panel);
-            panel->setBounds(0 + 120 * generatorCount, 113, 120, 500);
-            addAndMakeVisible(panel);
-
             generatorCount++;
         }
+
+        parameters = chuGeneratorManager::getAllGenerators()[0]->createPanel();
+        addAndMakeVisible(parameters);
 
         setSize(1100, 720);
     }
@@ -84,10 +83,13 @@ public:
     void resized() override
     {
         int windowHeight = this->getHeight();
+        int windowWidth = this->getWidth();
+
         stopButton->setBounds(-5, windowHeight - 70, 115, 75);
         intensitySlider->setBounds(120, windowHeight - 40, 300, 30);
         intensityLabel->setBounds(120, windowHeight - 65, 300, 25);
         enableButton->setBounds(430, windowHeight - 70, 60, 60);
+        parameters->setBounds(windowWidth - 300, 0, 300, windowHeight);
     }
 
     ~chuMainComponent()

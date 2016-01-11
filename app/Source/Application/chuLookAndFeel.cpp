@@ -21,7 +21,6 @@ chuLookAndFeel::chuLookAndFeel()
     setColour(Label::textColourId, Colours::white);
     setColour(Slider::textBoxTextColourId, Colours::white);
     setColour(Slider::ColourIds::thumbColourId, Colours::steelblue);
-
 }
 
 void chuLookAndFeel::drawButtonBackground(Graphics& g, Button& button, const Colour& backgroundColour,
@@ -55,4 +54,21 @@ void chuLookAndFeel::drawButtonBackground(Graphics& g, Button& button, const Col
         g.setColour(baseColour);
         g.fillPath(outline);
     }
+}
+
+void chuLookAndFeel::drawPropertyPanelSectionHeader (Graphics& g, const String& name,
+                                                     bool isOpen, int width, int height)
+{
+    const float buttonSize = height * 0.75f;
+    const float buttonIndent = (height - buttonSize) * 0.5f;
+
+    g.setColour(Colours::darkgrey);
+    g.fillRect(0, 0, width, height);
+    drawTreeviewPlusMinusBox (g, Rectangle<float> (buttonIndent, buttonIndent, buttonSize, buttonSize), Colours::darkgrey, isOpen, false);
+
+    const int textX = (int) (buttonIndent * 2.0f + buttonSize + 2.0f);
+
+    g.setColour (Colours::white);
+    g.setFont (Font (height * 0.7f, Font::bold));
+    g.drawText (name, textX, 0, width - textX - 4, height, Justification::centredLeft, true);
 }
