@@ -358,22 +358,31 @@
     <ClCompile Include="..\..\Source\chuOSCManager.cpp">
       <Filter>coherunce\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Application\chuLookAndFeel.cpp">
-      <Filter>coherunce\Application</Filter>
+    <ClCompile Include="..\..\Source\Application\Components\chuInspector.cpp">
+      <Filter>coherunce\Application\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Application\Components\chuClipGrid.cpp">
+      <Filter>coherunce\Application\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Application\Components\chuGlobalControls.cpp">
+      <Filter>coherunce\Application\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Application\Components\chuClipButton.cpp">
       <Filter>coherunce\Application\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Application\Components\chuMultiSplitPane.cpp">
+      <Filter>coherunce\Application\Components</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\chuApplication.cpp">
+      <Filter>coherunce\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Application\chuLookAndFeel.cpp">
       <Filter>coherunce\Application</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\chuMainWindow.cpp">
       <Filter>coherunce\Application</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\chuMenuBar.cpp">
-      <Filter>coherunce\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\chuMainComponent.cpp">
       <Filter>coherunce\Application</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\chuPreferencesDialog.cpp">
@@ -1734,13 +1743,25 @@
     <ClInclude Include="..\..\Source\chuOSCManager.h">
       <Filter>coherunce\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Application\chuLookAndFeel.h">
-      <Filter>coherunce\Application</Filter>
+    <ClInclude Include="..\..\Source\Application\Components\chuInspector.h">
+      <Filter>coherunce\Application\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Application\Components\chuClipGrid.h">
+      <Filter>coherunce\Application\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Application\Components\chuGlobalControls.h">
+      <Filter>coherunce\Application\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Application\Components\chuClipButton.h">
       <Filter>coherunce\Application\Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Application\Components\chuMultiSplitPane.h">
+      <Filter>coherunce\Application\Components</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\chuApplication.h">
+      <Filter>coherunce\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Application\chuLookAndFeel.h">
       <Filter>coherunce\Application</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\chuMainWindow.h">

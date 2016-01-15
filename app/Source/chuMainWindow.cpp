@@ -8,22 +8,35 @@
   ==============================================================================
 */
 
-#include "chuApplication.h"
 #include "chuMainWindow.h"
+#include "chuLookAndFeel.h"
+#include "chuApplication.h"
 
-Component* createMainContentComponent();
+#include "chuMultiSplitPane.h"
+#include "chuGlobalControls.h"
+#include "chuClipGrid.h"
+#include "chuInspector.h"
 
 chuMainWindow::chuMainWindow(String name)
 : DocumentWindow(name, Colours::lightgrey, DocumentWindow::allButtons)
 {
     setUsingNativeTitleBar(true);
-    setContentOwned(createMainContentComponent(), true);
-    setResizable(true, true);
-    setResizeLimits(750, 500, 250000, 250000);
+
+    customLookAndFeel = new chuLookAndFeel();
+    LookAndFeel::setDefaultLookAndFeel(customLookAndFeel);
 
     addKeyListener(getApp()->getApplicationCommandManager().getKeyMappings());
 
-    centreWithSize(getWidth(), getHeight());
+    auto splitPane = new chuMultiSplitPane();
+    splitPane->addPane(new chuGlobalControls(), 250, 300, 250);
+    splitPane->addPane(new chuClipGrid(), 100, 500, 200, true);
+    splitPane->addPane(new chuInspector(), 50, 400, 300);
+    splitPane->setBounds(getBounds());
+    setContentOwned(splitPane, true);
+
+    setResizable(true, true);
+    setResizeLimits(750, 400, 250000, 250000);
+    centreWithSize(1200, 700);
     setVisible(true);
 }
 

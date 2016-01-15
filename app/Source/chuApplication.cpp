@@ -13,6 +13,8 @@
 #include "chuMainWindow.h"
 #include "chuMenuBar.h"
 #include "chuOSCManager.h"
+#include "chuGeneratorManager.h"
+
 
 #define FRAME_RATE 30
 
@@ -21,8 +23,6 @@
 
 void chuApplication::initialise(const String& commandLine)
 {
-    mainWindow = new chuMainWindow(getApplicationName());
-
     laserThread = new LaserOutputThread();
     laserThread->startThread();
 
@@ -41,10 +41,18 @@ void chuApplication::initialise(const String& commandLine)
     getApplicationCommandManager().registerAllCommandsForTarget(this);
     menu->initialize();
     mainMenu = menu;
+
+    chuOSCManager::initialize(7900);
+    chuGeneratorManager::initialize();
+
+    mainWindow = new chuMainWindow(getApplicationName());
 }
 
 void chuApplication::shutdown()
 {
+    chuGeneratorManager::deinitialize();
+    chuOSCManager::deinitialize();
+
     mainMenu = nullptr;
     mainWindow = nullptr;
     settingsWindow = nullptr;
