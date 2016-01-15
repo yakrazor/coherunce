@@ -30,4 +30,5 @@ This is early-stage experimental software, developed in spare hacking time, that
     
 3. Open the appropriate project for your platform from `JUCE/extras/Introjucer/Builds` and build the Introjucer.
 4. Clone the coherünce repo into the same parent folder as the JUCE repo.
+5. Open `app/coherunce.jucer` in the Introjucer and hit *Save Project and Open in IDE...*
 5. Build the appropriate project for your platform from `coherunce/app/Builds`.
