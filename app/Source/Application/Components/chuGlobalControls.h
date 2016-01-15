@@ -32,6 +32,8 @@ private:
     ScopedPointer<Label> intensityLabel;
     ScopedPointer<TextButton> enableButton;
 
+    ScopedPointer<Component> beatSyncComponent;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuGlobalControls)
 };
 

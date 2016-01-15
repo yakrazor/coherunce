@@ -44,6 +44,10 @@
         <FILE id="I36tj6" name="chuMultiSplitPane.cpp" compile="1" resource="0"
               file="Source/Application/Components/chuMultiSplitPane.cpp"/>
       </GROUP>
+      <FILE id="AAoRSm" name="BeatSyncComponent.cpp" compile="1" resource="0"
+            file="Source/BeatSyncComponent.cpp"/>
+      <FILE id="kvZHfU" name="BeatSyncComponent.h" compile="0" resource="0"
+            file="Source/BeatSyncComponent.h"/>
       <FILE id="J0nBhR" name="chuApplication.h" compile="0" resource="0"
             file="Source/chuApplication.h"/>
       <FILE id="U2c2EU" name="chuApplication.cpp" compile="1" resource="0"

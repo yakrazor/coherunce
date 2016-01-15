@@ -11,6 +11,7 @@
 #include "../../../JuceLibraryCode/JuceHeader.h"
 #include "chuGlobalControls.h"
 #include "chuApplication.h"
+#include "BeatSyncComponent.h"
 
 //==============================================================================
 chuGlobalControls::chuGlobalControls()
@@ -41,6 +42,9 @@ chuGlobalControls::chuGlobalControls()
     enableButton->setColour(TextButton::buttonColourId, Colours::green);
     enableButton->addListener(this);
     addAndMakeVisible(enableButton);
+
+    beatSyncComponent = new BeatSyncComponent();
+    addAndMakeVisible(beatSyncComponent);
 }
 
 chuGlobalControls::~chuGlobalControls()
@@ -55,10 +59,14 @@ void chuGlobalControls::paint (Graphics& g)
 void chuGlobalControls::resized()
 {
     int height = getHeight();
+    int width = getWidth();
+
     stopButton->setBounds(-5, height - 70, 115, 75);
     intensitySlider->setBounds(120, height - 40, 55, 30);
     intensityLabel->setBounds(120, height - 65, 55, 25);
     enableButton->setBounds(185, height - 70, 60, 60);
+
+    beatSyncComponent->setBounds(0, 0, width, 100);
 }
 
 void chuGlobalControls::buttonClicked(Button* button)
