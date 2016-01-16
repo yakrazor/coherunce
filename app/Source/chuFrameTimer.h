@@ -20,8 +20,11 @@ class chuFrameTimer : public Timer, public MidiInputCallback
 public:
     chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLaserThread), numPulses(0) {}
     void timerCallback() override;
+
     void setBarClock(float clock) { barClock = clock; }
     float getBarClock() { return barClock; }
+
+    void syncBeatClock();
 
     void handleIncomingMidiMessage (MidiInput*, const MidiMessage& message) override;
 

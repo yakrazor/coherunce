@@ -18,6 +18,7 @@
 */
 
 //[Headers] You can add your own extra header files here...
+#include "chuApplication.h"
 //[/Headers]
 
 #include "BeatSyncComponent.h"
@@ -110,6 +111,7 @@ void BeatSyncComponent::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == syncButton)
     {
         //[UserButtonCode_syncButton] -- add your button handler code here..
+        getApp()->getFrameTimer()->syncBeatClock();
         //[/UserButtonCode_syncButton]
     }
 

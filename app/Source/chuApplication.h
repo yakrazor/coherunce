@@ -55,6 +55,7 @@ public:
     bool perform(const InvocationInfo& info) override;
 
     LaserOutputThread* getLaserOutputThread() { return laserThread; }
+    chuFrameTimer* getFrameTimer() { return frameTimer; }
     
 private:
     ScopedPointer<Component> mainWindow;

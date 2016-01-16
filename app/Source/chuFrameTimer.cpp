@@ -37,6 +37,12 @@ void chuFrameTimer::timerCallback() {
     }
 }
 
+void chuFrameTimer::syncBeatClock()
+{
+    numPulses = 0;
+    setBarClock(0);
+}
+
 void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& message)
 {
     if (message.isMidiClock() && isRunning)
