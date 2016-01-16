@@ -43,14 +43,12 @@ void chuApplication::initialise(const String& commandLine)
     mainMenu = menu;
 
     chuOSCManager::initialize(7900);
-    chuGeneratorManager::initialize();
 
     mainWindow = new chuMainWindow(getApplicationName());
 }
 
 void chuApplication::shutdown()
 {
-    chuGeneratorManager::deinitialize();
     chuOSCManager::deinitialize();
 
     mainMenu = nullptr;
@@ -64,7 +62,7 @@ void chuApplication::shutdown()
 
     applicationCommandManager = nullptr;
     sharedAudioDeviceManager = nullptr;
-
+    clearGeneratorManager();
 }
 
 void chuApplication::systemRequestedQuit()

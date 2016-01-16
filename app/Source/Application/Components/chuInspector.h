@@ -12,20 +12,24 @@
 #define CHUINSPECTOR_H_INCLUDED
 
 #include "../../../JuceLibraryCode/JuceHeader.h"
+#include "chuParameter.h"
 
 
-class chuInspector : public Component
+class chuInspector : public Component, public ChangeListener
 {
 public:
-    chuInspector();
+    chuInspector(ChangeBroadcaster* broadcaster);
     ~chuInspector();
 
     void paint(Graphics& g);
     void resized();
 
-private:
-    ScopedPointer<PropertyPanel> parameters;
+    void inspectParameters(chuParameterProvider* provider);
 
+    virtual void changeListenerCallback(ChangeBroadcaster* source) override;
+
+private:
+    ScopedPointer<PropertyPanel> panel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuInspector)
 };

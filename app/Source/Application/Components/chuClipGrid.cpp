@@ -16,16 +16,32 @@
 //==============================================================================
 chuClipGrid::chuClipGrid()
 {
-    int generatorCount = 0;
-    for (auto& generator : chuGeneratorManager::getAllGenerators())
+    auto manager = getGeneratorManager();
+    if (!manager)
     {
-        auto cb = new chuClipButton();
-        cb->setGenerator(generator);
-        cb->setBounds(0 + 120 * generatorCount, 0, 120, 110);
-        addAndMakeVisible(cb);
-        childControls.add(cb);
+        return;
+    }
 
-        generatorCount++;
+    manager->addChangeListener(this);
+
+    auto& generators = manager->getAllGenerators();
+    int cols = 5;
+    int rows = 5;
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            auto cb = new chuClipButton();
+            int index = i * cols + j;
+            if (index < generators.size())
+            {
+                cb->setGenerator(generators[i * cols + j]);
+            }
+            cb->setBounds(120 * j, 110 * i, 120, 110);
+            addAndMakeVisible(cb);
+            childControls.add(cb);
+        }
     }
 }
 
@@ -41,4 +57,17 @@ void chuClipGrid::paint(Graphics& g)
 void chuClipGrid::resized()
 {
 
+}
+
+void chuClipGrid::changeListenerCallback(ChangeBroadcaster* source)
+{
+    chuGeneratorManager* mgr = dynamic_cast<chuGeneratorManager*>(source);
+    if (mgr)
+    {
+        auto currentGen = mgr->getCurrentGenerator();
+        for (auto gridButton : childControls)
+        {
+            gridButton->setFocus(currentGen != nullptr && gridButton->getGenerator() == currentGen);
+        }
+    }
 }

@@ -12,9 +12,9 @@
 #define CHUCLIPGRID_H_INCLUDED
 
 #include "../../../JuceLibraryCode/JuceHeader.h"
+#include "chuClipButton.h"
 
-
-class chuClipGrid : public Component
+class chuClipGrid : public Component, public ChangeListener
 {
 public:
     chuClipGrid();
@@ -23,9 +23,11 @@ public:
     void paint(Graphics& g);
     void resized();
 
+    virtual void changeListenerCallback(ChangeBroadcaster* source) override;
+
 private:
-    OwnedArray<Component> childControls;
-    
+    OwnedArray<chuClipButton> childControls;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuClipGrid)
 };
 

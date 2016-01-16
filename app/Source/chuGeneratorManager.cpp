@@ -11,7 +11,7 @@
 #include "chuGeneratorManager.h"
 
 
-void chuGeneratorManager::initialize()
+chuGeneratorManager::chuGeneratorManager()
 {
     auto pinwheel = new chuGenPolygonPinwheel();
     pinwheel->setActive(false);
@@ -41,9 +41,30 @@ void chuGeneratorManager::initialize()
     allGenerators.add(fivePoints2);
 }
 
-void chuGeneratorManager::deinitialize()
+chuGeneratorManager::~chuGeneratorManager()
 {
     allGenerators.clear();
 }
 
-OwnedArray<chuGenerator> chuGeneratorManager::allGenerators;
+void chuGeneratorManager::setCurrentGenerator(chuGenerator* gen)
+{
+    currentGenerator = gen;
+    sendChangeMessage();
+}
+
+
+ScopedPointer<chuGeneratorManager> theManager;
+
+chuGeneratorManager* getGeneratorManager()
+{
+    if (!theManager)
+    {
+        theManager = new chuGeneratorManager();
+    }
+    return theManager;
+}
+
+void clearGeneratorManager()
+{
+    theManager = nullptr;
+}

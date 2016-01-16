@@ -12,12 +12,14 @@
 #include "chuClipButton.h"
 
 #include "chuGenerator.h"
+#include "chuGeneratorManager.h"
 
 //==============================================================================
 chuClipButton::chuClipButton()
 : generator(nullptr)
 {
     labelHeight = 25;
+    borderWidth = 2;
 
     preview = new DrawableComposite();
     preview->setBoundingBox(RelativeParallelogram(Rectangle<float>(-100.0, 100.0, 100.0, -100.0)));
@@ -48,6 +50,18 @@ void chuClipButton::paint(Graphics& g)
 
     g.setColour(Colours::darkgrey);
     g.drawLine(w, 0, w, h - labelHeight);
+
+    if (clipActive)
+    {
+        auto r = getLocalBounds();
+        r.removeFromBottom(labelHeight - 1);
+        r.reduce(1, 0);
+        g.setColour(Colours::skyblue);
+        g.fillRect(r);
+        r.reduce(borderWidth, borderWidth);
+        g.setColour(Colours::black);
+        g.fillRect(r);
+    }
 }
 
 
@@ -94,25 +108,34 @@ void chuClipButton::setGenerator(chuGenerator* gen)
     labelButton->setButtonText(gen->getName());
 }
 
+void chuClipButton::setFocus(bool focused)
+{
+    labelButton->setToggleState(focused, dontSendNotification);
+}
+
 void chuClipButton::resized()
 {
     auto r = getLocalBounds();
     auto lowerStrip = r.removeFromBottom(labelHeight);
-
+    
     mainButton->setBounds(r);
     labelButton->setBounds(lowerStrip);
 }
 
 void chuClipButton::buttonClicked(Button* button)
 {
-    if (button == mainButton)
+    if (button == mainButton && generator != nullptr)
     {
-        bool newState = !generator->isActive();
-        generator->setActive(newState);
-        button->setToggleState(newState, dontSendNotification);
+        clipActive = !generator->isActive();
+        generator->setActive(clipActive);
+        if (clipActive)
+        {
+            getGeneratorManager()->setCurrentGenerator(generator);
+        }
+        repaint();
     }
     else if (button == labelButton)
     {
-        // TODO: show properties palette
+        getGeneratorManager()->setCurrentGenerator(generator);
     }
 }
