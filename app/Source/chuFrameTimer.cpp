@@ -39,7 +39,7 @@ void chuFrameTimer::timerCallback() {
 
 void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& message)
 {
-    if (message.isMidiClock())
+    if (message.isMidiClock() && isRunning)
     {
         numPulses++;
         if (numPulses > pulsesPerBar) {
@@ -47,5 +47,14 @@ void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& mes
         }
 
         setBarClock(numPulses / (pulsesPerBar * 1.0));
+    }
+    else if (message.isMidiStart())
+    {
+        numPulses = 0;
+        isRunning = true;
+    }
+    else if (message.isMidiStop())
+    {
+        isRunning = false;
     }
 }

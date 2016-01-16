@@ -28,6 +28,7 @@ public:
 private:
     LaserOutputThread* laserThread;
     float barClock;
+    bool isRunning;
 
     unsigned int numPulses;
     const unsigned int pulsesPerQuarterNote = 24;
