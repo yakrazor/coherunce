@@ -18,11 +18,12 @@ class LaserOutputThread;
 class chuFrameTimer : public Timer, public MidiInputCallback
 {
 public:
-    chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLaserThread), numPulses(0) {}
+    chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLaserThread), numPulses(0), externalClock(false) {}
     void timerCallback() override;
     void setBarClock(float clock) { barClock = clock; }
     float getBarClock() { return barClock; }
-
+    void setExternalClock(bool useExternalClock);
+    
     void handleIncomingMidiMessage (MidiInput*, const MidiMessage& message) override;
 
 private:
@@ -30,6 +31,7 @@ private:
     float barClock;
 
     unsigned int numPulses;
+    bool externalClock;
     const unsigned int pulsesPerQuarterNote = 24;
     const unsigned int quarterNotesPerBar = 4;
     const unsigned int pulsesPerBar = pulsesPerQuarterNote * quarterNotesPerBar;

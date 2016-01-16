@@ -45,7 +45,8 @@ void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& mes
         if (numPulses > pulsesPerBar) {
             numPulses -= pulsesPerBar;
         }
-
-        setBarClock(numPulses / (pulsesPerBar * 1.0));
+        if (externalClock) {
+            setBarClock(numPulses / (pulsesPerBar * 1.0));
+        }
     }
 }
