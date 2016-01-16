@@ -10,6 +10,10 @@
               file="Source/Core/Generators/chuGenFivePoints.h"/>
         <FILE id="W2Vexu" name="chuGenFivePoints.cpp" compile="1" resource="0"
               file="Source/Core/Generators/chuGenFivePoints.cpp"/>
+        <FILE id="OIPkRw" name="chuGenJavascript.h" compile="0" resource="0"
+              file="Source/Core/Generators/chuGenJavascript.h"/>
+        <FILE id="M2uXyI" name="chuGenJavascript.cpp" compile="1" resource="0"
+              file="Source/Core/Generators/chuGenJavascript.cpp"/>
         <FILE id="kFXPNO" name="chuGen16Step.h" compile="0" resource="0" file="Source/Core/Generators/chuGen16Step.h"/>
         <FILE id="hVq1OI" name="chuGen16Step.cpp" compile="1" resource="0"
               file="Source/Core/Generators/chuGen16Step.cpp"/>

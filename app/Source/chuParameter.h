@@ -106,6 +106,21 @@ private:
     std::atomic<uint32> value;
 };
 
+class chuParameterString : public chuParameter {
+public:
+    chuParameterString(const String& _name, const String& str, const chuParameterOptions& _options = chuParameterOptions::Default);
+    virtual ~chuParameterString() {}
+
+    virtual PropertyComponent* createComponent() override;
+    virtual void oscMessageReceived(const OSCMessage &message) override;
+
+    const String& getValue() const { return value; }
+    void setValue(const String& str) { value = str; }
+
+private:
+    String value;
+};
+
 
 
 #endif  // CHUPARAMETER_H_INCLUDED

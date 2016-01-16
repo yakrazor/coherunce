@@ -12,6 +12,7 @@
 #include "chuGenPolygonPinwheel.h"
 #include "chuGenFivePoints.h"
 #include "chuGen16Step.h"
+#include "chuGenJavascript.h"
 
 
 chuGeneratorManager::chuGeneratorManager()
@@ -47,6 +48,9 @@ chuGeneratorManager::chuGeneratorManager()
     step->setActive(false);
     step->setOSCAddress("/generator/5");
     allGenerators.add(step);
+
+    auto js = new chuGenJavascript();
+    allGenerators.add(js);
 }
 
 chuGeneratorManager::~chuGeneratorManager()

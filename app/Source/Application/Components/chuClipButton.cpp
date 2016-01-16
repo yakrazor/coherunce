@@ -21,11 +21,7 @@ chuClipButton::chuClipButton()
     labelHeight = 25;
     borderWidth = 2;
 
-    preview = new DrawableComposite();
-    preview->setBoundingBox(RelativeParallelogram(Rectangle<float>(-100.0, 100.0, 100.0, -100.0)));
-
     mainButton = new DrawableButton("", DrawableButton::ImageFitted);
-    mainButton->setImages(preview);
     mainButton->addListener(this);
 
     labelButton = new TextButton("");
@@ -51,7 +47,7 @@ void chuClipButton::paint(Graphics& g)
     g.setColour(Colours::darkgrey);
     g.drawLine(w, 0, w, h - labelHeight);
 
-    if (clipActive)
+    if (generator && generator->isActive())
     {
         auto r = getLocalBounds();
         r.removeFromBottom(labelHeight - 1);
@@ -63,7 +59,6 @@ void chuClipButton::paint(Graphics& g)
         g.fillRect(r);
     }
 }
-
 
 void drawGeneratorPreview(chuGenerator* generator, DrawableComposite* preview)
 {
@@ -116,21 +111,27 @@ void drawGeneratorPreview(chuGenerator* generator, DrawableComposite* preview)
     }
 }
 
-
 void chuClipButton::setGenerator(chuGenerator* gen)
 {
     generator = gen;
-
-    preview->removeAllChildren();
-    drawGeneratorPreview(generator, preview);
-
-    mainButton->setImages(preview);
     labelButton->setButtonText(gen->getName());
+    updatePreview();
+}
+
+void chuClipButton::updatePreview()
+{
+    preview = new DrawableComposite();
+    preview->setBoundingBox(RelativeParallelogram(Rectangle<float>(-100.0, 100.0, 100.0, -100.0)));
+    drawGeneratorPreview(generator, preview);
+    mainButton->setImages(preview);
 }
 
 void chuClipButton::setFocus(bool focused)
 {
     labelButton->setToggleState(focused, dontSendNotification);
+    
+    // TODO: need to update preview whenever properties change; for now, update on focus as a workaround
+    updatePreview();
 }
 
 void chuClipButton::resized()
@@ -146,7 +147,7 @@ void chuClipButton::buttonClicked(Button* button)
 {
     if (button == mainButton && generator != nullptr)
     {
-        clipActive = !generator->isActive();
+        bool clipActive = !generator->isActive();
         generator->setActive(clipActive);
         if (clipActive)
         {

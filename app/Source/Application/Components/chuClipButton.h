@@ -32,6 +32,7 @@ public:
     chuGenerator* getGenerator() { return generator; }
 
     void setFocus(bool focused);
+    void updatePreview();
 
     virtual void buttonClicked(Button* button) override;
 
@@ -40,7 +41,6 @@ private:
 
     int labelHeight;
     int borderWidth;
-    bool clipActive;
 
     ScopedPointer<DrawableComposite> preview;
     ScopedPointer<DrawableButton> mainButton;
