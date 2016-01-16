@@ -14,6 +14,7 @@ chuGen16Step::chuGen16Step()
 : chuGenerator("16Step")
 {
     height = new chuParameterFloat("Height", 0.01, 1.0, 0.3);
+    numSteps = new chuParameterInt("Steps", 2, 16, 16);
     restColor = new chuParameterColor("RestColor", Colors::blue);
     activeColor = new chuParameterColor("ActiveColor", Colors::red);
 }
@@ -23,13 +24,17 @@ void chuGen16Step::getParamList(std::vector<chuParameter*>& params)
     chuGenerator::getParamList(params); // call superclass
 
     params.push_back(height);
+    params.push_back(numSteps);
     params.push_back(restColor);
     params.push_back(activeColor);
 }
 
 std::vector<PatternItem> chuGen16Step::getPatterns(float barClock)
 {
-    int step = barClock * 16;
+    int count = numSteps->getValue();
+    int step = (int)(count * barClock) % count;
+    float stepScaled = step/(count * 0.5) - 1.0;
+    float barWidth = 2.0 /(count * 1.0);
 
     std::vector<PatternItem> items;
     PatternItem item;
@@ -42,13 +47,13 @@ std::vector<PatternItem> chuGen16Step::getPatterns(float barClock)
     item.points.push_back(Vector2f(-1, -height->getValue()));
     if (step > 0)
     {
-        item.points.push_back(Vector2f((step - 8)/8.0, -height->getValue()));
+        item.points.push_back(Vector2f(stepScaled, -height->getValue()));
     }
-    item.points.push_back(Vector2f((step - 8)/8.0, height->getValue()));
-    item.points.push_back(Vector2f((step - 7)/8.0, height->getValue()));
+    item.points.push_back(Vector2f(stepScaled, height->getValue()));
+    item.points.push_back(Vector2f(stepScaled + barWidth, height->getValue()));
     if (step < 15)
     {
-        item.points.push_back(Vector2f((step - 7)/8.0, -height->getValue()));
+        item.points.push_back(Vector2f(stepScaled + barWidth, -height->getValue()));
     }
     item.points.push_back(Vector2f(1, -height->getValue()));
 
