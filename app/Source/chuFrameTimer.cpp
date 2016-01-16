@@ -19,8 +19,9 @@ void chuFrameTimer::timerCallback() {
             printf("Ticked timer at time %f\n", Time::getMillisecondCounterHiRes());
         }
         
-        laserThread->patterns.start_frame();
+        auto& patterns = laserThread->getOutputBuffer().getPatternQueue();
 
+        patterns.start_frame();
         for (auto& generator : getGeneratorManager()->getAllGenerators())
         {
             if (generator->isActive())
@@ -28,12 +29,11 @@ void chuFrameTimer::timerCallback() {
                 auto items = generator->getPatterns(barClock);
                 for (auto& item : items)
                 {
-                    laserThread->patterns.push_item(item);
+                    patterns.push_item(item);
                 }
             }
         }
-
-        laserThread->patterns.finish_frame();
+        patterns.finish_frame();
     }
 }
 

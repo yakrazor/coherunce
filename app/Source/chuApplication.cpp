@@ -55,7 +55,7 @@ void chuApplication::shutdown()
     mainWindow = nullptr;
     settingsWindow = nullptr;
 
-    laserThread->patterns.finish_frame();
+    laserThread->getOutputBuffer().getPatternQueue().finish_frame();
     laserThread->disableOutput();
     laserThread->stopThread(200);
     laserThread = nullptr;

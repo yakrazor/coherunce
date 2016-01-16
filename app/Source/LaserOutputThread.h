@@ -13,39 +13,19 @@
 
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "chuThreadQueue.h"
-#include "PatternItem.h"
-#include "chuParameter.h"
+#include "LaserOutputDriver.h"
+#include "LaserOutputBuffer.h"
+#include "LaserConfig.h"
 
 extern bool logging;
 
-class LaserConfig : public chuParameterProvider
-{
-public:
-    LaserConfig();
-
-    const int ildaXMin = -32768;
-    const int ildaXMax = 32767;
-    const int ildaYMin = -32768;
-    const int ildaYMax = 32767;
-    const int ildaIntensityMin = 0;
-    const int ildaIntensityMax = 65535;
-
-    chuParameterInt pointsPerSecond;
-    chuParameterInt longestUnbrokenLine;
-    chuParameterInt internalDwellPoints;
-    chuParameterInt dwellOffPoints;
-    chuParameterInt dwellOnPoints;
-
-    virtual void getParamList(std::vector<chuParameter*>& params) override;
-    virtual String getName() const override { return "Laser Config"; }
-};
 
 class LaserOutputThread : public Thread
 {
 public:
     LaserOutputThread();
     ~LaserOutputThread();
+
     bool init();
     void run() override;
 
@@ -53,20 +33,22 @@ public:
     void disableOutput();
     bool isOutputEnabled();
 
+    int getFPS();
+    int getPointCount();
+
     LaserConfig& getLaserConfig() { return laserConfig; }
-
-    void setGlobalIntensity(float intensity) { globalIntensity = intensity; }
-
-    chuThreadQueue<PatternItem> patterns;
+    LaserOutputBuffer& getOutputBuffer() { return outputBuffer; }
+    const LaserStatistics& getStatistics() const { return stats; }
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LaserOutputThread)
-    bool connected;
 
-    float globalIntensity;
-    bool enabled;
-
+    LaserStatistics stats;
     LaserConfig laserConfig;
+    LaserOutputBuffer outputBuffer;
+
+    ScopedPointer<LaserOutputDriver> outputDriver;
+    ScopedPointer<LaserOutputDevice> outputDevice;
 };
 
 
