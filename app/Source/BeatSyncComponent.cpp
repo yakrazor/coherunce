@@ -79,7 +79,7 @@ void BeatSyncComponent::paint (Graphics& g)
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll (Colours::black);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -90,9 +90,9 @@ void BeatSyncComponent::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    tapTempoButton->setBounds (8, 64, 96, 32);
-    syncButton->setBounds (200, 64, 95, 32);
-    bpmLabel->setBounds (8, 8, 280, 48);
+    tapTempoButton->setBounds (8, 64, 80, 24);
+    syncButton->setBounds (165, 64, 80, 24);
+    bpmLabel->setBounds (8, 8, 300, 48);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
