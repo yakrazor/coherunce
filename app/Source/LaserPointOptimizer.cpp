@@ -77,13 +77,42 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
 
     buffer.getPatternQueue().process_frame([&](LaserOutputBuffer::PatternQueue::frame_type frame) {
         for (auto& item : frame) {
-            if (item.type == PatternType::RegularPolygon) {
 
-                // clamp input point
-                if (item.origin.x < -1.0) { item.origin.x = -1.0; }
-                if (item.origin.x > 1.0)  { item.origin.x = 1.0; }
-                if (item.origin.y < -1.0) { item.origin.y = -1.0; }
-                if (item.origin.y > 1.0)  { item.origin.y = 1.0; }
+            // clamp input point
+            if (item.origin.x < -1.0) { item.origin.x = -1.0; }
+            if (item.origin.x > 1.0)  { item.origin.x = 1.0; }
+            if (item.origin.y < -1.0) { item.origin.y = -1.0; }
+            if (item.origin.y > 1.0)  { item.origin.y = 1.0; }
+
+            if (item.type == PatternType::Polyline) {
+
+                int16_t ptX = item.points[0].x * scale;
+                int16_t ptY = item.points[0].y * scale;
+
+                int move_distance = sqrt(pow(prevItemX - ptX, 2) + pow(prevItemY - ptY, 2));
+                int numMoveSegments = std::max(1, move_distance / longestUnbrokenLine);
+
+                // move from end of last item to start of this item
+                addLine(buffer.points, dwellOffPoints, dwellOnPoints, numMoveSegments, prevItemX, prevItemY, ptX, ptY, 0, 0, 0, 0);
+
+                prevItemX = ptX;
+                prevItemY = ptY;
+
+                for (auto& itemPt : item.points)
+                {
+                    int16_t ptX = itemPt.x * scale;
+                    int16_t ptY = itemPt.y * scale;
+
+                    int distance = sqrt(pow(prevItemX - ptX, 2) + pow(prevItemY - ptY, 2));
+                    int numSegments = std::max(1, distance / longestUnbrokenLine);
+                    addLine(buffer.points, dwellOffPoints, dwellOnPoints, numSegments, prevItemX, prevItemY, ptX, ptY, item.red, item.green, item.blue, intensity);
+
+                    prevItemX = ptX;
+                    prevItemY = ptY;
+                }
+
+            }
+            else if (item.type == PatternType::RegularPolygon) {
 
                 // Find the start point
                 float rad = item.rotation * PI/180.0;
