@@ -39,6 +39,11 @@ chuGeneratorManager::chuGeneratorManager()
     fivePoints2->color->setValue(Color::fromRGB(0, 0, 255));
     fivePoints2->setOSCAddress("/generator/4");
     allGenerators.add(fivePoints2);
+
+    auto step = new chuGen16Step();
+    step->setActive(false);
+    step->setOSCAddress("/generator/5");
+    allGenerators.add(step);
 }
 
 chuGeneratorManager::~chuGeneratorManager()

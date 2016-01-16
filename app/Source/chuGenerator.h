@@ -49,6 +49,17 @@ public:
     ScopedPointer<chuParameterColor> color;
 };
 
+class chuGen16Step : public chuGenerator {
+public:
+    chuGen16Step();
+    virtual std::vector<PatternItem> getPatterns(float barClock) override;
+    virtual void getParamList(std::vector<chuParameter*>& params) override;
+
+    ScopedPointer<chuParameterFloat> height;
+    ScopedPointer<chuParameterColor> activeColor;
+    ScopedPointer<chuParameterColor> restColor;
+};
+
 class chuGenFivePoints : public chuGenerator {
 public:
     chuGenFivePoints();
@@ -66,19 +77,19 @@ public:
 
     ScopedPointer<chuParameterFloat> pt1x;
     ScopedPointer<chuParameterFloat> pt1y;
-    ScopedPointer<chuParameterFloat> pt1on;
+    ScopedPointer<chuParameterInt> pt1on;
     ScopedPointer<chuParameterFloat> pt2x;
     ScopedPointer<chuParameterFloat> pt2y;
-    ScopedPointer<chuParameterFloat> pt2on;
+    ScopedPointer<chuParameterInt> pt2on;
     ScopedPointer<chuParameterFloat> pt3x;
     ScopedPointer<chuParameterFloat> pt3y;
-    ScopedPointer<chuParameterFloat> pt3on;
+    ScopedPointer<chuParameterInt> pt3on;
     ScopedPointer<chuParameterFloat> pt4x;
     ScopedPointer<chuParameterFloat> pt4y;
-    ScopedPointer<chuParameterFloat> pt4on;
+    ScopedPointer<chuParameterInt> pt4on;
     ScopedPointer<chuParameterFloat> pt5x;
     ScopedPointer<chuParameterFloat> pt5y;
-    ScopedPointer<chuParameterFloat> pt5on;
+    ScopedPointer<chuParameterInt> pt5on;
 };
 
 class chuGenSpirograph : public chuGenerator {

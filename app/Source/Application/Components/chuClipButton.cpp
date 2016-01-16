@@ -73,6 +73,15 @@ void drawGeneratorPreview(chuGenerator* generator, DrawableComposite* preview)
     }
 
     auto items = generator->getPatterns(0.0);
+
+    auto border = new DrawablePath();
+    Path borderPath;
+    borderPath.addRectangle(-100, -100, 200, 200);
+    border->setStrokeFill(Colours::black);
+    border->setStrokeThickness(1.0);
+    border->setPath(borderPath);
+    preview->addAndMakeVisible(border);
+
     for (auto& item : items)
     {
         Path path;
@@ -84,12 +93,23 @@ void drawGeneratorPreview(chuGenerator* generator, DrawableComposite* preview)
              item.radius * 100,
              item.rotation);
         }
+        else if (item.type == PatternType::Polyline)
+        {
+            for (int i = 1; i < item.points.size(); i++)
+            {
+                path.addLineSegment(
+                    Line<float>(
+                        item.points[i-1].x * 100, item.points[i-1].y * -100,
+                        item.points[i].x * 100, item.points[i].y * -100),
+                    1
+                );
+            }
+        }
 
         auto dp = new DrawablePath();
-        dp->setStrokeFill(Colours::red);
         dp->setStrokeFill(Colour(item.red >> 8, item.green >> 8, item.blue >> 8));
         dp->setFill(Colours::transparentBlack);
-        dp->setStrokeThickness(1.0f);
+        dp->setStrokeThickness(2.0f);
         dp->setPath(path);
 
         preview->addAndMakeVisible(dp);

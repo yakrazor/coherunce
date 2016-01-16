@@ -45,7 +45,7 @@ struct PatternItem
     float radius;
     float height;
     int sides;
-    Vector2f points[12];
+    std::vector<Vector2f> points;
 };
 
 

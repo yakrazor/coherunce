@@ -77,6 +77,52 @@ std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns(float barClock)
     return items;
 }
 
+chuGen16Step::chuGen16Step()
+: chuGenerator("16Step")
+{
+    height = new chuParameterFloat("Height", 0.01, 1.0, 0.3);
+    restColor = new chuParameterColor("RestColor", Colors::blue);
+    activeColor = new chuParameterColor("ActiveColor", Colors::red);
+}
+
+void chuGen16Step::getParamList(std::vector<chuParameter*>& params)
+{
+    chuGenerator::getParamList(params); // call superclass
+
+    params.push_back(height);
+    params.push_back(restColor);
+    params.push_back(activeColor);
+}
+
+std::vector<PatternItem> chuGen16Step::getPatterns(float barClock)
+{
+    int step = barClock * 16;
+
+    std::vector<PatternItem> items;
+    PatternItem item;
+    item.type = PatternType::Polyline;
+    item.red = restColor->getValue().getRed() << 8;
+    item.green = restColor->getValue().getGreen() << 8;
+    item.blue = restColor->getValue().getBlue() << 8;
+    item.origin = Vector2f(0, 0);
+
+    item.points.push_back(Vector2f(-1, -height->getValue()));
+    if (step > 0)
+    {
+        item.points.push_back(Vector2f((step - 8)/8.0, -height->getValue()));
+    }
+    item.points.push_back(Vector2f((step - 8)/8.0, height->getValue()));
+    item.points.push_back(Vector2f((step - 7)/8.0, height->getValue()));
+    if (step < 15)
+    {
+        item.points.push_back(Vector2f((step - 7)/8.0, -height->getValue()));
+    }
+    item.points.push_back(Vector2f(1, -height->getValue()));
+
+    items.push_back(item);
+    return items;
+}
+
 chuGenFivePoints::chuGenFivePoints()
 : chuGenerator("FivePoints")
 {
@@ -86,23 +132,23 @@ chuGenFivePoints::chuGenFivePoints()
     color = new chuParameterColor("Color", Colors::red);
 
     chuParameterOptions options;
-    options.isUserVisible = false;
+    options.isUserVisible = true;
 
-    pt1x  = new chuParameterFloat("pt1x",  leapXMin, leapXMax, 0.0, options);
-    pt1y  = new chuParameterFloat("pt1y",  leapYMin, leapYMax, 0.0, options);
-    pt1on = new chuParameterFloat("pt1on", 0.0, 1.0, 0.0, options);
-    pt2x  = new chuParameterFloat("pt2x",  leapXMin, leapXMax, 0.0, options);
-    pt2y  = new chuParameterFloat("pt2y",  leapYMin, leapYMax, 0.0, options);
-    pt2on = new chuParameterFloat("pt2on", 0.0, 1.0, 0.0, options);
-    pt3x  = new chuParameterFloat("pt3x",  leapXMin, leapXMax, 0.0, options);
-    pt3y  = new chuParameterFloat("pt3y",  leapYMin, leapYMax, 0.0, options);
-    pt3on = new chuParameterFloat("pt3on", 0.0, 1.0, 0.0, options);
-    pt4x  = new chuParameterFloat("pt4x",  leapXMin, leapXMax, 0.0, options);
-    pt4y  = new chuParameterFloat("pt4y",  leapYMin, leapYMax, 0.0, options);
-    pt4on = new chuParameterFloat("pt4on", 0.0, 1.0, 0.0, options);
-    pt5x  = new chuParameterFloat("pt5x",  leapXMin, leapXMax, 0.0, options);
-    pt5y  = new chuParameterFloat("pt5y",  leapYMin, leapYMax, 0.0, options);
-    pt5on = new chuParameterFloat("pt5on", 0.0, 1.0, 0.0, options);
+    pt1x  = new chuParameterFloat("pt1x",  leapXMin, leapXMax, (leapXMax - leapXMin)*1.0/6.0 + leapXMin, options);
+    pt1y  = new chuParameterFloat("pt1y",  leapYMin, leapYMax, (leapYMax + leapYMin)/2.0, options);
+    pt1on = new chuParameterInt("pt1on", 0, 1, 1, options);
+    pt2x  = new chuParameterFloat("pt2x",  leapXMin, leapXMax, (leapXMax - leapXMin)*2.0/6.0 + leapXMin, options);
+    pt2y  = new chuParameterFloat("pt2y",  leapYMin, leapYMax, (leapYMax + leapYMin)/2.0, options);
+    pt2on = new chuParameterInt("pt2on", 0, 1, 1, options);
+    pt3x  = new chuParameterFloat("pt3x",  leapXMin, leapXMax, (leapXMax - leapXMin)*3.0/6.0 + leapXMin, options);
+    pt3y  = new chuParameterFloat("pt3y",  leapYMin, leapYMax, (leapYMax + leapYMin)/2.0, options);
+    pt3on = new chuParameterInt("pt3on", 0, 1, 1, options);
+    pt4x  = new chuParameterFloat("pt4x",  leapXMin, leapXMax, (leapXMax - leapXMin)*4.0/6.0 + leapXMin, options);
+    pt4y  = new chuParameterFloat("pt4y",  leapYMin, leapYMax, (leapYMax + leapYMin)/2.0, options);
+    pt4on = new chuParameterInt("pt4on", 0, 1, 1, options);
+    pt5x  = new chuParameterFloat("pt5x",  leapXMin, leapXMax, (leapXMax - leapXMin)*5.0/6.0 + leapXMin, options);
+    pt5y  = new chuParameterFloat("pt5y",  leapYMin, leapYMax, (leapYMax + leapYMin)/2.0, options);
+    pt5on = new chuParameterInt("pt5on", 0, 1, 1, options);
 }
 
 void chuGenFivePoints::getParamList(std::vector<chuParameter*>& params)
