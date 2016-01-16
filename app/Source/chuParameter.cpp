@@ -9,6 +9,7 @@
 */
 
 #include "chuParameter.h"
+#include "chuApplication.h"
 
 chuParameterOptions chuParameterOptions::Default;
 
@@ -224,10 +225,13 @@ public:
     {
         setUsingNativeTitleBar(true);
         document.addListener(this);
+        setResizable(true, true);
 
         editor = new CodeEditorComponent(document, nullptr);
         editor->loadContent(param->getValue());
         setContentOwned(editor, false);
+
+        addKeyListener(getApp()->getApplicationCommandManager().getKeyMappings());
     }
 
     ~CodeEditorWindow()
@@ -286,7 +290,13 @@ public:
 
         if (!window) {
             window = new CodeEditorWindow(param->getName(), param);
-            window->setBounds(100, 100, 400, 600);
+            auto buttonBounds = b->getScreenBounds();
+            int codeWindowWidth = 300;
+            int codeWindowHeight = 400;
+            window->setBounds(buttonBounds.getCentreX() - codeWindowWidth,
+                              buttonBounds.getCentreY() + 30,
+                              codeWindowWidth,
+                              codeWindowHeight);
         }
         window->setVisible(true);
     }

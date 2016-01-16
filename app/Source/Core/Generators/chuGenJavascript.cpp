@@ -22,7 +22,6 @@ struct InteropObject : public DynamicObject
 
     static Identifier getClassName() { return "Graphics"; }
 
-
     static var getParameter(const var::NativeFunctionArgs& args)
     {
         var result = var::undefined();

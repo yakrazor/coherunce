@@ -195,9 +195,13 @@ bool chuApplication::perform(const InvocationInfo& info)
         case CommandIDs::CloseWindow:
             {
                 auto window = TopLevelWindow::getActiveTopLevelWindow();
-                if (window != getMainWindow())
+                if (window == &getSettingsWindow())
                 {
                     window->setVisible(false);
+                }
+                if (window != getMainWindow())
+                {
+                    delete window;
                 }
                 return true;
             }
