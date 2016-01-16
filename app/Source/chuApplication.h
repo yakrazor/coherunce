@@ -17,9 +17,6 @@
 #include "chuFrameTimer.h"
 
 
-Component* createMainContentComponent();
-
-
 enum CommandIDs {
     About = 0x2000,
     Preferences,

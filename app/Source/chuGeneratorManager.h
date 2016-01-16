@@ -14,19 +14,26 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "chuGenerator.h"
 
-class chuGeneratorManager
+class chuGeneratorManager : public ChangeBroadcaster
 {
 public:
-    static void initialize();
-    static void deinitialize();
-    
-    static OwnedArray<chuGenerator>& getAllGenerators() { return allGenerators; }
+    chuGeneratorManager();
+    ~chuGeneratorManager();
+
+    OwnedArray<chuGenerator>& getAllGenerators() { return allGenerators; }
+
+    chuGenerator* getCurrentGenerator() { return currentGenerator; }
+    void setCurrentGenerator(chuGenerator* gen);
+
 private:
-    static OwnedArray<chuGenerator> allGenerators;
+    OwnedArray<chuGenerator> allGenerators;
+    chuGenerator* currentGenerator;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuGeneratorManager)
 };
 
+chuGeneratorManager* getGeneratorManager();
+void clearGeneratorManager();
 
 
 #endif  // CHUGENERATORMANAGER_H_INCLUDED

@@ -38,6 +38,7 @@ public:
     chuParameterInt dwellOnPoints;
 
     virtual void getParamList(std::vector<chuParameter*>& params) override;
+    virtual String getName() const override { return "Laser Config"; }
 };
 
 class LaserOutputThread : public Thread

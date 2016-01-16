@@ -21,7 +21,7 @@ void chuFrameTimer::timerCallback() {
         
         laserThread->patterns.start_frame();
 
-        for (auto& generator : chuGeneratorManager::getAllGenerators())
+        for (auto& generator : getGeneratorManager()->getAllGenerators())
         {
             if (generator->isActive())
             {

@@ -9,9 +9,13 @@
 */
 
 #include "chuGeneratorManager.h"
+#include "chuGenPolygonPinwheel.h"
+#include "chuGenFivePoints.h"
+#include "chuGen16Step.h"
+#include "chuGenJavascript.h"
 
 
-void chuGeneratorManager::initialize()
+chuGeneratorManager::chuGeneratorManager()
 {
     auto pinwheel = new chuGenPolygonPinwheel();
     pinwheel->setActive(false);
@@ -39,11 +43,40 @@ void chuGeneratorManager::initialize()
     fivePoints2->color->setValue(Color::fromRGB(0, 0, 255));
     fivePoints2->setOSCAddress("/generator/4");
     allGenerators.add(fivePoints2);
+
+    auto step = new chuGen16Step();
+    step->setActive(false);
+    step->setOSCAddress("/generator/5");
+    allGenerators.add(step);
+
+    auto js = new chuGenJavascript();
+    allGenerators.add(js);
 }
 
-void chuGeneratorManager::deinitialize()
+chuGeneratorManager::~chuGeneratorManager()
 {
     allGenerators.clear();
 }
 
-OwnedArray<chuGenerator> chuGeneratorManager::allGenerators;
+void chuGeneratorManager::setCurrentGenerator(chuGenerator* gen)
+{
+    currentGenerator = gen;
+    sendChangeMessage();
+}
+
+
+ScopedPointer<chuGeneratorManager> theManager;
+
+chuGeneratorManager* getGeneratorManager()
+{
+    if (!theManager)
+    {
+        theManager = new chuGeneratorManager();
+    }
+    return theManager;
+}
+
+void clearGeneratorManager()
+{
+    theManager = nullptr;
+}
