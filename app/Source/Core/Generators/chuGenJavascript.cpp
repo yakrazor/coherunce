@@ -45,6 +45,10 @@ struct InteropObject : public DynamicObject
                 {
                     result = thisObject->generator->d->getValue();
                 }
+                else if (args.arguments[0] == "barClock")
+                {
+                    result = thisObject->generator->localBarClock;
+                }
             }
         }
         return result;
@@ -79,11 +83,13 @@ chuGenJavascript::chuGenJavascript()
     d = new chuParameterFloat("d", 0.0, 1.0, 0.5);
     code = new chuParameterString("Code",
                                   "var a = g.getParameter('a');\n" \
+                                  "var b = g.getParameter('b');\n" \
+                                  "var clk = 1.0 - g.getParameter('barClock');\n"
                                   "g.addPoint(0,0);\n" \
-                                  "g.addPoint(-a, a);\n" \
-                                  "g.addPoint(-a, -a);\n" \
-                                  "g.addPoint(a, a);\n" \
-                                  "g.addPoint(a, -a);\n" \
+                                  "g.addPoint(-a, a * b * clk);\n" \
+                                  "g.addPoint(-a, -a * b * clk);\n" \
+                                  "g.addPoint(a, a * b * clk);\n" \
+                                  "g.addPoint(a, -a * b * clk);\n" \
                                   "g.addPoint(0, 0);\n"
                                   );
 
@@ -108,6 +114,7 @@ std::vector<PatternItem> chuGenJavascript::getPatterns(float barClock)
     PatternItem item;
     item.type = Polyline;
     patternBuffer.push_back(item);
+    localBarClock = barClock;
     
     engine.execute(code->getValue());
 

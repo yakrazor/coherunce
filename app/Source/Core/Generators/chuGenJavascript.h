@@ -28,6 +28,8 @@ public:
     ScopedPointer<chuParameterString> code;
 
     std::vector<PatternItem> patternBuffer;
+    float localBarClock;
+    
 private:
 
     JavascriptEngine engine;

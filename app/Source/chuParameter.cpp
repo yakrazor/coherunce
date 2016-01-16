@@ -291,7 +291,7 @@ public:
         if (!window) {
             window = new CodeEditorWindow(param->getName(), param);
             auto buttonBounds = b->getScreenBounds();
-            int codeWindowWidth = 300;
+            int codeWindowWidth = 400;
             int codeWindowHeight = 400;
             window->setBounds(buttonBounds.getCentreX() - codeWindowWidth,
                               buttonBounds.getCentreY() + 30,
