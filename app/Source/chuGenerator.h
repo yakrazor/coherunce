@@ -37,66 +37,6 @@ private:
     bool active;
 };
 
-class chuGenPolygonPinwheel : public chuGenerator {
-public:
-    chuGenPolygonPinwheel();
-    virtual std::vector<PatternItem> getPatterns(float barClock) override;
-    virtual void getParamList(std::vector<chuParameter*>& params) override;
-    ScopedPointer<chuParameterInt> sides;
-    ScopedPointer<chuParameterFloat> radius;
-    ScopedPointer<chuParameterInt> copies;
-    ScopedPointer<chuParameterFloat> scale;
-    ScopedPointer<chuParameterColor> color;
-};
-
-class chuGen16Step : public chuGenerator {
-public:
-    chuGen16Step();
-    virtual std::vector<PatternItem> getPatterns(float barClock) override;
-    virtual void getParamList(std::vector<chuParameter*>& params) override;
-
-    ScopedPointer<chuParameterFloat> height;
-    ScopedPointer<chuParameterColor> activeColor;
-    ScopedPointer<chuParameterColor> restColor;
-};
-
-class chuGenFivePoints : public chuGenerator {
-public:
-    chuGenFivePoints();
-    virtual std::vector<PatternItem> getPatterns(float barClock) override;
-    virtual void getParamList(std::vector<chuParameter*>& params) override;
-
-    static constexpr float leapXMin = -300.0;
-    static constexpr float leapXMax = 300.0;
-    static constexpr float leapYMin = 60.0;
-    static constexpr float leapYMax = 360.0;
-
-    ScopedPointer<chuParameterInt> sides;
-    ScopedPointer<chuParameterFloat> radius;
-    ScopedPointer<chuParameterColor> color;
-
-    ScopedPointer<chuParameterFloat> pt1x;
-    ScopedPointer<chuParameterFloat> pt1y;
-    ScopedPointer<chuParameterInt> pt1on;
-    ScopedPointer<chuParameterFloat> pt2x;
-    ScopedPointer<chuParameterFloat> pt2y;
-    ScopedPointer<chuParameterInt> pt2on;
-    ScopedPointer<chuParameterFloat> pt3x;
-    ScopedPointer<chuParameterFloat> pt3y;
-    ScopedPointer<chuParameterInt> pt3on;
-    ScopedPointer<chuParameterFloat> pt4x;
-    ScopedPointer<chuParameterFloat> pt4y;
-    ScopedPointer<chuParameterInt> pt4on;
-    ScopedPointer<chuParameterFloat> pt5x;
-    ScopedPointer<chuParameterFloat> pt5y;
-    ScopedPointer<chuParameterInt> pt5on;
-};
-
-class chuGenSpirograph : public chuGenerator {
-public:
-    chuGenSpirograph() : chuGenerator("Spirograph") {}
-    virtual std::vector<PatternItem> getPatterns(float barClock) override;
-};
 
 
 #endif  // CHUGENERATOR_H_INCLUDED

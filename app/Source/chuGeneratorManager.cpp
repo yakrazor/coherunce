@@ -9,6 +9,9 @@
 */
 
 #include "chuGeneratorManager.h"
+#include "chuGenPolygonPinwheel.h"
+#include "chuGenFivePoints.h"
+#include "chuGen16Step.h"
 
 
 chuGeneratorManager::chuGeneratorManager()

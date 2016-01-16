@@ -5,6 +5,19 @@
               jucerVersion="4.1.0">
   <MAINGROUP id="dWToof" name="coherunce">
     <GROUP id="{6BC089EB-636E-5AF4-43B5-94FB4D9264BC}" name="Core">
+      <GROUP id="{F098A945-FEAF-C0E2-E6B9-909D113EC801}" name="Generators">
+        <FILE id="MObyHw" name="chuGenFivePoints.h" compile="0" resource="0"
+              file="Source/Core/Generators/chuGenFivePoints.h"/>
+        <FILE id="W2Vexu" name="chuGenFivePoints.cpp" compile="1" resource="0"
+              file="Source/Core/Generators/chuGenFivePoints.cpp"/>
+        <FILE id="kFXPNO" name="chuGen16Step.h" compile="0" resource="0" file="Source/Core/Generators/chuGen16Step.h"/>
+        <FILE id="hVq1OI" name="chuGen16Step.cpp" compile="1" resource="0"
+              file="Source/Core/Generators/chuGen16Step.cpp"/>
+        <FILE id="Je0krA" name="chuGenPolygonPinwheel.h" compile="0" resource="0"
+              file="Source/Core/Generators/chuGenPolygonPinwheel.h"/>
+        <FILE id="T57OOh" name="chuGenPolygonPinwheel.cpp" compile="1" resource="0"
+              file="Source/Core/Generators/chuGenPolygonPinwheel.cpp"/>
+      </GROUP>
       <FILE id="mM0sox" name="PatternItem.h" compile="0" resource="0" file="Source/PatternItem.h"/>
       <FILE id="RW39hs" name="chuParameter.h" compile="0" resource="0" file="Source/chuParameter.h"/>
       <FILE id="Z7XqJa" name="chuParameter.cpp" compile="1" resource="0"
@@ -27,15 +40,15 @@
     </GROUP>
     <GROUP id="{572DD2B8-3E51-3583-F0F7-5C2847D91469}" name="Application">
       <GROUP id="{2EE424BE-D824-ED33-A90D-787A9687C4B3}" name="Components">
+        <FILE id="TaszcT" name="chuInspector.h" compile="0" resource="0" file="Source/Application/Components/chuInspector.h"/>
         <FILE id="k27pUQ" name="chuInspector.cpp" compile="1" resource="0"
               file="Source/Application/Components/chuInspector.cpp"/>
-        <FILE id="TaszcT" name="chuInspector.h" compile="0" resource="0" file="Source/Application/Components/chuInspector.h"/>
-        <FILE id="Hzt5Zf" name="chuClipGrid.cpp" compile="1" resource="0" file="Source/Application/Components/chuClipGrid.cpp"/>
         <FILE id="eO6hqi" name="chuClipGrid.h" compile="0" resource="0" file="Source/Application/Components/chuClipGrid.h"/>
-        <FILE id="UbuprI" name="chuGlobalControls.cpp" compile="1" resource="0"
-              file="Source/Application/Components/chuGlobalControls.cpp"/>
+        <FILE id="Hzt5Zf" name="chuClipGrid.cpp" compile="1" resource="0" file="Source/Application/Components/chuClipGrid.cpp"/>
         <FILE id="amI1je" name="chuGlobalControls.h" compile="0" resource="0"
               file="Source/Application/Components/chuGlobalControls.h"/>
+        <FILE id="UbuprI" name="chuGlobalControls.cpp" compile="1" resource="0"
+              file="Source/Application/Components/chuGlobalControls.cpp"/>
         <FILE id="NIJ4FT" name="chuClipButton.h" compile="0" resource="0" file="Source/Application/Components/chuClipButton.h"/>
         <FILE id="daQ3Qg" name="chuClipButton.cpp" compile="1" resource="0"
               file="Source/Application/Components/chuClipButton.cpp"/>
@@ -44,10 +57,10 @@
         <FILE id="I36tj6" name="chuMultiSplitPane.cpp" compile="1" resource="0"
               file="Source/Application/Components/chuMultiSplitPane.cpp"/>
       </GROUP>
-      <FILE id="AAoRSm" name="BeatSyncComponent.cpp" compile="1" resource="0"
-            file="Source/BeatSyncComponent.cpp"/>
       <FILE id="kvZHfU" name="BeatSyncComponent.h" compile="0" resource="0"
             file="Source/BeatSyncComponent.h"/>
+      <FILE id="AAoRSm" name="BeatSyncComponent.cpp" compile="1" resource="0"
+            file="Source/BeatSyncComponent.cpp"/>
       <FILE id="J0nBhR" name="chuApplication.h" compile="0" resource="0"
             file="Source/chuApplication.h"/>
       <FILE id="U2c2EU" name="chuApplication.cpp" compile="1" resource="0"
