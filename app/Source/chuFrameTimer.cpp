@@ -19,8 +19,9 @@ void chuFrameTimer::timerCallback() {
             printf("Ticked timer at time %f\n", Time::getMillisecondCounterHiRes());
         }
         
-        laserThread->patterns.start_frame();
+        auto& patterns = laserThread->getOutputBuffer().getPatternQueue();
 
+        patterns.start_frame();
         for (auto& generator : getGeneratorManager()->getAllGenerators())
         {
             if (generator->isActive())
@@ -28,18 +29,23 @@ void chuFrameTimer::timerCallback() {
                 auto items = generator->getPatterns(barClock);
                 for (auto& item : items)
                 {
-                    laserThread->patterns.push_item(item);
+                    patterns.push_item(item);
                 }
             }
         }
-
-        laserThread->patterns.finish_frame();
+        patterns.finish_frame();
     }
+}
+
+void chuFrameTimer::syncBeatClock()
+{
+    numPulses = 0;
+    setBarClock(0);
 }
 
 void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& message)
 {
-    if (message.isMidiClock())
+    if (message.isMidiClock() && isRunning)
     {
         numPulses++;
         if (numPulses > pulsesPerBar) {
@@ -48,5 +54,14 @@ void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& mes
         if (externalClock) {
             setBarClock(numPulses / (pulsesPerBar * 1.0));
         }
+    }
+    else if (message.isMidiStart())
+    {
+        numPulses = 0;
+        isRunning = true;
+    }
+    else if (message.isMidiStop())
+    {
+        isRunning = false;
     }
 }
