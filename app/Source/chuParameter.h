@@ -88,6 +88,21 @@ private:
     std::atomic<int> value;
 };
 
+class chuParameterBool : public chuParameter {
+public:
+    chuParameterBool(const String& _name, bool _defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
+    virtual ~chuParameterBool() {}
+
+    virtual PropertyComponent* createComponent() override;
+    virtual void oscMessageReceived(const OSCMessage &message) override;
+
+    bool getValue() const { return value.load(); }
+    void setValue(bool newValue) { value.store(newValue); }
+
+private:
+    std::atomic<bool> value;
+};
+
 typedef Colour Color;
 typedef Colours Colors;
 
