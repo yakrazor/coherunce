@@ -11,7 +11,7 @@
 #include "../../../JuceLibraryCode/JuceHeader.h"
 #include "chuClipButton.h"
 
-#include "chuGenerator.h"
+#include "Core/Generators/chuGenerator.h"
 #include "chuGeneratorManager.h"
 
 //==============================================================================

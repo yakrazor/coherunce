@@ -8,7 +8,7 @@
       <GROUP id="{F098A945-FEAF-C0E2-E6B9-909D113EC801}" name="Generators">
         <FILE id="DuTmIV" name="chuGenerator.h" compile="0" resource="0" file="Source/chuGenerator.h"/>
         <FILE id="aSeYE9" name="chuGenerator.cpp" compile="1" resource="0"
-              file="Source/chuGenerator.cpp"/>
+              file="Source/Core/Generators/chuGenerator.cpp"/>
         <FILE id="MObyHw" name="chuGenFivePoints.h" compile="0" resource="0"
               file="Source/Core/Generators/chuGenFivePoints.h"/>
         <FILE id="W2Vexu" name="chuGenFivePoints.cpp" compile="1" resource="0"
@@ -26,11 +26,11 @@
               file="Source/Core/Generators/chuGenPolygonPinwheel.cpp"/>
       </GROUP>
       <GROUP id="{B3965FF4-711D-3D26-7EB1-8105EEBFE28E}" name="Parameters">
-        <FILE id="vUuhoS" name="chuParameters.h" compile="0" resource="0" file="Source/chuParameters.h"/>
+        <FILE id="vUuhoS" name="chuParameters.h" compile="0" resource="0" file="Source/Core/Parameters/chuParameters.h"/>
         <FILE id="RW39hs" name="chuParameterBase.h" compile="0" resource="0"
-              file="Source/chuParameterBase.h"/>
+              file="Source/Core/Parameters/chuParameterBase.h"/>
         <FILE id="Z7XqJa" name="chuParameterBase.cpp" compile="1" resource="0"
-              file="Source/chuParameterBase.cpp"/>
+              file="Source/Core/Parameters/chuParameterBase.cpp"/>
         <FILE id="volbjB" name="chuParameterFloat.h" compile="0" resource="0"
               file="Source/Core/Parameters/chuParameterFloat.h"/>
         <FILE id="c7scCQ" name="chuParameterFloat.cpp" compile="1" resource="0"
@@ -52,26 +52,26 @@
         <FILE id="DU1p9d" name="chuParameterString.cpp" compile="1" resource="0"
               file="Source/Core/Parameters/chuParameterString.cpp"/>
       </GROUP>
-      <FILE id="mM0sox" name="PatternItem.h" compile="0" resource="0" file="Source/PatternItem.h"/>
+      <FILE id="mM0sox" name="PatternItem.h" compile="0" resource="0" file="Source/Core/PatternItem.h"/>
       <FILE id="C8JIKw" name="chuThreadQueue.h" compile="0" resource="0"
-            file="Source/chuThreadQueue.h"/>
-      <FILE id="BiHNzH" name="chuFrameTimer.h" compile="0" resource="0" file="Source/chuFrameTimer.h"/>
+            file="Source/Core/chuThreadQueue.h"/>
+      <FILE id="BiHNzH" name="chuFrameTimer.h" compile="0" resource="0" file="Source/Core/chuFrameTimer.h"/>
       <FILE id="hUqHBz" name="chuFrameTimer.cpp" compile="1" resource="0"
-            file="Source/chuFrameTimer.cpp"/>
+            file="Source/Core/chuFrameTimer.cpp"/>
       <FILE id="ATwDoW" name="chuGeneratorManager.h" compile="0" resource="0"
-            file="Source/chuGeneratorManager.h"/>
+            file="Source/Core/chuGeneratorManager.h"/>
       <FILE id="moTBqQ" name="chuGeneratorManager.cpp" compile="1" resource="0"
-            file="Source/chuGeneratorManager.cpp"/>
-      <FILE id="uezu9I" name="chuOSCManager.h" compile="0" resource="0" file="Source/chuOSCManager.h"/>
+            file="Source/Core/chuGeneratorManager.cpp"/>
+      <FILE id="uezu9I" name="chuOSCManager.h" compile="0" resource="0" file="Source/Core/chuOSCManager.h"/>
       <FILE id="KPqnt4" name="chuOSCManager.cpp" compile="1" resource="0"
-            file="Source/chuOSCManager.cpp"/>
+            file="Source/Core/chuOSCManager.cpp"/>
     </GROUP>
     <GROUP id="{572DD2B8-3E51-3583-F0F7-5C2847D91469}" name="Application">
       <GROUP id="{2EE424BE-D824-ED33-A90D-787A9687C4B3}" name="Components">
         <FILE id="kvZHfU" name="BeatSyncComponent.h" compile="0" resource="0"
-              file="Source/BeatSyncComponent.h"/>
+              file="Source/Application/Components/BeatSyncComponent.h"/>
         <FILE id="AAoRSm" name="BeatSyncComponent.cpp" compile="1" resource="0"
-              file="Source/BeatSyncComponent.cpp"/>
+              file="Source/Application/Components/BeatSyncComponent.cpp"/>
         <FILE id="TaszcT" name="chuInspector.h" compile="0" resource="0" file="Source/Application/Components/chuInspector.h"/>
         <FILE id="k27pUQ" name="chuInspector.cpp" compile="1" resource="0"
               file="Source/Application/Components/chuInspector.cpp"/>
@@ -91,53 +91,53 @@
       </GROUP>
       <GROUP id="{37F6BC25-4574-8313-0C31-247A2D741A98}" name="Preferences">
         <FILE id="gyZhv7" name="chuPreferencesDialog.h" compile="0" resource="0"
-              file="Source/chuPreferencesDialog.h"/>
+              file="Source/Application/Preferences/chuPreferencesDialog.h"/>
         <FILE id="lIJ6wG" name="chuPreferencesDialog.cpp" compile="1" resource="0"
-              file="Source/chuPreferencesDialog.cpp"/>
+              file="Source/Application/Preferences/chuPreferencesDialog.cpp"/>
         <FILE id="Rm0HiD" name="chuPreferencesPageAudio.cpp" compile="1" resource="0"
-              file="Source/chuPreferencesPageAudio.cpp"/>
+              file="Source/Application/Preferences/chuPreferencesPageAudio.cpp"/>
         <FILE id="jDcp1p" name="chuPreferencesPageLaser.cpp" compile="1" resource="0"
-              file="Source/chuPreferencesPageLaser.cpp"/>
+              file="Source/Application/Preferences/chuPreferencesPageLaser.cpp"/>
         <FILE id="EjsiQR" name="chuPreferencesPageOSC.cpp" compile="1" resource="0"
-              file="Source/chuPreferencesPageOSC.cpp"/>
+              file="Source/Application/Preferences/chuPreferencesPageOSC.cpp"/>
       </GROUP>
       <FILE id="J0nBhR" name="chuApplication.h" compile="0" resource="0"
-            file="Source/chuApplication.h"/>
+            file="Source/Application/chuApplication.h"/>
       <FILE id="U2c2EU" name="chuApplication.cpp" compile="1" resource="0"
-            file="Source/chuApplication.cpp"/>
+            file="Source/Application/chuApplication.cpp"/>
       <FILE id="mzw7ey" name="chuLookAndFeel.h" compile="0" resource="0"
             file="Source/Application/chuLookAndFeel.h"/>
       <FILE id="v2EVuK" name="chuLookAndFeel.cpp" compile="1" resource="0"
             file="Source/Application/chuLookAndFeel.cpp"/>
-      <FILE id="NLBlDr" name="chuMainWindow.h" compile="0" resource="0" file="Source/chuMainWindow.h"/>
+      <FILE id="NLBlDr" name="chuMainWindow.h" compile="0" resource="0" file="Source/Application/chuMainWindow.h"/>
       <FILE id="z35zEq" name="chuMainWindow.cpp" compile="1" resource="0"
-            file="Source/chuMainWindow.cpp"/>
-      <FILE id="qEN59A" name="chuMenuBar.h" compile="0" resource="0" file="Source/chuMenuBar.h"/>
-      <FILE id="La1zlg" name="chuMenuBar.cpp" compile="1" resource="0" file="Source/chuMenuBar.cpp"/>
+            file="Source/Application/chuMainWindow.cpp"/>
+      <FILE id="qEN59A" name="chuMenuBar.h" compile="0" resource="0" file="Source/Application/chuMenuBar.h"/>
+      <FILE id="La1zlg" name="chuMenuBar.cpp" compile="1" resource="0" file="Source/Application/chuMenuBar.cpp"/>
     </GROUP>
     <GROUP id="{0954451C-E5BA-15C3-924D-EE8E6287ED75}" name="Output">
-      <FILE id="pI2oD9" name="LaserPoint.cpp" compile="1" resource="0" file="Source/LaserPoint.cpp"/>
-      <FILE id="sczenR" name="LaserPoint.h" compile="0" resource="0" file="Source/LaserPoint.h"/>
+      <FILE id="pI2oD9" name="LaserPoint.cpp" compile="1" resource="0" file="Source/Output/LaserPoint.cpp"/>
+      <FILE id="sczenR" name="LaserPoint.h" compile="0" resource="0" file="Source/Output/LaserPoint.h"/>
       <FILE id="uHxvsG" name="LaserOutputThread.h" compile="0" resource="0"
-            file="Source/LaserOutputThread.h"/>
+            file="Source/Output/LaserOutputThread.h"/>
       <FILE id="K3CvKr" name="LaserOutputThread.cpp" compile="1" resource="0"
-            file="Source/LaserOutputThread.cpp"/>
+            file="Source/Output/LaserOutputThread.cpp"/>
       <FILE id="TuwGEd" name="LaserOutputDriver.h" compile="0" resource="0"
-            file="Source/LaserOutputDriver.h"/>
+            file="Source/Output/LaserOutputDriver.h"/>
       <FILE id="YEbi8W" name="LaserOutputDriver.cpp" compile="1" resource="0"
-            file="Source/LaserOutputDriver.cpp"/>
+            file="Source/Output/LaserOutputDriver.cpp"/>
       <FILE id="zehDbG" name="LaserOutputBuffer.h" compile="0" resource="0"
-            file="Source/LaserOutputBuffer.h"/>
+            file="Source/Output/LaserOutputBuffer.h"/>
       <FILE id="s1lX2I" name="LaserOutputBuffer.cpp" compile="1" resource="0"
-            file="Source/LaserOutputBuffer.cpp"/>
+            file="Source/Output/LaserOutputBuffer.cpp"/>
       <FILE id="t46xvp" name="LaserPointOptimizer.h" compile="0" resource="0"
-            file="Source/LaserPointOptimizer.h"/>
+            file="Source/Output/LaserPointOptimizer.h"/>
       <FILE id="vBy6EJ" name="LaserPointOptimizer.cpp" compile="1" resource="0"
-            file="Source/LaserPointOptimizer.cpp"/>
-      <FILE id="MRNscU" name="LaserConfig.h" compile="0" resource="0" file="Source/LaserConfig.h"/>
-      <FILE id="aGhLd4" name="LaserConfig.cpp" compile="1" resource="0" file="Source/LaserConfig.cpp"/>
-      <FILE id="kO2hZN" name="LaserState.h" compile="0" resource="0" file="Source/LaserState.h"/>
-      <FILE id="Cth1FJ" name="LaserState.cpp" compile="1" resource="0" file="Source/LaserState.cpp"/>
+            file="Source/Output/LaserPointOptimizer.cpp"/>
+      <FILE id="MRNscU" name="LaserConfig.h" compile="0" resource="0" file="Source/Output/LaserConfig.h"/>
+      <FILE id="aGhLd4" name="LaserConfig.cpp" compile="1" resource="0" file="Source/Output/LaserConfig.cpp"/>
+      <FILE id="kO2hZN" name="LaserState.h" compile="0" resource="0" file="Source/Output/LaserState.h"/>
+      <FILE id="Cth1FJ" name="LaserState.cpp" compile="1" resource="0" file="Source/Output/LaserState.cpp"/>
     </GROUP>
     <GROUP id="{FC597BDF-A594-DAFD-5E88-4BDF3DF7AE4B}" name="Input"/>
     <GROUP id="{FD4EAC3F-C9BB-120A-5068-22FC87579073}" name="Resources">
@@ -150,10 +150,10 @@
                smallIcon="QusNFG" bigIcon="QusNFG">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="1" optimisation="1" targetName="coherunce" headerPath="$(PROJECT_DIR)/../../lib/libetherdream"
+                       isDebug="1" optimisation="1" targetName="coherunce" headerPath="$(PROJECT_DIR)/../../Source&#10;$(PROJECT_DIR)/../../lib/libetherdream&#10;"
                        libraryPath="$(PROJECT_DIR)/../../lib/libetherdream/osx"/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="0" optimisation="3" targetName="coherunce" headerPath="$(PROJECT_DIR)/../../lib/libetherdream&#10;"
+                       isDebug="0" optimisation="3" targetName="coherunce" headerPath="$(PROJECT_DIR)/../../Source&#10;$(PROJECT_DIR)/../../lib/libetherdream&#10;"
                        libraryPath="$(PROJECT_DIR)/../../lib/libetherdream/osx"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

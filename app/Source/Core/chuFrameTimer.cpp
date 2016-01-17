@@ -10,7 +10,7 @@
 
 #include "chuFrameTimer.h"
 #include "LaserOutputThread.h"
-#include "chuGenerator.h"
+#include "Generators/chuGenerator.h"
 #include "chuGeneratorManager.h"
 
 void chuFrameTimer::timerCallback() {

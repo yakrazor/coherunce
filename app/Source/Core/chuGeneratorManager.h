@@ -12,7 +12,7 @@
 #define CHUGENERATORMANAGER_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "chuGenerator.h"
+#include "Generators/chuGenerator.h"
 
 class chuGeneratorManager : public ChangeBroadcaster
 {
