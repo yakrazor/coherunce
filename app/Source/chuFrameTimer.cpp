@@ -41,6 +41,7 @@ void chuFrameTimer::syncBeatClock()
 {
     numPulses = 0;
     setBarClock(0);
+    isRunning = true;
 }
 
 void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& message)
