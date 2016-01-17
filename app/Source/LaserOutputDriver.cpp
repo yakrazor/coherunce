@@ -15,7 +15,6 @@
 #include "LaserPoint.h"
 
 #include <etherdream.h>
-#include <protocol.h>
 
 void sendEtherdreamOSCMessage(struct etherdream* device, String address, float value)
 {
