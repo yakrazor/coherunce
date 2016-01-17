@@ -63,6 +63,11 @@ void chuApplication::shutdown()
     applicationCommandManager = nullptr;
     sharedAudioDeviceManager = nullptr;
     clearGeneratorManager();
+
+    while (auto window = TopLevelWindow::getActiveTopLevelWindow())
+    {
+        delete window;
+    }
 }
 
 void chuApplication::systemRequestedQuit()
