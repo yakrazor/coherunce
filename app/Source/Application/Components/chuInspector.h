@@ -12,7 +12,7 @@
 #define CHUINSPECTOR_H_INCLUDED
 
 #include "../../../JuceLibraryCode/JuceHeader.h"
-#include "chuParameter.h"
+#include "chuParameters.h"
 
 
 class chuInspector : public Component, public ChangeListener

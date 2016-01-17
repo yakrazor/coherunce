@@ -11,7 +11,7 @@
 #ifndef LASERCONFIG_H_INCLUDED
 #define LASERCONFIG_H_INCLUDED
 
-#include "chuParameter.h"
+#include "chuParameters.h"
 
 class LaserConfig : public chuParameterProvider
 {
