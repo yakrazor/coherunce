@@ -31,6 +31,9 @@ public:
     chuParameterInt dwellOffPoints;
     chuParameterInt dwellOnPoints;
     chuParameterFloat globalIntensity;
+    chuParameterInt redDelay;
+    chuParameterInt greenDelay;
+    chuParameterInt blueDelay;
 
     virtual void getParamList(std::vector<chuParameter*>& params) override;
     virtual String getName() const override { return "Laser Config"; }

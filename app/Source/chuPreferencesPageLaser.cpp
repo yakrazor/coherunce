@@ -56,6 +56,16 @@ public:
             testButton->setBounds(r.removeFromTop(h));
             testButton->changeWidthToFitText();
         }
+
+        r.removeFromTop(space * 2);
+
+        if (laserProperties != nullptr)
+        {
+            int offset = r.getRight() - h;
+            r.setRight(h);
+            r.setWidth(r.getWidth() + offset);
+            laserProperties->setBounds(r);
+        }
     }
 
     void comboBoxChanged (ComboBox* comboBoxThatHasChanged) override

@@ -79,6 +79,10 @@ void LaserOutputThread::run() {
         }
         if (outputDriver && outputDriver->isOutputEnabled() && outputDevice)
         {
+            outputDevice->setRedDelay(getLaserConfig().redDelay.getValue());
+            outputDevice->setGreenDelay(getLaserConfig().greenDelay.getValue());
+            outputDevice->setBlueDelay(getLaserConfig().blueDelay.getValue());
+
             LaserPointOptimizer optimizer(laserConfig, outputDevice->getState());
             optimizer.fillBufferFromFrame(outputBuffer);
 

@@ -9,3 +9,9 @@
 */
 
 #include "LaserState.h"
+
+LaserState::LaserState()
+: redDelay(0), greenDelay(0), blueDelay(0)
+{
+
+}
