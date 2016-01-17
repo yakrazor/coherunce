@@ -14,6 +14,7 @@
 #include "chuGen16Step.h"
 #include "chuGenJavascript.h"
 
+#define STRING_BLOCK(...) #__VA_ARGS__
 
 chuGeneratorManager::chuGeneratorManager()
 {
@@ -50,7 +51,46 @@ chuGeneratorManager::chuGeneratorManager()
     allGenerators.add(step);
 
     auto js = new chuGenJavascript();
+    js->code->setValue(
+        "var a = g.getParameter('a');\n"
+        "var b = g.getParameter('b');\n"
+        "var clk = 1.0 - g.getParameter('barClock');\n"
+        "\n"
+        "g.addPoint(0,0);\n"
+        "g.addPoint(-a, a * b * clk);\n"
+        "g.addPoint(-a, -a * b * clk);\n"
+        "g.addPoint(a, a * b * clk);\n"
+        "g.addPoint(a, -a * b * clk);\n"
+        "g.addPoint(0, 0);\n"
+    );
     allGenerators.add(js);
+
+    auto js2 = new chuGenJavascript();
+    js2->code->setValue(
+        "var a = g.getParameter('a');\n"
+        "var b = g.getParameter('b');\n"
+        "var c = g.getParameter('c');\n"
+        "var clk = g.getParameter('barClock');\n"
+        "\n"
+        "var steps = 16;\n"
+        "var k = Math.abs(clk - 0.5);\n"
+        "var s = clk * Math.floor(16 * b);\n"
+        "var pump = 1.0 - (s - Math.floor(s));\n"
+        "\n"
+        "for (var t = -1; t <= 1.0; t += 1/steps)\n"
+        "{\n"
+        "    g.setColor(255, 0, 0);\n"
+        "    g.addPoint(t, (a + c * pump) * Math.sin(k * t * Math.PI * 2));\n"
+        "    g.setColor(0, 255 * clk, 255 * (1 - clk));\n"
+        "    g.addPoint(t, (a + c * pump) * Math.sin(1 - k * t * Math.PI * 2));\n"
+        "}\n"
+    );
+    js2->a->setValue(0.1);
+    js2->b->setValue(0.5);
+    js2->c->setValue(0.3);
+    js2->d->setValue(0.5);
+
+    allGenerators.add(js2);
 }
 
 chuGeneratorManager::~chuGeneratorManager()

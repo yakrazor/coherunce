@@ -44,18 +44,18 @@ std::vector<PatternItem> chuGen16Step::getPatterns(float barClock)
     item.blue = restColor->getValue().getBlue() << 8;
     item.origin = Vector2f(0, 0);
 
-    item.points.push_back(Vector2f(-1, -height->getValue()));
+    item.polyline.addPoint(Vector2f(-1, -height->getValue()), restColor->getValue());
     if (step > 0)
     {
-        item.points.push_back(Vector2f(stepScaled, -height->getValue()));
+        item.polyline.addPoint(Vector2f(stepScaled, -height->getValue()), restColor->getValue());
     }
-    item.points.push_back(Vector2f(stepScaled, height->getValue()));
-    item.points.push_back(Vector2f(stepScaled + barWidth, height->getValue()));
+    item.polyline.addPoint(Vector2f(stepScaled, height->getValue()), activeColor->getValue());
+    item.polyline.addPoint(Vector2f(stepScaled + barWidth, height->getValue()), activeColor->getValue());
     if (step < 15)
     {
-        item.points.push_back(Vector2f(stepScaled + barWidth, -height->getValue()));
+        item.polyline.addPoint(Vector2f(stepScaled + barWidth, -height->getValue()), restColor->getValue());
     }
-    item.points.push_back(Vector2f(1, -height->getValue()));
+    item.polyline.addPoint(Vector2f(1, -height->getValue()), restColor->getValue());
 
     items.push_back(item);
     return items;

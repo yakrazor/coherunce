@@ -79,35 +79,44 @@ void drawGeneratorPreview(chuGenerator* generator, DrawableComposite* preview)
 
     for (auto& item : items)
     {
-        Path path;
-
         if (item.type == PatternType::RegularPolygon)
         {
-             path.addPolygon(Point<float>(item.origin.x * 100, item.origin.y * 100),
-             item.sides,
-             item.radius * 100,
-             item.rotation);
+            Path path;
+            path.addPolygon(Point<float>(item.origin.x * 100, item.origin.y * 100),
+                            item.sides,
+                            item.radius * 100,
+                            item.rotation);
+
+            auto dp = new DrawablePath();
+            dp->setStrokeFill(Colour(item.red >> 8, item.green >> 8, item.blue >> 8));
+            dp->setFill(Colours::transparentBlack);
+            dp->setStrokeThickness(2.0f);
+            dp->setPath(path);
+            
+            preview->addAndMakeVisible(dp);
         }
         else if (item.type == PatternType::Polyline)
         {
-            for (int i = 1; i < item.points.size(); i++)
+            auto& vertices = item.polyline.vertices;
+            for (int i = 1; i < vertices.size(); i++)
             {
+                Path path;
                 path.addLineSegment(
                     Line<float>(
-                        item.points[i-1].x * 100, item.points[i-1].y * -100,
-                        item.points[i].x * 100, item.points[i].y * -100),
+                        vertices[i-1].x * 100, vertices[i-1].y * -100,
+                        vertices[i].x * 100, vertices[i].y * -100),
                     1
                 );
+
+                auto dp = new DrawablePath();
+                dp->setStrokeFill(item.polyline.colours[i]);
+                dp->setFill(Colours::transparentBlack);
+                dp->setStrokeThickness(2.0f);
+                dp->setPath(path);
+
+                preview->addAndMakeVisible(dp);
             }
         }
-
-        auto dp = new DrawablePath();
-        dp->setStrokeFill(Colour(item.red >> 8, item.green >> 8, item.blue >> 8));
-        dp->setFill(Colours::transparentBlack);
-        dp->setStrokeThickness(2.0f);
-        dp->setPath(path);
-
-        preview->addAndMakeVisible(dp);
     }
 }
 
