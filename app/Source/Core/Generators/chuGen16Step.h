@@ -21,7 +21,9 @@ public:
     virtual void getParamList(std::vector<chuParameter*>& params) override;
 
     ScopedPointer<chuParameterFloat> height;
+    ScopedPointer<chuParameterBool> quantized;
     ScopedPointer<chuParameterInt> numSteps;
+    ScopedPointer<chuParameterFloat> pointiness;
     ScopedPointer<chuParameterColor> activeColor;
     ScopedPointer<chuParameterColor> restColor;
 };

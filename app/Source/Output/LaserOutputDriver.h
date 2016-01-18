@@ -24,6 +24,10 @@ public:
     virtual bool writeToDevice(LaserConfig& laserConfig, LaserOutputBuffer& buffer) = 0;
     virtual void stop() = 0;
 
+    virtual void setRedDelay(int delay) = 0;
+    virtual void setGreenDelay(int delay) = 0;
+    virtual void setBlueDelay(int delay) = 0;
+
     virtual LaserState& getState() = 0;
 };
 

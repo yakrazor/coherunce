@@ -18,6 +18,7 @@ struct InteropObject : public DynamicObject
     {
         setMethod("getParameter", getParameter);
         setMethod("addPoint", addPoint);
+        setMethod("setColor", setColor);
     }
 
     static Identifier getClassName() { return "Graphics"; }
@@ -60,9 +61,23 @@ struct InteropObject : public DynamicObject
         {
             if (InteropObject* thisObject = dynamic_cast<InteropObject*> (args.thisObject.getObject()))
             {
-                thisObject->generator->patternBuffer.back().points.push_back(
-                    Vector2f((float)args.arguments[0], (float)args.arguments[1])
+                thisObject->generator->patternBuffer.back().polyline.addPoint(
+                    Vector2f((float)args.arguments[0], (float)args.arguments[1]),
+                    thisObject->generator->currentColour
                 );
+            }
+        }
+        return var::undefined();
+    }
+
+    static var setColor(const var::NativeFunctionArgs& args)
+    {
+        if (args.numArguments == 3)
+        {
+            if (InteropObject* thisObject = dynamic_cast<InteropObject*> (args.thisObject.getObject()))
+            {
+                thisObject->generator->currentColour =
+                    Colour::fromRGB((int)args.arguments[0], (int)args.arguments[1], (int)args.arguments[2]);
             }
         }
         return var::undefined();
@@ -84,17 +99,17 @@ chuGenJavascript::chuGenJavascript()
     code = new chuParameterString("Code",
                                   "var a = g.getParameter('a');\n" \
                                   "var b = g.getParameter('b');\n" \
-                                  "var clk = 1.0 - g.getParameter('barClock');\n"
-                                  "g.addPoint(0,0);\n" \
-                                  "g.addPoint(-a, a * b * clk);\n" \
-                                  "g.addPoint(-a, -a * b * clk);\n" \
-                                  "g.addPoint(a, a * b * clk);\n" \
-                                  "g.addPoint(a, -a * b * clk);\n" \
-                                  "g.addPoint(0, 0);\n"
+                                  "var d = g.getParameter('c');\n" \
+                                  "var c = g.getParameter('d');\n" \
+                                  "var clk = 1.0 - g.getParameter('barClock');\n\n" \
+                                  "// add points with g.addPoint(x, y)\n" \
+                                  "// change color with g.setColor(r, g, b) [0-255]\n"
                                   );
 
     engine.maximumExecutionTime = RelativeTime::seconds(5);
     engine.registerNativeObject("g", new InteropObject(this));
+
+    currentColour = Colours::red;
 }
 
 void chuGenJavascript::getParamList(std::vector<chuParameter*>& params)

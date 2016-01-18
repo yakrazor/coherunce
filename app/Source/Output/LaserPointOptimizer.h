@@ -27,6 +27,7 @@ private:
 
     unsigned pointIndex;
     void addLine(ildaPoint* points, int dwellOffPoints, int dwellOnPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t r, uint16_t g, uint16_t b, uint16_t i);
+    void addLine(ildaPoint* points, int dwellOffPoints, int dwellOnPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, const Colour& startColour, const Colour& endColour, uint16_t i);
 
     const LaserConfig& config;
     const LaserState& state;

@@ -11,7 +11,7 @@
 #ifndef LASERCONFIG_H_INCLUDED
 #define LASERCONFIG_H_INCLUDED
 
-#include "chuParameter.h"
+#include "chuParameters.h"
 
 class LaserConfig : public chuParameterProvider
 {
@@ -31,6 +31,9 @@ public:
     chuParameterInt dwellOffPoints;
     chuParameterInt dwellOnPoints;
     chuParameterFloat globalIntensity;
+    chuParameterInt redDelay;
+    chuParameterInt greenDelay;
+    chuParameterInt blueDelay;
 
     virtual void getParamList(std::vector<chuParameter*>& params) override;
     virtual String getName() const override { return "Laser Config"; }

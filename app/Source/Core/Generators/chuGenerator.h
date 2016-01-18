@@ -14,7 +14,7 @@
 #include <vector>
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PatternItem.h"
-#include "chuParameter.h"
+#include "chuParameters.h"
 
 
 class chuGenerator : public chuParameterProvider {

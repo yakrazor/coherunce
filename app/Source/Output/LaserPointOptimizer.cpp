@@ -32,6 +32,18 @@ void add_point(ildaPoint* point, int16_t x, int16_t y, uint16_t r, uint16_t g, u
     point->u2 = 0;
 }
 
+void add_point(ildaPoint* point, int16_t x, int16_t y, const Colour& colour, uint16_t i)
+{
+    point->x = x;
+    point->y = y;
+    point->r = colour.getRed() << 8;
+    point->g = colour.getGreen() << 8;
+    point->b = colour.getBlue() << 8;
+    point->i = i;
+    point->u1 = 0;
+    point->u2 = 0;
+}
+
 void LaserPointOptimizer::addLine(ildaPoint* points, int dwellOffPoints, int dwellOnPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
 {
 
@@ -52,6 +64,34 @@ void LaserPointOptimizer::addLine(ildaPoint* points, int dwellOffPoints, int dwe
     for (int i = 0; i < dwellOnPoints; i++)
     {
         add_point(&points[pointIndex++], x2, y2, r, g, b, i);
+    }
+    for (int i = 0; i < dwellOffPoints; i++)
+    {
+        add_point(&points[pointIndex++], x2, y2, 0, 0, 0, 0);
+    }
+}
+
+void LaserPointOptimizer::addLine(ildaPoint* points, int dwellOffPoints, int dwellOnPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, const Colour& startColour, const Colour& endColour, uint16_t i)
+{
+
+    int dx = (x2 - x1) / numSegments;
+    int dy = (y2 - y1) / numSegments;
+    for (int i = 0; i < dwellOffPoints; i++)
+    {
+        add_point(&points[pointIndex++], x1, y1, 0, 0, 0, 0);
+    }
+    for (int i = 0; i < dwellOnPoints; i++)
+    {
+        add_point(&points[pointIndex++], x1, y1, startColour, i);
+    }
+    for (int i = 0; i <= numSegments; i++)
+    {
+        Colour interpColour = startColour.interpolatedWith(endColour, i / (numSegments * 1.0));
+        add_point(&points[pointIndex++], x1 + dx * i, y1 + dy * i, interpColour, i);
+    }
+    for (int i = 0; i < dwellOnPoints; i++)
+    {
+        add_point(&points[pointIndex++], x2, y2, endColour, i);
     }
     for (int i = 0; i < dwellOffPoints; i++)
     {
@@ -86,8 +126,14 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
 
             if (item.type == PatternType::Polyline) {
 
-                int16_t ptX = item.points[0].x * scale;
-                int16_t ptY = item.points[0].y * scale;
+                auto& vertices = item.polyline.vertices;
+                if (vertices.size() == 0)
+                {
+                    continue;
+                }
+
+                int16_t ptX = vertices[0].x * scale;
+                int16_t ptY = vertices[0].y * scale;
 
                 int move_distance = sqrt(pow(prevItemX - ptX, 2) + pow(prevItemY - ptY, 2));
                 int numMoveSegments = std::max(1, move_distance / longestUnbrokenLine);
@@ -98,14 +144,17 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
                 prevItemX = ptX;
                 prevItemY = ptY;
 
-                for (auto& itemPt : item.points)
+                for (int i = 1; i < vertices.size(); i++)
                 {
-                    int16_t ptX = itemPt.x * scale;
-                    int16_t ptY = itemPt.y * scale;
+                    int16_t ptX = vertices[i].x * scale;
+                    int16_t ptY = vertices[i].y * scale;
+
+                    const Colour& startColour = item.polyline.colours[i - 1];
+                    const Colour& endColour = item.polyline.colours[i];
 
                     int distance = sqrt(pow(prevItemX - ptX, 2) + pow(prevItemY - ptY, 2));
                     int numSegments = std::max(1, distance / longestUnbrokenLine);
-                    addLine(buffer.points, dwellOffPoints, dwellOnPoints, numSegments, prevItemX, prevItemY, ptX, ptY, item.red, item.green, item.blue, intensity);
+                    addLine(buffer.points, 0, internalShapeDwellPoints, numSegments, prevItemX, prevItemY, ptX, ptY, startColour, endColour, intensity);
 
                     prevItemX = ptX;
                     prevItemY = ptY;

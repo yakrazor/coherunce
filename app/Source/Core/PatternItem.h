@@ -21,9 +21,10 @@ struct Vector2f
     float y;
 };
 
-struct Polyline
+class Polyline2f
 {
-    Polyline()
+public:
+    Polyline2f()
     {
     }
     
@@ -33,18 +34,20 @@ struct Polyline
         colours.push_back(colour);
     }
 
+    size_t size() { return vertices.size(); }
+
     std::vector<Vector2f> vertices;
     std::vector<Colour> colours;
 };
 
-typedef enum {
+enum PatternType {
     Point = 0,
     Line,
     Polyline,
     Rectangle,
     Ellipse,
     RegularPolygon
-} PatternType;
+};
 
 struct PatternItem
 {
@@ -62,7 +65,7 @@ struct PatternItem
     float radius;
     float height;
     int sides;
-    std::vector<Vector2f> points;
+    Polyline2f polyline;
 };
 
 

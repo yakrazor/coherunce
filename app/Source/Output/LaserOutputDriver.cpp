@@ -12,9 +12,25 @@
 #include "LaserOutputBuffer.h"
 #include "LaserConfig.h"
 #include "LaserState.h"
+#include "LaserPoint.h"
 
 #include <etherdream.h>
 
+void sendEtherdreamOSCMessage(struct etherdream* device, String address, float value)
+{
+    // TODO: get the correct DAC IP address
+    // possible hack: get in_addr from device struct (requires dumping in full struct definition from etherdream.c)
+    // doesn't appear to work, though
+    //const char *strHostAddress = inet_ntoa(device->addr);
+    const char *strHostAddress = "192.168.2.3";
+
+    OSCMessage message(address);
+    message.addFloat32(value);
+
+    OSCSender sender;
+    sender.connect(strHostAddress, 60000);
+    sender.send(message);
+}
 
 class EtherdreamOutputDevice : public LaserOutputDevice
 {
@@ -62,6 +78,33 @@ public:
     {
         etherdream_stop(thisDevice);
         state.currentPoint = ildaPoint::zero;
+    }
+
+    virtual void setRedDelay(int delay) override
+    {
+        if (delay != state.redDelay)
+        {
+            sendEtherdreamOSCMessage(thisDevice, "/geom/rdelay", delay);
+            state.redDelay = delay;
+        }
+    }
+
+    virtual void setGreenDelay(int delay) override
+    {
+        if (delay != state.redDelay)
+        {
+            sendEtherdreamOSCMessage(thisDevice, "/geom/gdelay", delay);
+            state.redDelay = delay;
+        }
+    }
+
+    virtual void setBlueDelay(int delay) override
+    {
+        if (delay != state.redDelay)
+        {
+            sendEtherdreamOSCMessage(thisDevice, "/geom/bdelay", delay);
+            state.redDelay = delay;
+        }
     }
 
     virtual LaserState& getState() override
