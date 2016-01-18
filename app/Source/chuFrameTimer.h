@@ -25,6 +25,8 @@ public:
     float getBarClock() { return barClock; }
     void setExternalClock(bool useExternalClock);
     void syncBeatClock();
+    void tapTempo();
+    double getBpm();
 
     void handleIncomingMidiMessage (MidiInput*, const MidiMessage& message) override;
 
@@ -35,6 +37,9 @@ private:
 
     unsigned int numPulses;
     bool externalClock;
+    
+    double lastTapTimestamps[];
+    double tappedBpm;
     const unsigned int pulsesPerQuarterNote = 24;
     const unsigned int quarterNotesPerBar = 4;
     const unsigned int pulsesPerBar = pulsesPerQuarterNote * quarterNotesPerBar;
