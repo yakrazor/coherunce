@@ -35,7 +35,8 @@
                                                                     //[/Comments]
 */
 class BeatSyncComponent  : public Component,
-                           public ButtonListener
+                           public ButtonListener,
+                           public chuFrameTimer::Listener
 {
 public:
     //==============================================================================
@@ -44,6 +45,7 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    void valueChanged(Value&);
     //[/UserMethods]
 
     void paint (Graphics& g);

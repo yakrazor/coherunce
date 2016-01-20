@@ -44,8 +44,20 @@ void chuFrameTimer::syncBeatClock()
     isRunning = true;
 }
 
+void chuFrameTimer::tapTempo() {
+    // Handle tap tempo event
+}
+
+void chuFrameTimer::setExternalClock(bool external)
+{
+    // Toggle between internal and external clock source
+}
+
 void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& message)
 {
+    double pulseDelta = 0.0;
+    double currentPulseTimestamp = 0.0;
+    
     if (message.isMidiClock() && isRunning)
     {
         numPulses++;
@@ -53,16 +65,25 @@ void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& mes
             numPulses -= pulsesPerBar;
         }
         if (externalClock) {
+            currentPulseTimestamp = Time::getMillisecondCounterHiRes();
+            pulseDelta = currentPulseTimestamp - lastMidiClockTimestamp;
+            lastMidiClockTimestamp = currentPulseTimestamp;
+            barClockMsDelta = (pulseDelta + barClockMsDelta) / 2.0;
+            setValue(msNumerator / barClockMsDelta);
             setBarClock(numPulses / (pulsesPerBar * 1.0));
+            printf("BPM: %f\n", msNumerator / barClockMsDelta);
+            
         }
     }
     else if (message.isMidiStart())
     {
         numPulses = 0;
         isRunning = true;
+        printf("Midi clock start\n");
     }
     else if (message.isMidiStop())
     {
         isRunning = false;
+        printf("Midi clock stop\n");
     }
 }

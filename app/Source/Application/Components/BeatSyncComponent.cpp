@@ -57,6 +57,7 @@ BeatSyncComponent::BeatSyncComponent ()
 
 
     //[Constructor] You can add your own custom stuff here..
+    getApp()->getFrameTimer()->addListener(this);
     //[/Constructor]
 }
 
@@ -71,6 +72,7 @@ BeatSyncComponent::~BeatSyncComponent()
 
 
     //[Destructor]. You can add your own custom destruction code here..
+    getApp()->getFrameTimer()->removeListener(this);
     //[/Destructor]
 }
 
@@ -122,6 +124,10 @@ void BeatSyncComponent::buttonClicked (Button* buttonThatWasClicked)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+void BeatSyncComponent::valueChanged(Value& value) {
+    double bpm = value.getValue();
+    bpmLabel->setText(String::formatted("%.2f", bpm), NotificationType::dontSendNotification);
+}
 //[/MiscUserCode]
 
 
