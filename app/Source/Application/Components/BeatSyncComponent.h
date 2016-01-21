@@ -35,7 +35,8 @@
                                                                     //[/Comments]
 */
 class BeatSyncComponent  : public Component,
-                           public ButtonListener
+                           public ButtonListener,
+                           public SliderListener
 {
 public:
     //==============================================================================
@@ -49,6 +50,7 @@ public:
     void paint (Graphics& g);
     void resized();
     void buttonClicked (Button* buttonThatWasClicked);
+    void sliderValueChanged (Slider* sliderThatWasMoved);
 
 
 
@@ -61,14 +63,33 @@ private:
     private:
         BeatSyncComponent* beatSyncComponent;
     };
+    class clockSourceListener : public Value::Listener {
+    public:
+        clockSourceListener(BeatSyncComponent* bsc) : Listener(), beatSyncComponent(bsc) {};
+        void valueChanged(Value&);
+    private:
+        BeatSyncComponent* beatSyncComponent;
+    };
+    class runningListener : public Value::Listener {
+    public:
+        runningListener(BeatSyncComponent* bsc) : Listener(), beatSyncComponent(bsc) {};
+        void valueChanged(Value&);
+    private:
+        BeatSyncComponent* beatSyncComponent;
+    };
     bpmListener* bpmListen;
-    
+    clockSourceListener* clockSrcListen;
+    runningListener* runningListen;
+
     //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<TextButton> tapTempoButton;
     ScopedPointer<TextButton> syncButton;
     ScopedPointer<Label> bpmLabel;
+    ScopedPointer<TextButton> stopStartButton;
+    ScopedPointer<TextButton> externalInternalToggle;
+    ScopedPointer<Slider> bpmSlider;
 
 
     //==============================================================================

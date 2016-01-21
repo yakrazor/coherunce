@@ -37,19 +37,22 @@ public:
     void setBarClock(float clock) { barClock = clock; };
     float getBarClock() { return barClock; };
 
-    void setExternalClock(bool);
+    void setExternalClock(bool isExternal) { external->setValue(isExternal); }
+    void setRunning(bool isRunning) { running->setValue(isRunning); }
     void syncBeatClock();
     void tapTempo();
     
     double getBpm() { return bpm->getValue(); }
     double getMsBetweenBeats() { return delta->getValue(); }
+    void setBpm(double newBpm);
+    
     bool isClockExternal() { return external->getValue(); }
     bool isClockRunning() { return running->getValue(); }
     
-    bpmValue* bpm;
-    externalClockValue* external;
-    beatDeltaMsValue* delta;
-    clockRunningValue* running;
+    ScopedPointer<bpmValue> bpm;
+    ScopedPointer<externalClockValue> external;
+    ScopedPointer<beatDeltaMsValue> delta;
+    ScopedPointer<clockRunningValue> running;
 
     
     void handleIncomingMidiMessage (MidiInput*, const MidiMessage& message) override;

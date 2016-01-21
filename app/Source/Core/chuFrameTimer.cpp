@@ -61,9 +61,8 @@ void chuFrameTimer::tapTempo() {
     // Handle tap tempo event
 }
 
-void chuFrameTimer::setExternalClock(bool external)
-{
-    // Toggle between internal and external clock source
+void chuFrameTimer::setBpm(double newBpm) {
+    // Handle new bpm settings
 }
 
 void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& message)
