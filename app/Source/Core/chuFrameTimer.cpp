@@ -106,11 +106,9 @@ void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& mes
     {
         numPulses = 0;
         running->setValue(true);
-        printf("Midi clock start\n");
     }
     else if (message.isMidiStop())
     {
         running->setValue(false);
-        printf("Midi clock stop\n");
     }
 }
