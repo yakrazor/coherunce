@@ -17,19 +17,15 @@ class LaserOutputThread;
 
 
 class bpmValue : public Value {
-    
 };
 
 class externalClockValue : public Value {
-    
 };
 
 class clockRunningValue : public Value {
-    
 };
 
 class beatDeltaMsValue : public Value {
-    
 };
 
 class chuFrameTimer : public Timer, public MidiInputCallback

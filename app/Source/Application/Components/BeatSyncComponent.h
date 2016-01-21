@@ -35,8 +35,7 @@
                                                                     //[/Comments]
 */
 class BeatSyncComponent  : public Component,
-                           public ButtonListener,
-                           public bpmValue::Listener
+                           public ButtonListener
 {
 public:
     //==============================================================================
@@ -45,7 +44,6 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void valueChanged(Value&);
     //[/UserMethods]
 
     void paint (Graphics& g);
@@ -56,6 +54,15 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    class bpmListener : public Value::Listener {
+    public:
+        bpmListener(BeatSyncComponent* bsc) : Listener(), beatSyncComponent(bsc) {};
+        void valueChanged(Value&);
+    private:
+        BeatSyncComponent* beatSyncComponent;
+    };
+    bpmListener* bpmListen;
+    
     //[/UserVariables]
 
     //==============================================================================
@@ -69,6 +76,7 @@ private:
 };
 
 //[EndFile] You can add extra defines here...
+
 //[/EndFile]
 
 #endif   // __JUCE_HEADER_83DDC134AF7E7A78__
