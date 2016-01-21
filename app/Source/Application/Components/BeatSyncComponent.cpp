@@ -57,7 +57,7 @@ BeatSyncComponent::BeatSyncComponent ()
 
 
     //[Constructor] You can add your own custom stuff here..
-    getApp()->getFrameTimer()->addListener(this);
+    getApp()->getFrameTimer()->bpm->addListener(this);
     //[/Constructor]
 }
 
@@ -72,7 +72,7 @@ BeatSyncComponent::~BeatSyncComponent()
 
 
     //[Destructor]. You can add your own custom destruction code here..
-    getApp()->getFrameTimer()->removeListener(this);
+    getApp()->getFrameTimer()->bpm->removeListener(this);
     //[/Destructor]
 }
 

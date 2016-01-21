@@ -15,10 +15,27 @@
 
 class LaserOutputThread;
 
-class chuFrameTimer : public Timer, public MidiInputCallback, public Value
+
+class bpmValue : public Value {
+    
+};
+
+class externalClockValue : public Value {
+    
+};
+
+class clockRunningValue : public Value {
+    
+};
+
+class beatDeltaMsValue : public Value {
+    
+};
+
+class chuFrameTimer : public Timer, public MidiInputCallback
 {
 public:
-    chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLaserThread), numPulses(0), barClockMsDelta(20.8333333), externalClock(true), isRunning(true) {}
+    chuFrameTimer(LaserOutputThread* pLaserThread);
     void timerCallback() override;
 
     void setBarClock(float clock) { barClock = clock; };
@@ -27,20 +44,27 @@ public:
     void setExternalClock(bool);
     void syncBeatClock();
     void tapTempo();
+    
+    double getBpm() { return bpm->getValue(); }
+    double getMsBetweenBeats() { return delta->getValue(); }
+    bool isClockExternal() { return external->getValue(); }
+    bool isClockRunning() { return running->getValue(); }
+    
+    bpmValue* bpm;
+    externalClockValue* external;
+    beatDeltaMsValue* delta;
+    clockRunningValue* running;
 
+    
     void handleIncomingMidiMessage (MidiInput*, const MidiMessage& message) override;
 
 private:
     LaserOutputThread* laserThread;
     float barClock;
-    double barClockMsDelta;
-    bool isRunning;
-
     unsigned int numPulses;
-    bool externalClock;
-    
     double lastMidiClockTimestamp;
     Array<double> midiClockPulseDeltas;
+    
     
     const unsigned int pulsesPerQuarterNote = 24;
     const unsigned int quarterNotesPerBar = 4;

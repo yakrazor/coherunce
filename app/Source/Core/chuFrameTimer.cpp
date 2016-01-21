@@ -13,6 +13,19 @@
 #include "Generators/chuGenerator.h"
 #include "chuGeneratorManager.h"
 
+chuFrameTimer::chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLaserThread), numPulses(0)
+{
+    bpm = new bpmValue();
+    external = new externalClockValue();
+    delta = new beatDeltaMsValue();
+    running = new clockRunningValue();
+    
+    bpm->setValue(120.0);
+    external->setValue(true);
+    delta->setValue(24.0);
+    running->setValue(true);
+}
+
 void chuFrameTimer::timerCallback() {
     if (laserThread) {
         if (logging) {
@@ -41,7 +54,7 @@ void chuFrameTimer::syncBeatClock()
 {
     numPulses = 0;
     setBarClock(0);
-    isRunning = true;
+    running->setValue(true);
 }
 
 void chuFrameTimer::tapTempo() {
@@ -58,13 +71,13 @@ void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& mes
     double pulseDelta = 0.0;
     double currentPulseTimestamp = 0.0;
     
-    if (message.isMidiClock() && isRunning)
+    if (message.isMidiClock() && isClockRunning())
     {
         numPulses++;
         if (numPulses > pulsesPerBar) {
             numPulses -= pulsesPerBar;
         }
-        if (externalClock) {
+        if (isClockExternal()) {
 
             currentPulseTimestamp = Time::getMillisecondCounterHiRes();
             pulseDelta = currentPulseTimestamp - lastMidiClockTimestamp;
@@ -78,14 +91,14 @@ void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& mes
                 for(int idx = 0; idx < midiClockPulseDeltas.size(); idx++) {
                     clockPulseDeltaAccumulator += midiClockPulseDeltas[idx];
                 }
-                barClockMsDelta = clockPulseDeltaAccumulator / midiClockPulseDeltas.size();
+                delta->setValue(clockPulseDeltaAccumulator / midiClockPulseDeltas.size());
             } else {
-                barClockMsDelta = pulseDelta;
+                delta->setValue(pulseDelta);
             }
-            double bpm = msNumerator / barClockMsDelta;
-            double old_bpm = getValue();
-            if (fabs(old_bpm - bpm) > bpmDeltaSmoothing) {
-                setValue(bpm);
+            double new_bpm = msNumerator / getMsBetweenBeats();
+            double old_bpm = getBpm();
+            if (fabs(old_bpm - new_bpm) > bpmDeltaSmoothing) {
+                bpm->setValue(new_bpm);
             }
             setBarClock(numPulses / (pulsesPerBar * 1.0));
         }
@@ -93,12 +106,12 @@ void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& mes
     else if (message.isMidiStart())
     {
         numPulses = 0;
-        isRunning = true;
+        running->setValue(true);
         printf("Midi clock start\n");
     }
     else if (message.isMidiStop())
     {
-        isRunning = false;
+        running->setValue(false);
         printf("Midi clock stop\n");
     }
 }

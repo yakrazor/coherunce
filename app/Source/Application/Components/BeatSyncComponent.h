@@ -36,7 +36,7 @@
 */
 class BeatSyncComponent  : public Component,
                            public ButtonListener,
-                           public chuFrameTimer::Listener
+                           public bpmValue::Listener
 {
 public:
     //==============================================================================
