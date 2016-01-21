@@ -65,14 +65,29 @@ void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& mes
             numPulses -= pulsesPerBar;
         }
         if (externalClock) {
+
             currentPulseTimestamp = Time::getMillisecondCounterHiRes();
             pulseDelta = currentPulseTimestamp - lastMidiClockTimestamp;
             lastMidiClockTimestamp = currentPulseTimestamp;
-            barClockMsDelta = (pulseDelta + barClockMsDelta) / 2.0;
-            setValue(msNumerator / barClockMsDelta);
+            midiClockPulseDeltas.insert(0, pulseDelta);
+            if (midiClockPulseDeltas.size() > numPulsesToKeep) {
+                midiClockPulseDeltas.resize(numPulsesToKeep);
+            }
+            if (midiClockPulseDeltas.size() > 0) {
+                double clockPulseDeltaAccumulator = 0;
+                for(int idx = 0; idx < midiClockPulseDeltas.size(); idx++) {
+                    clockPulseDeltaAccumulator += midiClockPulseDeltas[idx];
+                }
+                barClockMsDelta = clockPulseDeltaAccumulator / midiClockPulseDeltas.size();
+            } else {
+                barClockMsDelta = pulseDelta;
+            }
+            double bpm = msNumerator / barClockMsDelta;
+            double old_bpm = getValue();
+            if (fabs(old_bpm - bpm) > bpmDeltaSmoothing) {
+                setValue(bpm);
+            }
             setBarClock(numPulses / (pulsesPerBar * 1.0));
-            printf("BPM: %f\n", msNumerator / barClockMsDelta);
-            
         }
     }
     else if (message.isMidiStart())

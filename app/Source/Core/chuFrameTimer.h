@@ -40,11 +40,14 @@ private:
     bool externalClock;
     
     double lastMidiClockTimestamp;
+    Array<double> midiClockPulseDeltas;
     
     const unsigned int pulsesPerQuarterNote = 24;
     const unsigned int quarterNotesPerBar = 4;
     const unsigned int pulsesPerBar = pulsesPerQuarterNote * quarterNotesPerBar;
     const unsigned int msNumerator = 2500;
+    const unsigned int numPulsesToKeep = 100;
+    const float bpmDeltaSmoothing = 0.1;
 };
 
 
