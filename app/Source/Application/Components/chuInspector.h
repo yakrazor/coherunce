@@ -21,8 +21,8 @@ public:
     chuInspector(ChangeBroadcaster* broadcaster);
     ~chuInspector();
 
-    void paint(Graphics& g);
-    void resized();
+    virtual void paint(Graphics& g) override;
+    virtual void resized() override;
 
     void inspectParameters(chuParameterProvider* provider);
 

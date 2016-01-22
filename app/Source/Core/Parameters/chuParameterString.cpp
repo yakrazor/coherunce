@@ -38,7 +38,7 @@ public:
     {
     }
 
-    void closeButtonPressed()
+    virtual void closeButtonPressed() override
     {
         delete this;
     }
@@ -101,7 +101,7 @@ public:
         window->setVisible(true);
     }
 
-    virtual void refresh()
+    virtual void refresh() override
     {
     }
 

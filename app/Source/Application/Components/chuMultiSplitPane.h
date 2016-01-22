@@ -44,10 +44,10 @@ private:
         SplitterBar(int minWidth, int maxWidth, int startWidth);
         ~SplitterBar();
 
-        void paint(Graphics&);
-        void resized();
-        void mouseDown(const MouseEvent& e) override;
-        void mouseDrag(const MouseEvent& e) override;
+        virtual void paint(Graphics&) override;
+        virtual void resized() override;
+        virtual void mouseDown(const MouseEvent& e) override;
+        virtual void mouseDrag(const MouseEvent& e) override;
 
         int getWidth() const { return width; }
         int getDirection() const { return direction; }

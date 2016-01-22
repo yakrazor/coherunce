@@ -22,8 +22,8 @@ public:
     chuPreferencesDialog();
     ~chuPreferencesDialog();
 
-    void paint(Graphics&);
-    void resized();
+    virtual void paint(Graphics&) override;
+    virtual void resized() override;
 
     void closeButtonPressed() override;
 

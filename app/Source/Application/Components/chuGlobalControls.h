@@ -20,8 +20,8 @@ public:
     chuGlobalControls();
     ~chuGlobalControls();
 
-    void paint(Graphics& g);
-    void resized();
+    virtual void paint(Graphics& g) override;
+    virtual void resized() override;
 
     virtual void buttonClicked(Button* button) override;
     virtual void sliderValueChanged (Slider* slider) override;

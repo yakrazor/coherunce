@@ -20,8 +20,8 @@ public:
     void initialize();
 
     virtual StringArray getMenuBarNames() override;
-    virtual PopupMenu getMenuForIndex(int topLevelMenuIndex, const String &menuName);
-    virtual void menuItemSelected(int menuItemID, int topLevelMenuIndex);
+    virtual PopupMenu getMenuForIndex(int topLevelMenuIndex, const String &menuName) override;
+    virtual void menuItemSelected(int menuItemID, int topLevelMenuIndex) override;
 
     ~chuMenuBar();
 

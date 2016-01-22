@@ -20,8 +20,8 @@ public:
     chuClipGrid();
     ~chuClipGrid();
 
-    void paint(Graphics& g);
-    void resized();
+    virtual void paint(Graphics& g) override;
+    virtual void resized() override;
 
     virtual void changeListenerCallback(ChangeBroadcaster* source) override;
 

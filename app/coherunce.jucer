@@ -149,10 +149,10 @@
                postbuildCommand="if [[ ! -f &quot;${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries/libetherdream.dylib&quot; ]]; then&#10;mkdir ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries&#10;cp ${SRCROOT}/../../lib/libetherdream/osx/libetherdream.dylib ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/Libraries&#10;fi&#10;install_name_tool -add_rpath @loader_path/../Libraries ${BUILT_PRODUCTS_DIR}/coherunce.app/Contents/MacOS/coherunce 2&gt;/dev/null || true&#10;"
                smallIcon="QusNFG" bigIcon="QusNFG">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="default"
                        isDebug="1" optimisation="1" targetName="coherunce" headerPath="$(PROJECT_DIR)/../../Source&#10;$(PROJECT_DIR)/../../lib/libetherdream&#10;"
                        libraryPath="$(PROJECT_DIR)/../../lib/libetherdream/osx"/>
-        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="default"
                        isDebug="0" optimisation="3" targetName="coherunce" headerPath="$(PROJECT_DIR)/../../Source&#10;$(PROJECT_DIR)/../../lib/libetherdream&#10;"
                        libraryPath="$(PROJECT_DIR)/../../lib/libetherdream/osx"/>
       </CONFIGURATIONS>
