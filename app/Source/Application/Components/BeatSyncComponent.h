@@ -35,7 +35,8 @@
                                                                     //[/Comments]
 */
 class BeatSyncComponent  : public Component,
-                           public ButtonListener
+                           public ButtonListener,
+                           public SliderListener
 {
 public:
     //==============================================================================
@@ -49,17 +50,55 @@ public:
     void paint (Graphics& g);
     void resized();
     void buttonClicked (Button* buttonThatWasClicked);
+    void sliderValueChanged (Slider* sliderThatWasMoved);
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    class bpmListener : public Value::Listener {
+    public:
+        bpmListener(BeatSyncComponent* bsc) : Listener(), beatSyncComponent(bsc) {};
+        void valueChanged(Value&);
+    private:
+        BeatSyncComponent* beatSyncComponent;
+    };
+    class clockSourceListener : public Value::Listener {
+    public:
+        clockSourceListener(BeatSyncComponent* bsc) : Listener(), beatSyncComponent(bsc) {};
+        void valueChanged(Value&);
+    private:
+        BeatSyncComponent* beatSyncComponent;
+    };
+    class runningListener : public Value::Listener {
+    public:
+        runningListener(BeatSyncComponent* bsc) : Listener(), beatSyncComponent(bsc) {};
+        void valueChanged(Value&);
+    private:
+        BeatSyncComponent* beatSyncComponent;
+    };
+    class quantListener : public Value::Listener {
+    public:
+        quantListener(BeatSyncComponent* bsc) : Listener(), beatSyncComponent(bsc) {};
+        void valueChanged(Value&);
+    private:
+        BeatSyncComponent* beatSyncComponent;
+    };
+    ScopedPointer<bpmListener> bpmListen;
+    ScopedPointer<clockSourceListener> clockSrcListen;
+    ScopedPointer<runningListener> runningListen;
+    ScopedPointer<quantListener> quantListen;
+
     //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<TextButton> tapTempoButton;
     ScopedPointer<TextButton> syncButton;
     ScopedPointer<Label> bpmLabel;
+    ScopedPointer<TextButton> stopStartButton;
+    ScopedPointer<TextButton> externalInternalToggle;
+    ScopedPointer<Slider> bpmSlider;
+    ScopedPointer<Label> beatClockLabel;
 
 
     //==============================================================================
@@ -67,6 +106,7 @@ private:
 };
 
 //[EndFile] You can add extra defines here...
+
 //[/EndFile]
 
 #endif   // __JUCE_HEADER_83DDC134AF7E7A78__
