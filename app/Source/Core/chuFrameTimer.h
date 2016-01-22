@@ -66,7 +66,8 @@ private:
     float barClock;
     unsigned int numPulses;
     double lastMidiClockTimestamp;
-    double lastTimerCallbackTimestamp;
+    double lastDownbeatTimestamp;
+    double lastTapTempoTimestamp;
     Array<double> midiClockPulseDeltas;
 
     
@@ -74,8 +75,9 @@ private:
     const unsigned int pulsesPerQuarterNote = 24;
     const unsigned int quarterNotesPerBar = 4;
     const unsigned int pulsesPerBar = pulsesPerQuarterNote * quarterNotesPerBar;
-    const unsigned int msNumerator = 2500;
+    const unsigned int beatMsNumerator = 60000;
     const unsigned int numPulsesToKeep = 100;
+    const unsigned int tapTempoMaxDeltaMs = 5000;
     const float bpmDeltaSmoothing = 0.1;
 };
 
