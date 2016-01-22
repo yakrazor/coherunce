@@ -77,9 +77,17 @@ private:
     private:
         BeatSyncComponent* beatSyncComponent;
     };
-    bpmListener* bpmListen;
-    clockSourceListener* clockSrcListen;
-    runningListener* runningListen;
+    class quantListener : public Value::Listener {
+    public:
+        quantListener(BeatSyncComponent* bsc) : Listener(), beatSyncComponent(bsc) {};
+        void valueChanged(Value&);
+    private:
+        BeatSyncComponent* beatSyncComponent;
+    };
+    ScopedPointer<bpmListener> bpmListen;
+    ScopedPointer<clockSourceListener> clockSrcListen;
+    ScopedPointer<runningListener> runningListen;
+    ScopedPointer<quantListener> quantListen;
 
     //[/UserVariables]
 
@@ -90,6 +98,7 @@ private:
     ScopedPointer<TextButton> stopStartButton;
     ScopedPointer<TextButton> externalInternalToggle;
     ScopedPointer<Slider> bpmSlider;
+    ScopedPointer<Label> beatClockLabel;
 
 
     //==============================================================================

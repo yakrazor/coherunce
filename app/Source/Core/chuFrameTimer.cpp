@@ -19,14 +19,20 @@ chuFrameTimer::chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLas
     external = new externalClockValue();
     delta = new beatDeltaMsValue();
     running = new clockRunningValue();
+    quant = new quantizedBarClockValue();
     
     bpm->setValue(120.0);
     external->setValue(true);
     delta->setValue(24.0);
     running->setValue(true);
+    quant->setValue(0);
 }
 
 void chuFrameTimer::timerCallback() {
+    double timeStamp = Time::getMillisecondCounterHiRes();
+    if (!isClockExternal()) {
+        // calculate bar clock here
+    }
     if (laserThread) {
         if (logging) {
             printf("Ticked timer at time %f\n", Time::getMillisecondCounterHiRes());
@@ -48,6 +54,13 @@ void chuFrameTimer::timerCallback() {
         }
         patterns.finish_frame();
     }
+    int quantClock = floor(barClock * 4.0);
+    int currentQuantClockVal = quant->getValue();
+    if (currentQuantClockVal != quantClock) {
+        quant->setValue(quantClock);
+    }
+    
+    lastTimerCallbackTimestamp = Time::getMillisecondCounterHiRes();
 }
 
 void chuFrameTimer::syncBeatClock()
@@ -62,7 +75,12 @@ void chuFrameTimer::tapTempo() {
 }
 
 void chuFrameTimer::setBpm(double newBpm) {
-    // Handle new bpm settings
+    if (isClockExternal()) {
+        // We can't modify external clock timing, only internal
+        return;
+    }
+    bpm->setValue(newBpm);
+    delta->setValue(msNumerator / newBpm);
 }
 
 void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& message)

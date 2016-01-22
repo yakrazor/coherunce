@@ -45,7 +45,7 @@ BeatSyncComponent::BeatSyncComponent ()
 
     addAndMakeVisible (bpmLabel = new Label ("bpmLabel",
                                              TRANS("120.00")));
-    bpmLabel->setFont (Font (Font::getDefaultMonospacedFontName(), 54.10f, Font::plain));
+    bpmLabel->setFont (Font (Font::getDefaultMonospacedFontName(), 54.00f, Font::plain));
     bpmLabel->setJustificationType (Justification::centredLeft);
     bpmLabel->setEditable (false, false, false);
     bpmLabel->setColour (Label::backgroundColourId, Colour (0x00000000));
@@ -70,6 +70,15 @@ BeatSyncComponent::BeatSyncComponent ()
     bpmSlider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
     bpmSlider->addListener (this);
 
+    addAndMakeVisible (beatClockLabel = new Label ("new label",
+                                                   TRANS("0")));
+    beatClockLabel->setFont (Font (Font::getDefaultMonospacedFontName(), 54.00f, Font::plain));
+    beatClockLabel->setJustificationType (Justification::centredRight);
+    beatClockLabel->setEditable (false, false, false);
+    beatClockLabel->setColour (Label::textColourId, Colours::white);
+    beatClockLabel->setColour (TextEditor::textColourId, Colours::black);
+    beatClockLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -81,9 +90,11 @@ BeatSyncComponent::BeatSyncComponent ()
     bpmListen = new bpmListener(this);
     clockSrcListen = new clockSourceListener(this);
     runningListen = new runningListener(this);
+    quantListen = new quantListener(this);
     getApp()->getFrameTimer()->bpm->addListener(bpmListen);
     getApp()->getFrameTimer()->external->addListener(clockSrcListen);
     getApp()->getFrameTimer()->running->addListener(runningListen);
+    getApp()->getFrameTimer()->quant->addListener(quantListen);
     //[/Constructor]
 }
 
@@ -98,6 +109,7 @@ BeatSyncComponent::~BeatSyncComponent()
     stopStartButton = nullptr;
     externalInternalToggle = nullptr;
     bpmSlider = nullptr;
+    beatClockLabel = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -128,6 +140,7 @@ void BeatSyncComponent::resized()
     stopStartButton->setBounds (96, 72, 64, 24);
     externalInternalToggle->setBounds (160, 72, 80, 24);
     bpmSlider->setBounds (8, 48, 232, 24);
+    beatClockLabel->setBounds (200, 0, 48, 48);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -209,6 +222,11 @@ void BeatSyncComponent::runningListener::valueChanged(Value& value) {
         beatSyncComponent->stopStartButton->setButtonText("Stopped");
     }
 }
+
+void BeatSyncComponent::quantListener::valueChanged(Value& value) {
+    int quantClock = value.getValue();
+    beatSyncComponent->beatClockLabel->setText(String::formatted("%d", quantClock), NotificationType::dontSendNotification);
+}
 //[/MiscUserCode]
 
 
@@ -236,7 +254,7 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="0 0 184 48" bkgCol="0" textCol="ffffffff"
          edTextCol="ff000000" edBkgCol="0" labelText="120.00" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default monospaced font"
-         fontsize="54.100000000000001421" bold="0" italic="0" justification="33"/>
+         fontsize="54" bold="0" italic="0" justification="33"/>
   <TEXTBUTTON name="new button" id="d9f2aa84eb93e4c2" memberName="stopStartButton"
               virtualName="" explicitFocusOrder="0" pos="96 72 64 24" tooltip="Toggles between running and stopped clock"
               buttonText="Running" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
@@ -247,6 +265,11 @@ BEGIN_JUCER_METADATA
           virtualName="" explicitFocusOrder="0" pos="8 48 232 24" tooltip="Drag this to manually set the BPM"
           min="60" max="200" int="0" style="LinearHorizontal" textBoxPos="NoTextBox"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
+  <LABEL name="new label" id="663f6726de909555" memberName="beatClockLabel"
+         virtualName="" explicitFocusOrder="0" pos="200 0 48 48" textCol="ffffffff"
+         edTextCol="ff000000" edBkgCol="0" labelText="0" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default monospaced font"
+         fontsize="54" bold="0" italic="0" justification="34"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

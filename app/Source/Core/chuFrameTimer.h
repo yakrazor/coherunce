@@ -28,6 +28,9 @@ class clockRunningValue : public Value {
 class beatDeltaMsValue : public Value {
 };
 
+class quantizedBarClockValue : public Value {
+};
+
 class chuFrameTimer : public Timer, public MidiInputCallback
 {
 public:
@@ -53,6 +56,7 @@ public:
     ScopedPointer<externalClockValue> external;
     ScopedPointer<beatDeltaMsValue> delta;
     ScopedPointer<clockRunningValue> running;
+    ScopedPointer<quantizedBarClockValue> quant;
 
     
     void handleIncomingMidiMessage (MidiInput*, const MidiMessage& message) override;
@@ -62,7 +66,9 @@ private:
     float barClock;
     unsigned int numPulses;
     double lastMidiClockTimestamp;
+    double lastTimerCallbackTimestamp;
     Array<double> midiClockPulseDeltas;
+
     
     
     const unsigned int pulsesPerQuarterNote = 24;
