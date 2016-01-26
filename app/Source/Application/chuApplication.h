@@ -46,6 +46,8 @@ public:
     ApplicationCommandManager& getApplicationCommandManager();
     AudioDeviceManager& getSharedAudioDeviceManager();
 
+    void setExternalClockSource(const String& deviceName);
+
     Component& getSettingsWindow();
 
     // ApplicationCommandTarget interface
@@ -65,6 +67,8 @@ private:
     ScopedPointer<ApplicationCommandManager> applicationCommandManager;
     ScopedPointer<AudioDeviceManager> sharedAudioDeviceManager;
     ScopedPointer<chuFrameTimer> frameTimer;
+
+    String externalClockMidiDeviceName;
 };
 
 inline chuApplication* getApp()

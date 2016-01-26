@@ -55,7 +55,7 @@ BeatSyncComponent::BeatSyncComponent ()
 
     addAndMakeVisible (stopStartButton = new TextButton ("new button"));
     stopStartButton->setTooltip (TRANS("Toggles between running and stopped clock"));
-    stopStartButton->setButtonText (TRANS("Running"));
+    stopStartButton->setButtonText (TRANS("Pause"));
     stopStartButton->addListener (this);
 
     addAndMakeVisible (externalInternalToggle = new TextButton ("new button"));
@@ -91,10 +91,18 @@ BeatSyncComponent::BeatSyncComponent ()
     clockSrcListen = new clockSourceListener(this);
     runningListen = new runningListener(this);
     quantListen = new quantListener(this);
-    getApp()->getFrameTimer()->bpm->addListener(bpmListen);
-    getApp()->getFrameTimer()->external->addListener(clockSrcListen);
-    getApp()->getFrameTimer()->running->addListener(runningListen);
-    getApp()->getFrameTimer()->quant->addListener(quantListen);
+
+    auto frameTimer = getApp()->getFrameTimer();
+    frameTimer->bpmValue.addListener(bpmListen);
+    frameTimer->isClockExternalValue.addListener(clockSrcListen);
+    frameTimer->isClockRunningValue.addListener(runningListen);
+    frameTimer->quantizedBeatClockValue.addListener(quantListen);
+
+    bpmListen->valueChanged(frameTimer->bpmValue);
+    clockSrcListen->valueChanged(frameTimer->isClockExternalValue);
+    runningListen->valueChanged(frameTimer->isClockRunningValue);
+    quantListen->valueChanged(frameTimer->quantizedBeatClockValue);
+
     //[/Constructor]
 }
 
@@ -113,7 +121,11 @@ BeatSyncComponent::~BeatSyncComponent()
 
 
     //[Destructor]. You can add your own custom destruction code here..
-    getApp()->getFrameTimer()->bpm->removeListener(bpmListen);
+    auto frameTimer = getApp()->getFrameTimer();
+    frameTimer->bpmValue.removeListener(bpmListen);
+    frameTimer->isClockExternalValue.removeListener(clockSrcListen);
+    frameTimer->isClockRunningValue.removeListener(runningListen);
+    frameTimer->quantizedBeatClockValue.removeListener(quantListen);
     //[/Destructor]
 }
 
@@ -216,11 +228,7 @@ void BeatSyncComponent::clockSourceListener::valueChanged(Value& value) {
 
 void BeatSyncComponent::runningListener::valueChanged(Value& value) {
     bool isRunning = value.getValue();
-    if(isRunning) {
-        beatSyncComponent->stopStartButton->setButtonText("Running");
-    } else {
-        beatSyncComponent->stopStartButton->setButtonText("Stopped");
-    }
+    beatSyncComponent->stopStartButton->setToggleState(!isRunning, dontSendNotification);
 }
 
 void BeatSyncComponent::quantListener::valueChanged(Value& value) {

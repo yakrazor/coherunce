@@ -101,6 +101,16 @@ private:
 
     void changeListenerCallback(ChangeBroadcaster*) override
     {
+        // Set the external clock to the first enabled input
+        for (auto& deviceName : MidiInput::getDevices())
+        {
+            if (getApp()->getSharedAudioDeviceManager().isMidiInputEnabled(deviceName))
+            {
+                getApp()->setExternalClockSource(deviceName);
+                break;
+            }
+        }
+
         dumpDeviceInfo();
     }
 
