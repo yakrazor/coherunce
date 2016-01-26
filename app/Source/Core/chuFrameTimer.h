@@ -16,48 +16,32 @@
 class LaserOutputThread;
 
 
-class bpmValue : public Value {
-};
-
-class externalClockValue : public Value {
-};
-
-class clockRunningValue : public Value {
-};
-
-class beatDeltaMsValue : public Value {
-};
-
-class quantizedBarClockValue : public Value {
-};
-
 class chuFrameTimer : public Timer, public MidiInputCallback
 {
 public:
     chuFrameTimer(LaserOutputThread* pLaserThread);
     void timerCallback() override;
 
-    void setBarClock(float clock) { barClock = clock; };
+    void setBarClock(float clock);
     float getBarClock() { return barClock; };
 
-    void setExternalClock(bool isExternal) { external->setValue(isExternal); }
-    void setRunning(bool isRunning) { running->setValue(isRunning); }
+    void setExternalClock(bool isExternal);
+    void setRunning(bool isRunning);
     void syncBeatClock();
     void tapTempo();
     
-    double getBpm() { return bpm->getValue(); }
-    double getMsBetweenBeats() { return delta->getValue(); }
+    double getBpm() { return bpmValue.getValue(); }
+    double getMsBetweenBeats() { return beatDeltaMillisecondsValue.getValue(); }
     void setBpm(double newBpm);
     
-    bool isClockExternal() { return external->getValue(); }
-    bool isClockRunning() { return running->getValue(); }
+    bool isClockExternal() { return isClockExternalValue.getValue(); }
+    bool isClockRunning() { return isClockRunningValue.getValue(); }
     
-    ScopedPointer<bpmValue> bpm;
-    ScopedPointer<externalClockValue> external;
-    ScopedPointer<beatDeltaMsValue> delta;
-    ScopedPointer<clockRunningValue> running;
-    ScopedPointer<quantizedBarClockValue> quant;
-
+    Value bpmValue;
+    Value isClockExternalValue;
+    Value beatDeltaMillisecondsValue;
+    Value isClockRunningValue;
+    Value quantizedBeatClockValue;
     
     void handleIncomingMidiMessage (MidiInput*, const MidiMessage& message) override;
 
@@ -70,13 +54,14 @@ private:
     double lastTapTempoTimestamp;
     Array<double> midiClockPulseDeltas;
 
-    
+    float bpmExternal;
+    void setBpmRaw(double newBpm);
     
     const unsigned int pulsesPerQuarterNote = 24;
     const unsigned int quarterNotesPerBar = 4;
     const unsigned int pulsesPerBar = pulsesPerQuarterNote * quarterNotesPerBar;
     const unsigned int beatMsNumerator = 60000;
-    const unsigned int numPulsesToKeep = 100;
+    const unsigned int externalClockAveragingWindowMilliseconds = 600;
     const unsigned int tapTempoMaxDeltaMs = 5000;
     const float bpmDeltaSmoothing = 0.1;
 };

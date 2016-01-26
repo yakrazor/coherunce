@@ -29,11 +29,13 @@ void chuApplication::initialise(const String& commandLine)
     frameTimer = new chuFrameTimer(laserThread);
     frameTimer->startTimerHz(FRAME_RATE);
 
-    const StringArray list (MidiInput::getDevices());
-    String midiInput = list[0];
-    if (!getSharedAudioDeviceManager().isMidiInputEnabled(midiInput))
-        getSharedAudioDeviceManager().setMidiInputEnabled(midiInput, true);
-    getSharedAudioDeviceManager().addMidiInputCallback(midiInput, frameTimer);
+    externalClockMidiDeviceName = "";
+    
+    int index = MidiInput::getDefaultDeviceIndex();
+    if (index >= 0)
+    {
+        setExternalClockSource(MidiInput::getDevices()[index]);
+    }
 
     settingsWindow = new chuPreferencesDialog();
 
@@ -96,6 +98,21 @@ AudioDeviceManager& chuApplication::getSharedAudioDeviceManager()
     }
 
     return *sharedAudioDeviceManager;
+}
+
+void chuApplication::setExternalClockSource(const String& deviceName)
+{
+    if (frameTimer)
+    {
+        if (externalClockMidiDeviceName != "")
+        {
+            getSharedAudioDeviceManager().removeMidiInputCallback(externalClockMidiDeviceName, frameTimer);
+        }
+        externalClockMidiDeviceName = deviceName;
+        
+        getSharedAudioDeviceManager().setMidiInputEnabled(deviceName, true);
+        getSharedAudioDeviceManager().addMidiInputCallback(deviceName, frameTimer);
+    }
 }
 
 Component& chuApplication::getSettingsWindow()

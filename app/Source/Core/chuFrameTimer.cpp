@@ -15,33 +15,70 @@
 
 chuFrameTimer::chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLaserThread), numPulses(0)
 {
-    bpm = new bpmValue();
-    external = new externalClockValue();
-    delta = new beatDeltaMsValue();
-    running = new clockRunningValue();
-    quant = new quantizedBarClockValue();
-    
-    bpm->setValue(120.0);
-    external->setValue(true);
-    delta->setValue(24.0);
-    running->setValue(true);
-    quant->setValue(0);
+    bpmValue.setValue(120.0);
+    isClockExternalValue.setValue(false);
+    beatDeltaMillisecondsValue.setValue(24.0);
+    isClockRunningValue.setValue(true);
+    quantizedBeatClockValue.setValue(0);
 }
 
-void chuFrameTimer::timerCallback() {
-    double timeStamp = Time::getMillisecondCounterHiRes();
-    double deltaMs = delta->getValue();
-    if (!isClockExternal()) {
-        if ((timeStamp - lastDownbeatTimestamp) > (deltaMs * quarterNotesPerBar)) {
+void chuFrameTimer::setBarClock(float clock)
+{
+    barClock = clock;
+    numPulses = pulsesPerBar * barClock;
+
+    int quantClock = ceil(barClock * 4.0);
+    int currentQuantClockVal = quantizedBeatClockValue.getValue();
+    if (currentQuantClockVal != quantClock) {
+        quantizedBeatClockValue.setValue(quantClock);
+    }
+}
+
+void chuFrameTimer::setExternalClock(bool isExternal)
+{
+    if (isClockExternal() && isExternal == false)
+    {
+        // set timer to match current bar position, to switch from external to internal without jumping
+        double timeStamp = Time::getMillisecondCounterHiRes();
+        lastDownbeatTimestamp = timeStamp - ((float)beatDeltaMillisecondsValue.getValue() * barClock * quarterNotesPerBar);
+    }
+
+    isClockExternalValue.setValue(isExternal);
+}
+
+void chuFrameTimer::setRunning(bool isRunning)
+{
+    if (!isClockRunning() && isRunning == true)
+    {
+        // set timer to match current bar position, to restart without jumping
+        double timeStamp = Time::getMillisecondCounterHiRes();
+        lastDownbeatTimestamp = timeStamp - ((float)beatDeltaMillisecondsValue.getValue() * barClock * quarterNotesPerBar);
+    }
+
+    isClockRunningValue.setValue(isRunning);
+}
+
+void chuFrameTimer::timerCallback()
+{
+    if (logging) {
+        printf("Ticked timer at time %f\n", Time::getMillisecondCounterHiRes());
+    }
+
+    if (!isClockExternal() && isClockRunning())
+    {
+        double timeStamp = Time::getMillisecondCounterHiRes();
+        double deltaMs = beatDeltaMillisecondsValue.getValue();
+
+        if ((timeStamp - lastDownbeatTimestamp) > (deltaMs * quarterNotesPerBar))
+        {
             lastDownbeatTimestamp = Time::getMillisecondCounterHiRes();
             timeStamp = Time::getMillisecondCounterHiRes();
         }
-        barClock = (timeStamp - lastDownbeatTimestamp) / (deltaMs * quarterNotesPerBar);
+
+        setBarClock((timeStamp - lastDownbeatTimestamp) / (deltaMs * quarterNotesPerBar));
     }
+
     if (laserThread) {
-        if (logging) {
-            printf("Ticked timer at time %f\n", Time::getMillisecondCounterHiRes());
-        }
         
         auto& patterns = laserThread->getOutputBuffer().getPatternQueue();
 
@@ -59,23 +96,17 @@ void chuFrameTimer::timerCallback() {
         }
         patterns.finish_frame();
     }
-    int quantClock = ceil(barClock * 4.0);
-    int currentQuantClockVal = quant->getValue();
-    if (currentQuantClockVal != quantClock) {
-        quant->setValue(quantClock);
-    }
-    
 }
 
 void chuFrameTimer::syncBeatClock()
 {
-    numPulses = 0;
     setBarClock(0);
-    running->setValue(true);
+    setRunning(true);
     lastDownbeatTimestamp = Time::getMillisecondCounterHiRes();
 }
 
-void chuFrameTimer::tapTempo() {
+void chuFrameTimer::tapTempo()
+{
     if (isClockExternal()) {
         // We can't modify external clock timing, only internal
         return;
@@ -86,64 +117,79 @@ void chuFrameTimer::tapTempo() {
     if (deltaMs > tapTempoMaxDeltaMs) {
         return;
     }
-    bpm->setValue(beatMsNumerator / deltaMs);
-    delta->setValue(deltaMs);
+    bpmValue.setValue(beatMsNumerator / deltaMs);
+    beatDeltaMillisecondsValue.setValue(deltaMs);
 }
 
-void chuFrameTimer::setBpm(double newBpm) {
+void chuFrameTimer::setBpm(double newBpm)
+{
     if (isClockExternal()) {
         // We can't modify external clock timing, only internal
         return;
     }
-    bpm->setValue(newBpm);
-    delta->setValue(beatMsNumerator / newBpm);
+    setBpmRaw(newBpm);
 }
+
+void chuFrameTimer::setBpmRaw(double newBpm)
+{
+    bpmValue.setValue(newBpm);
+    beatDeltaMillisecondsValue.setValue(beatMsNumerator / newBpm);
+}
+
 
 void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& message)
 {
     double pulseDelta = 0.0;
     double currentPulseTimestamp = 0.0;
-    
-    if (message.isMidiClock() && isClockRunning())
+
+    if (message.isMidiClock())
     {
-        numPulses++;
-        if (numPulses > pulsesPerBar) {
-            numPulses -= pulsesPerBar;
+        // Update bar clock only if clock is running
+        if (isClockRunning() && isClockExternal())
+        {
+            numPulses++;
+            if (numPulses > pulsesPerBar) {
+                numPulses -= pulsesPerBar;
+            }
 
-        }
-        if (isClockExternal()) {
-
-            currentPulseTimestamp = Time::getMillisecondCounterHiRes();
-            pulseDelta = currentPulseTimestamp - lastMidiClockTimestamp;
-            lastMidiClockTimestamp = currentPulseTimestamp;
-            midiClockPulseDeltas.insert(0, pulseDelta);
-            if (midiClockPulseDeltas.size() > numPulsesToKeep) {
-                midiClockPulseDeltas.resize(numPulsesToKeep);
-            }
-            if (midiClockPulseDeltas.size() > 0) {
-                double clockPulseDeltaAccumulator = 0;
-                for(int idx = 0; idx < midiClockPulseDeltas.size(); idx++) {
-                    clockPulseDeltaAccumulator += midiClockPulseDeltas[idx];
-                }
-                delta->setValue((clockPulseDeltaAccumulator / midiClockPulseDeltas.size()) * pulsesPerQuarterNote);
-            } else {
-                delta->setValue(pulseDelta * pulsesPerQuarterNote);
-            }
-            double new_bpm = beatMsNumerator / getMsBetweenBeats();
-            double old_bpm = getBpm();
-            if (fabs(old_bpm - new_bpm) > bpmDeltaSmoothing) {
-                bpm->setValue(new_bpm);
-            }
             setBarClock(numPulses / (pulsesPerBar * 1.0));
         }
+
+        // Track external clock even when clock is internal or not running, for correct BPM display
+        currentPulseTimestamp = Time::getMillisecondCounterHiRes();
+        pulseDelta = currentPulseTimestamp - lastMidiClockTimestamp;
+        int numPulsesToKeep = pulsesPerQuarterNote * externalClockAveragingWindowMilliseconds / (float)beatDeltaMillisecondsValue.getValue();
+        lastMidiClockTimestamp = currentPulseTimestamp;
+        midiClockPulseDeltas.insert(0, pulseDelta);
+        if (midiClockPulseDeltas.size() > numPulsesToKeep) {
+            midiClockPulseDeltas.resize(numPulsesToKeep);
+        }
+        if (midiClockPulseDeltas.size() > 0) {
+            double clockPulseDeltaAccumulator = 0;
+            for(int idx = 0; idx < midiClockPulseDeltas.size(); idx++) {
+                clockPulseDeltaAccumulator += midiClockPulseDeltas[idx];
+            }
+            beatDeltaMillisecondsValue.setValue((clockPulseDeltaAccumulator / midiClockPulseDeltas.size()) * pulsesPerQuarterNote);
+        } else {
+            beatDeltaMillisecondsValue.setValue(pulseDelta * pulsesPerQuarterNote);
+        }
+        double new_bpm = beatMsNumerator / getMsBetweenBeats();
+        double old_bpm = bpmExternal;
+        if (fabs(old_bpm - new_bpm) > bpmDeltaSmoothing) {
+            bpmExternal = new_bpm;
+        }
+        if (isClockExternal())
+        {
+            setBpmRaw(bpmExternal);
+        }
     }
-    else if (message.isMidiStart())
+    else if (message.isMidiStart() && isClockExternal())
     {
-        numPulses = 0;
-        running->setValue(true);
+        setBarClock(0);
+        setRunning(true);
     }
-    else if (message.isMidiStop())
+    else if (message.isMidiStop() && isClockExternal())
     {
-        running->setValue(false);
+        setRunning(false);
     }
 }
