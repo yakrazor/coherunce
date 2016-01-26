@@ -68,6 +68,10 @@
     </GROUP>
     <GROUP id="{572DD2B8-3E51-3583-F0F7-5C2847D91469}" name="Application">
       <GROUP id="{2EE424BE-D824-ED33-A90D-787A9687C4B3}" name="Components">
+        <FILE id="QxogY6" name="chuCalibrationComponent.cpp" compile="1" resource="0"
+              file="Source/Application/Components/chuCalibrationComponent.cpp"/>
+        <FILE id="NDN9CU" name="chuCalibrationComponent.h" compile="0" resource="0"
+              file="Source/Application/Components/chuCalibrationComponent.h"/>
         <FILE id="kvZHfU" name="BeatSyncComponent.h" compile="0" resource="0"
               file="Source/Application/Components/BeatSyncComponent.h"/>
         <FILE id="AAoRSm" name="BeatSyncComponent.cpp" compile="1" resource="0"
