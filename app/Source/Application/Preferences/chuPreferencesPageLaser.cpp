@@ -10,11 +10,12 @@
 
 #include "chuApplication.h"
 #include "chuPreferencesDialog.h"
+#include "chuCalibrationComponent.h"
 
 class chuPreferencePageLaserContent : public Component,
     public ChangeListener,
-    private ComboBoxListener,
-    private ButtonListener
+    public ComboBoxListener,
+    public ButtonListener
 {
 public:
     chuPreferencePageLaserContent()
@@ -78,7 +79,12 @@ public:
         {
             if (outputDeviceDropDown->getSelectedId() > 0)
             {
-                // TODO: implement me
+                laserSelected = true;
+                laserId = outputDeviceDropDown->getSelectedId();
+                printf("Selected laser changed to %d\n", laserId);
+            } else {
+                laserSelected = false;
+                printf("Laser de-selected\n");
             }
         }
     }
@@ -87,6 +93,8 @@ public:
     {
         if (button == calibrateButton)
         {
+            chuCalibrationComponent::showCalibrationDialog();
+            
         }
         else if (button == testButton)
         {
@@ -113,6 +121,8 @@ private:
     ScopedPointer<Label> outputDeviceLabel;
     ScopedPointer<PropertyPanel> laserProperties;
     OwnedArray<Component> childControls;
+    int laserId;
+    bool laserSelected;
 
     static String getNoDeviceString()   { return "<< " + TRANS("none") + " >>"; }
 
@@ -157,11 +167,13 @@ private:
         {
             calibrateButton = new TextButton("Calibrate");
             addAndMakeVisible(calibrateButton);
+            calibrateButton->addListener(this);
         }
         if (testButton == nullptr)
         {
             testButton = new TextButton("Show Test Pattern");
             addAndMakeVisible(testButton);
+            testButton->addListener(this);
         }
     }
 

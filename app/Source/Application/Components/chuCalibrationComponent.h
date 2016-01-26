@@ -44,6 +44,7 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    static void showCalibrationDialog();
     //[/UserMethods]
 
     void paint (Graphics& g);

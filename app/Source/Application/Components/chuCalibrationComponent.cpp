@@ -213,6 +213,16 @@ void chuCalibrationComponent::sliderValueChanged (Slider* sliderThatWasMoved)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+void chuCalibrationComponent::showCalibrationDialog() {
+    DialogWindow::LaunchOptions dlo;
+    dlo.dialogTitle = "Laser calibration window";
+    dlo.escapeKeyTriggersCloseButton = true;
+    dlo.useNativeTitleBar = true;
+    dlo.resizable = true;
+    chuCalibrationComponent* chuCalib = new chuCalibrationComponent();
+    dlo.content = *new OptionalScopedPointer<Component>(chuCalib, true);
+    dlo.launchAsync();
+}
 //[/MiscUserCode]
 
 
