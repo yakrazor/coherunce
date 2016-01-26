@@ -82,8 +82,12 @@ public:
                 laserSelected = true;
                 laserId = outputDeviceDropDown->getSelectedId();
                 printf("Selected laser changed to %d\n", laserId);
+                calibrateButton->setEnabled(true);
+                testButton->setEnabled(true);
             } else {
                 laserSelected = false;
+                calibrateButton->setEnabled(false);
+                testButton->setEnabled(false);
                 printf("Laser de-selected\n");
             }
         }
@@ -166,12 +170,14 @@ private:
         if (calibrateButton == nullptr)
         {
             calibrateButton = new TextButton("Calibrate");
+            calibrateButton->setEnabled(false);
             addAndMakeVisible(calibrateButton);
             calibrateButton->addListener(this);
         }
         if (testButton == nullptr)
         {
             testButton = new TextButton("Show Test Pattern");
+            testButton->setEnabled(false);
             addAndMakeVisible(testButton);
             testButton->addListener(this);
         }
