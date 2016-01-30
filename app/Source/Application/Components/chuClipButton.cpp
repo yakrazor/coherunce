@@ -13,6 +13,7 @@
 
 #include "Core/Generators/chuGenerator.h"
 #include "chuGeneratorManager.h"
+#include "chuApplication.h"
 
 //==============================================================================
 chuClipButton::chuClipButton()
@@ -30,10 +31,12 @@ chuClipButton::chuClipButton()
     
     addAndMakeVisible(mainButton);
     addAndMakeVisible(labelButton);
+    startTimerHz(previewHz);
 }
 
 chuClipButton::~chuClipButton()
 {
+    stopTimer();
 }
 
 void chuClipButton::paint(Graphics& g)
@@ -66,8 +69,8 @@ void drawGeneratorPreview(chuGenerator* generator, DrawableComposite* preview)
     {
         return;
     }
-
-    auto items = generator->getPatterns(0.0);
+    
+    auto items = generator->getPatterns(getApp()->getFrameTimer()->getBarClock());
 
     auto border = new DrawablePath();
     Path borderPath;
@@ -133,6 +136,10 @@ void chuClipButton::updatePreview()
     preview->setBoundingBox(RelativeParallelogram(Rectangle<float>(-100.0, 100.0, 100.0, -100.0)));
     drawGeneratorPreview(generator, preview);
     mainButton->setImages(preview);
+}
+
+void chuClipButton::timerCallback() {
+    updatePreview();
 }
 
 void chuClipButton::setFocus(bool focused)
