@@ -6,7 +6,7 @@
   <MAINGROUP id="dWToof" name="coherunce">
     <GROUP id="{6BC089EB-636E-5AF4-43B5-94FB4D9264BC}" name="Core">
       <GROUP id="{F098A945-FEAF-C0E2-E6B9-909D113EC801}" name="Generators">
-        <FILE id="DuTmIV" name="chuGenerator.h" compile="0" resource="0" file="Source/chuGenerator.h"/>
+        <FILE id="DuTmIV" name="chuGenerator.h" compile="0" resource="0" file="Source/Core/Generators/chuGenerator.h"/>
         <FILE id="aSeYE9" name="chuGenerator.cpp" compile="1" resource="0"
               file="Source/Core/Generators/chuGenerator.cpp"/>
         <FILE id="MObyHw" name="chuGenFivePoints.h" compile="0" resource="0"
