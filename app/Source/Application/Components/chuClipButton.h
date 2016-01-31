@@ -17,9 +17,10 @@
 /*
 */
 
+
 class chuGenerator;
 
-class chuClipButton : public Component, Button::Listener
+class chuClipButton : public Component, Button::Listener, Timer
 {
 public:
     chuClipButton();
@@ -27,6 +28,7 @@ public:
 
     virtual void paint(Graphics& g) override;
     virtual void resized() override;
+    virtual void timerCallback() override;
 
     void setGenerator(chuGenerator* gen);
     chuGenerator* getGenerator() { return generator; }
@@ -45,6 +47,8 @@ private:
     ScopedPointer<DrawableComposite> preview;
     ScopedPointer<DrawableButton> mainButton;
     ScopedPointer<TextButton> labelButton;
+    
+    const int previewHz = 60;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (chuClipButton)
 };

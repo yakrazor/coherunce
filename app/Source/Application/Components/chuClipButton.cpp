@@ -13,6 +13,7 @@
 
 #include "Core/Generators/chuGenerator.h"
 #include "chuGeneratorManager.h"
+#include "chuApplication.h"
 
 //==============================================================================
 chuClipButton::chuClipButton()
@@ -34,6 +35,7 @@ chuClipButton::chuClipButton()
 
 chuClipButton::~chuClipButton()
 {
+    stopTimer();
 }
 
 void chuClipButton::paint(Graphics& g)
@@ -66,8 +68,8 @@ void drawGeneratorPreview(chuGenerator* generator, DrawableComposite* preview)
     {
         return;
     }
-
-    auto items = generator->getPatterns(0.0);
+    
+    auto items = generator->getPatterns(getApp()->getFrameTimer()->getBarClock());
 
     auto border = new DrawablePath();
     Path borderPath;
@@ -85,7 +87,7 @@ void drawGeneratorPreview(chuGenerator* generator, DrawableComposite* preview)
             path.addPolygon(Point<float>(item.origin.x * 100, item.origin.y * 100),
                             item.sides,
                             item.radius * 100,
-                            item.rotation);
+                            item.rotation * float_Pi/180.0);
 
             auto dp = new DrawablePath();
             dp->setStrokeFill(Colour(item.red >> 8, item.green >> 8, item.blue >> 8));
@@ -135,12 +137,20 @@ void chuClipButton::updatePreview()
     mainButton->setImages(preview);
 }
 
+void chuClipButton::timerCallback() {
+    updatePreview();
+}
+
 void chuClipButton::setFocus(bool focused)
 {
     labelButton->setToggleState(focused, dontSendNotification);
     
-    // TODO: need to update preview whenever properties change; for now, update on focus as a workaround
-    updatePreview();
+    if (focused)
+    {
+        startTimerHz(previewHz);
+    } else {
+        stopTimer();
+    }
 }
 
 void chuClipButton::resized()
