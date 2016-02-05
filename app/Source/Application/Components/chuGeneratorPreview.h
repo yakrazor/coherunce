@@ -15,7 +15,7 @@
 #include "chuGeneratorManager.h"
 #include "chuApplication.h"
 
-class chuGeneratorPreview : public Timer, public DrawableComposite {
+class chuGeneratorPreview : public Timer, public Component, public ChangeBroadcaster {
 public:
     // pub
     chuGeneratorPreview(chuGenerator* gen);
@@ -25,6 +25,7 @@ public:
     void startPreviewUpdate();
     void stopPreviewUpdate();
     void drawGeneratorPreview();
+    ScopedPointer<Drawable> getPreviewBuffer();
 
     virtual void timerCallback() override;
     
@@ -34,7 +35,7 @@ private:
     // priv
     chuGenerator* generator;
     const int previewHz = 60;
-    
+    ScopedPointer<DrawableComposite> previewBuffer;    
 
 };
 

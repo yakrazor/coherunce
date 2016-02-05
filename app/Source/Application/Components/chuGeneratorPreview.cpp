@@ -12,7 +12,7 @@
 
 chuGeneratorPreview::chuGeneratorPreview(chuGenerator* gen) {
     //setBoundingBox(RelativeParallelogram(Rectangle<float>(-100.0, 100.0, 100.0, -100.0)));
-    resetBoundingBoxToContentArea();
+    //resetBoundingBoxToContentArea();
     setGenerator(gen);
 }
 
@@ -37,12 +37,20 @@ void chuGeneratorPreview::timerCallback() {
     drawGeneratorPreview();
 }
 
+ScopedPointer<Drawable> chuGeneratorPreview::getPreviewBuffer() {
+    if (!previewBuffer) {
+        return nullptr;
+    }
+    return previewBuffer->createCopy();
+}
+
 void chuGeneratorPreview::drawGeneratorPreview()
 {
     if (!generator) {
         return;
     }
-    deleteAllChildren();
+    previewBuffer = new DrawableComposite();
+    previewBuffer->setBoundingBox(RelativeParallelogram(Rectangle<float>(-100.0, 100.0, 100.0, -100.0)));
     
     auto items = generator->getPatterns(getApp()->getFrameTimer()->getBarClock());
     
@@ -52,7 +60,7 @@ void chuGeneratorPreview::drawGeneratorPreview()
     border->setStrokeFill(Colours::black);
     border->setStrokeThickness(1.0);
     border->setPath(borderPath);
-    addAndMakeVisible(border);
+    previewBuffer->addAndMakeVisible(border);
     
     for (auto& item : items)
     {
@@ -70,7 +78,7 @@ void chuGeneratorPreview::drawGeneratorPreview()
             dp->setStrokeThickness(2.0f);
             dp->setPath(path);
             
-            addAndMakeVisible(dp);
+            previewBuffer->addAndMakeVisible(dp);
         }
         else if (item.type == PatternType::Polyline)
         {
@@ -91,9 +99,11 @@ void chuGeneratorPreview::drawGeneratorPreview()
                 dp->setStrokeThickness(2.0f);
                 dp->setPath(path);
                 
-                addAndMakeVisible(dp);
+                previewBuffer->addAndMakeVisible(dp);
             }
         }
     }
+    addAndMakeVisible(previewBuffer);
+    sendChangeMessage();
 
 }

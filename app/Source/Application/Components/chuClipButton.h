@@ -20,7 +20,7 @@
 
 class chuGenerator;
 
-class chuClipButton : public Component, Button::Listener
+class chuClipButton : public Component, Button::Listener, ChangeListener
 {
 public:
     chuClipButton();
@@ -34,6 +34,7 @@ public:
     void setFocus(bool focused);
 
     virtual void buttonClicked(Button* button) override;
+    virtual void changeListenerCallback(ChangeBroadcaster *source) override;
 
 private:
     chuGenerator* generator;

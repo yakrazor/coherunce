@@ -31,6 +31,8 @@ chuClipButton::chuClipButton()
     
     addAndMakeVisible(mainButton);
     addAndMakeVisible(labelButton);
+    preview = new chuGeneratorPreview(generator);
+    preview->addChangeListener(this);
 }
 
 void chuClipButton::paint(Graphics& g)
@@ -61,8 +63,13 @@ void chuClipButton::setGenerator(chuGenerator* gen)
 {
     generator = gen;
     labelButton->setButtonText(gen->getName());
+    preview->setGenerator(gen);
 }
 
+void chuClipButton::changeListenerCallback(ChangeBroadcaster *source) {
+    if (source == preview) {
+        mainButton->setImages(preview->getPreviewBuffer());
+    }
 }
 
 void chuClipButton::setFocus(bool focused)
@@ -71,7 +78,9 @@ void chuClipButton::setFocus(bool focused)
     
     if (focused)
     {
+        preview->startPreviewUpdate();
     } else {
+        preview->stopPreviewUpdate();
     }
 }
 
