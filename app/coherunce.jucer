@@ -68,6 +68,13 @@
     </GROUP>
     <GROUP id="{572DD2B8-3E51-3583-F0F7-5C2847D91469}" name="Application">
       <GROUP id="{2EE424BE-D824-ED33-A90D-787A9687C4B3}" name="Components">
+        <FILE id="YwP6v0" name="chuGeneratorPreview.cpp" compile="1" resource="0"
+              file="Source/Application/Components/chuGeneratorPreview.cpp"/>
+        <FILE id="l73s5e" name="chuGeneratorPreview.h" compile="0" resource="0"
+              file="Source/Application/Components/chuGeneratorPreview.h"/>
+        <FILE id="DF5Sgn" name="chuCodeEditor.cpp" compile="1" resource="0"
+              file="Source/Application/Components/chuCodeEditor.cpp"/>
+        <FILE id="LczQAv" name="chuCodeEditor.h" compile="0" resource="0" file="Source/Application/Components/chuCodeEditor.h"/>
         <FILE id="kvZHfU" name="BeatSyncComponent.h" compile="0" resource="0"
               file="Source/Application/Components/BeatSyncComponent.h"/>
         <FILE id="AAoRSm" name="BeatSyncComponent.cpp" compile="1" resource="0"

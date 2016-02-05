@@ -12,7 +12,7 @@
 #define CHUCLIPBUTTON_H_INCLUDED
 
 #include "../../../JuceLibraryCode/JuceHeader.h"
-
+#include "chuGeneratorPreview.h"
 //==============================================================================
 /*
 */
@@ -20,21 +20,18 @@
 
 class chuGenerator;
 
-class chuClipButton : public Component, Button::Listener, Timer
+class chuClipButton : public Component, Button::Listener
 {
 public:
     chuClipButton();
-    ~chuClipButton();
 
     virtual void paint(Graphics& g) override;
     virtual void resized() override;
-    virtual void timerCallback() override;
 
     void setGenerator(chuGenerator* gen);
     chuGenerator* getGenerator() { return generator; }
 
     void setFocus(bool focused);
-    void updatePreview();
 
     virtual void buttonClicked(Button* button) override;
 
@@ -44,11 +41,11 @@ private:
     int labelHeight;
     int borderWidth;
 
-    ScopedPointer<DrawableComposite> preview;
+    ScopedPointer<chuGeneratorPreview> preview;
     ScopedPointer<DrawableButton> mainButton;
     ScopedPointer<TextButton> labelButton;
     
-    const int previewHz = 60;
+    const int previewHz = 30;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (chuClipButton)
 };

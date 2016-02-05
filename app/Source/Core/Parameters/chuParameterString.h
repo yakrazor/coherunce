@@ -14,6 +14,7 @@
 #include "chuParameterBase.h"
 
 
+
 class chuParameterString : public chuParameter {
 public:
     chuParameterString(const String& _name, const String& str, const chuParameterOptions& _options = chuParameterOptions::Default);

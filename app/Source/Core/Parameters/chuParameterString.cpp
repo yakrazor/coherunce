@@ -10,6 +10,7 @@
 
 #include "chuParameterString.h"
 #include "chuApplication.h"
+#include "chuCodeEditor.h"
 
 chuParameterString::chuParameterString(const String& _name, const String& _str, const chuParameterOptions& _options)
 : chuParameter(_name, _options)
@@ -17,18 +18,16 @@ chuParameterString::chuParameterString(const String& _name, const String& _str, 
     setValue(_str);
 }
 
-class CodeEditorWindow : public DocumentWindow, private Timer, private CodeDocument::Listener
+class CodeEditorWindow : public DocumentWindow
 {
 public:
     CodeEditorWindow(const String& name, chuParameterString* param)
-    : DocumentWindow(name, Colours::black, allButtons), param(param)
+    : DocumentWindow(name, Colours::black, allButtons)
     {
         setUsingNativeTitleBar(true);
-        document.addListener(this);
         setResizable(true, true);
 
-        editor = new CodeEditorComponent(document, nullptr);
-        editor->loadContent(param->getValue());
+        editor = new chuCodeEditor(param);
         setContentOwned(editor, false);
 
         addKeyListener(getApp()->getApplicationCommandManager().getKeyMappings());
@@ -44,28 +43,7 @@ public:
     }
 
 private:
-    CodeDocument document;
-    ScopedPointer<CodeEditorComponent> editor;
-    chuParameterString* param;
-
-    void codeDocumentTextInserted(const String&, int) override
-    {
-        startTimer(300);
-    }
-
-    void codeDocumentTextDeleted(int, int) override
-    {
-        startTimer(300);
-    }
-
-    void timerCallback() override
-    {
-        stopTimer();
-        if (param)
-        {
-            param->setValue(document.getAllContent());
-        }
-    }
+    ScopedPointer<chuCodeEditor> editor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CodeEditorWindow)
 };
@@ -91,7 +69,7 @@ public:
         if (!window) {
             window = new CodeEditorWindow(param->getName(), param);
             auto buttonBounds = b->getScreenBounds();
-            int codeWindowWidth = 550;
+            int codeWindowWidth = 1100;
             int codeWindowHeight = 400;
             window->setBounds(buttonBounds.getCentreX() - codeWindowWidth,
                               buttonBounds.getCentreY() + 30,
