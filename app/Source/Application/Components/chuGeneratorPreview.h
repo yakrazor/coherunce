@@ -35,7 +35,8 @@ private:
     // priv
     chuGenerator* generator;
     const int previewHz = 60;
-    ScopedPointer<DrawableComposite> previewBuffer;    
+    ScopedPointer<DrawableComposite> previewBuffer;
+    const float resolution = 200.0;
 
 };
 

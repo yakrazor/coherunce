@@ -49,13 +49,13 @@ void chuGeneratorPreview::drawGeneratorPreview()
         return;
     }
     previewBuffer = new DrawableComposite();
-    previewBuffer->setBoundingBox(RelativeParallelogram(Rectangle<float>(-100.0, 100.0, 100.0, -100.0)));
+    previewBuffer->setBoundingBox(RelativeParallelogram(Rectangle<float>(-resolution, resolution, resolution, -resolution)));
     
     auto items = generator->getPatterns(getApp()->getFrameTimer()->getBarClock());
     
     auto border = new DrawablePath();
     Path borderPath;
-    borderPath.addRectangle(-100, -100, 200, 200);
+    borderPath.addRectangle(-resolution, -resolution, resolution * 2, resolution * 2);
     border->setStrokeFill(Colours::black);
     border->setStrokeThickness(1.0);
     border->setPath(borderPath);
@@ -66,9 +66,9 @@ void chuGeneratorPreview::drawGeneratorPreview()
         if (item.type == PatternType::RegularPolygon)
         {
             Path path;
-            path.addPolygon(Point<float>(item.origin.x * 100, item.origin.y * 100),
+            path.addPolygon(Point<float>(item.origin.x * resolution, item.origin.y * resolution),
                             item.sides,
-                            item.radius * 100,
+                            item.radius * resolution,
                             item.rotation * float_Pi/180.0);
             
             auto dp = new DrawablePath();
@@ -87,8 +87,8 @@ void chuGeneratorPreview::drawGeneratorPreview()
                 Path path;
                 path.addLineSegment(
                     Line<float>(
-                        vertices[i-1].x * 100, vertices[i-1].y * -100,
-                        vertices[i].x * 100, vertices[i].y * -100),
+                        vertices[i-1].x * resolution, vertices[i-1].y * -resolution,
+                        vertices[i].x * resolution, vertices[i].y * -resolution),
                         1
                 );
                 
