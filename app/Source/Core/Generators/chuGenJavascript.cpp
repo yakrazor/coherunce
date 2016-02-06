@@ -61,8 +61,13 @@ struct InteropObject : public DynamicObject
         {
             if (InteropObject* thisObject = dynamic_cast<InteropObject*> (args.thisObject.getObject()))
             {
+                float arg0 = static_cast<float>(args.arguments[0]);
+                float arg1 = static_cast<float>(args.arguments[1]);
+                if(isinf(arg0) || isinf(arg1)) {
+                    return var::undefined();
+                }
                 thisObject->generator->patternBuffer.back().polyline.addPoint(
-                    Vector2f((float)args.arguments[0], (float)args.arguments[1]),
+                    Vector2f(arg0, arg1),
                     thisObject->generator->currentColour
                 );
             }
