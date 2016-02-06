@@ -11,8 +11,7 @@
 #include "chuGeneratorPreview.h"
 
 chuGeneratorPreview::chuGeneratorPreview(chuGenerator* gen) {
-    //setBoundingBox(RelativeParallelogram(Rectangle<float>(-100.0, 100.0, 100.0, -100.0)));
-    //resetBoundingBoxToContentArea();
+    
     setGenerator(gen);
 }
 
@@ -87,11 +86,11 @@ void chuGeneratorPreview::drawGeneratorPreview()
             {
                 Path path;
                 path.addLineSegment(
-                                    Line<float>(
-                                                vertices[i-1].x * 100, vertices[i-1].y * -100,
-                                                vertices[i].x * 100, vertices[i].y * -100),
-                                    1
-                                    );
+                    Line<float>(
+                        vertices[i-1].x * 100, vertices[i-1].y * -100,
+                        vertices[i].x * 100, vertices[i].y * -100),
+                        1
+                );
                 
                 auto dp = new DrawablePath();
                 dp->setStrokeFill(item.polyline.colours[i]);
@@ -103,6 +102,7 @@ void chuGeneratorPreview::drawGeneratorPreview()
             }
         }
     }
+    previewBuffer->setTransformToFit(getLocalBounds().toFloat(), RectanglePlacement::stretchToFit);
     addAndMakeVisible(previewBuffer);
     sendChangeMessage();
 
