@@ -51,6 +51,8 @@ chuCodeEditor::chuCodeEditor (chuParameterString* param)
 
 
     //[Constructor] You can add your own custom stuff here..
+    auto fnt = Font(Font::getDefaultMonospacedFontName(), 20, Font::plain);
+    codeEditor->setFont(fnt);
     codeEditor->loadContent(param->getValue());
     preview->startPreviewUpdate();
     //[/Constructor]
