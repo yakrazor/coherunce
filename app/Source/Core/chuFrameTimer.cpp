@@ -13,7 +13,7 @@
 #include "Generators/chuGenerator.h"
 #include "chuGeneratorManager.h"
 
-chuFrameTimer::chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLaserThread), numPulses(0)
+chuFrameTimer::chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLaserThread), numPulses(0), barClock(0)
 {
     bpmValue.setValue(120.0);
     isClockExternalValue.setValue(false);
