@@ -24,6 +24,10 @@ chuFrameTimer::chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLas
 
 void chuFrameTimer::setBarClock(float clock)
 {
+    if (clock < 0 || clock > 1) {
+        printf("Bad clock value");
+        return;
+    }
     barClock = clock;
     numPulses = pulsesPerBar * barClock;
 
