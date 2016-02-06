@@ -57,17 +57,20 @@ struct InteropObject : public DynamicObject
 
     static var addPoint(const var::NativeFunctionArgs& args)
     {
-        if (args.numArguments == 2)
+        if (args.numArguments == 2 && args.arguments[0].isDouble() && args.arguments[1].isDouble())
         {
+            float x = static_cast<float>(args.arguments[0]);
+            float y = static_cast<float>(args.arguments[1]);
+            if (!std::isfinite(x) || !std::isfinite(y))
+            {
+                return var::undefined();
+            }
+            
             if (InteropObject* thisObject = dynamic_cast<InteropObject*> (args.thisObject.getObject()))
             {
-                float arg0 = static_cast<float>(args.arguments[0]);
-                float arg1 = static_cast<float>(args.arguments[1]);
-                if(isinf(arg0) || isinf(arg1)) {
-                    return var::undefined();
-                }
+                
                 thisObject->generator->patternBuffer.back().polyline.addPoint(
-                    Vector2f(arg0, arg1),
+                    Vector2f(x, y),
                     thisObject->generator->currentColour
                 );
             }
