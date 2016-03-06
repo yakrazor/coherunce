@@ -11,15 +11,15 @@
 #include "LaserConfig.h"
 
 LaserConfig::LaserConfig()
-: pointsPerSecond("Points Per Second", 200, 100000, 30000)
+: pointsPerSecond("Points Per Second", 200, 100000, 35000)
 , longestUnbrokenLine("Longest Unbroken Line", 200, 10000, 1000)
-, internalDwellPoints("Internal Dwell Points", 0, 50, 1)
+, internalDwellPoints("Internal Dwell Points", 0, 50, 3)
 , dwellOffPoints("Dwell Points (Off)", 0, 50, 10)
 , dwellOnPoints("Dwell Points (On)", 0, 50, 2)
 , globalIntensity("Intensity", 0, 1.0, 0.0)
-, redDelay("Red Delay", 0, 20, 4)
-, greenDelay("Green Delay", 0, 20, 4)
-, blueDelay("Blue Delay", 0, 20, 4)
+, redDelay("Red Delay", 0, 20, 6)
+, greenDelay("Green Delay", 0, 20, 6)
+, blueDelay("Blue Delay", 0, 20, 6)
 {
 }
 
