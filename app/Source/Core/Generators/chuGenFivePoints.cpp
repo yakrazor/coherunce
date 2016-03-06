@@ -83,7 +83,7 @@ std::vector<PatternItem> chuGenFivePoints::getPatterns(float barClock)
     bool flipX = false;
     float laserXMin = flipX ? 1.0 : -1.0;
     float laserXMax = flipX ? -1.0 : 1.0;
-    bool flipY = true;
+    bool flipY = false;
     float laserYMin = flipY ? 1.0 : -1.0;
     float laserYMax = flipY ? -1.0 : 1.0;
 
