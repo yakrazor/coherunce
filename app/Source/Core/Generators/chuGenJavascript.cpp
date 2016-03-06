@@ -57,7 +57,9 @@ struct InteropObject : public DynamicObject
 
     static var addPoint(const var::NativeFunctionArgs& args)
     {
-        if (args.numArguments == 2 && args.arguments[0].isDouble() && args.arguments[1].isDouble())
+        if (args.numArguments == 2 &&
+            (args.arguments[0].isDouble() || args.arguments[0].isInt() || args.arguments[0].isInt64()) &&
+            (args.arguments[1].isDouble() || args.arguments[1].isInt() || args.arguments[1].isInt64()))
         {
             float x = static_cast<float>(args.arguments[0]);
             float y = static_cast<float>(args.arguments[1]);
