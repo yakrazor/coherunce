@@ -23,6 +23,7 @@ enum CommandIDs {
     Preferences,
     Open,
     Save,
+    SaveAs,
     HelpContents,
     CloseWindow
 };

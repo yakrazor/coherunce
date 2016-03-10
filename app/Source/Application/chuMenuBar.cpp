@@ -49,6 +49,7 @@ PopupMenu chuMenuBar::getMenuForIndex(int topLevelMenuIndex, const String &menuN
         menu.addCommandItem(commandManager, CommandIDs::CloseWindow);
         menu.addSeparator();
         menu.addCommandItem(commandManager, CommandIDs::Save);
+        menu.addCommandItem(commandManager, CommandIDs::SaveAs);
         menu.addSeparator();
 #if !JUCE_MAC
         menu.addSeparator();

@@ -147,6 +147,10 @@ void chuApplication::getCommandInfo(CommandID commandID, ApplicationCommandInfo&
             result.setInfo("Save", "Save the current project", "General", 0);
             result.addDefaultKeypress('S', ModifierKeys::commandModifier);
             return;
+        case CommandIDs::SaveAs:
+            result.setInfo("Save As...", "Save the current project under a different filename", "General", 0);
+            result.addDefaultKeypress('S', ModifierKeys::commandModifier|ModifierKeys::shiftModifier);
+            return;
         case CommandIDs::HelpContents:
             result.setInfo(CharPointer_UTF8("coher\xc3\xbcnce Manual"), "Open the user manual", "Help", 0);
             return;
@@ -187,6 +191,7 @@ void chuApplication::getAllCommands(Array<CommandID>& commands)
     commands.add(CommandIDs::Preferences);
     commands.add(CommandIDs::Open);
     commands.add(CommandIDs::Save);
+    commands.add(CommandIDs::SaveAs);
     commands.add(CommandIDs::HelpContents);
     commands.add(CommandIDs::CloseWindow);
     commands.add(StandardApplicationCommandIDs::undo);
@@ -210,17 +215,34 @@ bool chuApplication::perform(const InvocationInfo& info)
             return true;
         case CommandIDs::Open:
             {
-                FileChooser fc ("Choose a project to open...",
+                FileChooser fc ("Open Project...",
                                 File::getCurrentWorkingDirectory(),
                                 "*.chu",
                                 true);
                 fc.browseForFileToOpen();
+
+                if (currentProject) {
+                    // todo: warn about unsaved changes
+                } else {
+                    currentProject = new chuProject();
+                }
                 currentProject->loadFromFile(fc.getResult());
             }
             return true;
         case CommandIDs::Save:
             if (currentProject) {
                 currentProject->saveToFile();
+            }
+            return true;
+        case CommandIDs::SaveAs:
+            if (currentProject) {
+                FileChooser fc ("Save As...",
+                                File::getCurrentWorkingDirectory(),
+                                "*.chu",
+                                true);
+                fc.browseForFileToSave(true);
+
+                currentProject->saveToFile(fc.getResult());
             }
             return true;
         case CommandIDs::HelpContents:
