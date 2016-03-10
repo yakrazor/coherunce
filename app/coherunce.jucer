@@ -67,6 +67,8 @@
             file="Source/Core/chuOSCManager.cpp"/>
     </GROUP>
     <GROUP id="{572DD2B8-3E51-3583-F0F7-5C2847D91469}" name="Application">
+      <FILE id="xa3clM" name="chuProject.cpp" compile="1" resource="0" file="Source/Application/chuProject.cpp"/>
+      <FILE id="p05WPz" name="chuProject.h" compile="0" resource="0" file="Source/Application/chuProject.h"/>
       <GROUP id="{2EE424BE-D824-ED33-A90D-787A9687C4B3}" name="Components">
         <FILE id="YwP6v0" name="chuGeneratorPreview.cpp" compile="1" resource="0"
               file="Source/Application/Components/chuGeneratorPreview.cpp"/>

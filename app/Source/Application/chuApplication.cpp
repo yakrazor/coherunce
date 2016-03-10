@@ -47,6 +47,9 @@ void chuApplication::initialise(const String& commandLine)
     chuOSCManager::initialize(7900);
 
     mainWindow = new chuMainWindow(getApplicationName());
+
+    currentProject = new chuProject();
+    currentProject->loadFromFile("./default.chu");
 }
 
 void chuApplication::shutdown()
@@ -206,10 +209,19 @@ bool chuApplication::perform(const InvocationInfo& info)
             getApp()->getSettingsWindow().setVisible(true);
             return true;
         case CommandIDs::Open:
-            // TODO: implement me
+            {
+                FileChooser fc ("Choose a project to open...",
+                                File::getCurrentWorkingDirectory(),
+                                "*.chu",
+                                true);
+                fc.browseForFileToOpen();
+                currentProject->loadFromFile(fc.getResult());
+            }
             return true;
         case CommandIDs::Save:
-            // TODO: implement me
+            if (currentProject) {
+                currentProject->saveToFile();
+            }
             return true;
         case CommandIDs::HelpContents:
             // TODO: implement me

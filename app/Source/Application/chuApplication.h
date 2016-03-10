@@ -15,6 +15,7 @@
 #include "LaserOutputThread.h"
 #include "chuMainWindow.h"
 #include "chuFrameTimer.h"
+#include "chuProject.h"
 
 
 enum CommandIDs {
@@ -67,6 +68,8 @@ private:
     ScopedPointer<ApplicationCommandManager> applicationCommandManager;
     ScopedPointer<AudioDeviceManager> sharedAudioDeviceManager;
     ScopedPointer<chuFrameTimer> frameTimer;
+
+    ScopedPointer<chuProject> currentProject;
 
     String externalClockMidiDeviceName;
 };
