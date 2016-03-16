@@ -25,6 +25,8 @@ public:
     chuGenerator* getCurrentGenerator() { return currentGenerator; }
     void setCurrentGenerator(chuGenerator* gen);
 
+    void deserializeGenerator(String type, ValueTree data);
+
 private:
     OwnedArray<chuGenerator> allGenerators;
     chuGenerator* currentGenerator;

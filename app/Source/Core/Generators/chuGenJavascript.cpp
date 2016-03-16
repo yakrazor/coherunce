@@ -99,8 +99,8 @@ struct InteropObject : public DynamicObject
 };
 
 
-chuGenJavascript::chuGenJavascript()
-: chuGenerator("CustomJavascript")
+chuGenJavascript::chuGenJavascript(ValueTree source)
+: chuGenerator("CustomJavascript", source)
 {
     addParameter(a = new chuParameterFloat("a", 0.0, 1.0, 0.5));
     addParameter(b = new chuParameterFloat("b", 0.0, 1.0, 0.5));

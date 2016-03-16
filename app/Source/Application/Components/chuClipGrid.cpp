@@ -36,7 +36,7 @@ chuClipGrid::chuClipGrid()
             int index = i * cols + j;
             if (index < generators.size())
             {
-                cb->setGenerator(generators[i * cols + j]);
+                cb->setGenerator(generators[index]);
             }
             cb->setBounds(120 * j, 110 * i, 120, 110);
             addAndMakeVisible(cb);

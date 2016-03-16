@@ -10,8 +10,8 @@
 
 #include "chuGen16Step.h"
 
-chuGen16Step::chuGen16Step()
-: chuGenerator("16Step")
+chuGen16Step::chuGen16Step(ValueTree source)
+: chuGenerator("16Step", source)
 {
     addParameter(height = new chuParameterFloat("Height", 0.01, 1.0, 0.3));
     addParameter(quantized = new chuParameterBool("Quantize", true));

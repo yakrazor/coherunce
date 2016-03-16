@@ -10,8 +10,8 @@
 
 #include "chuGenPolygonPinwheel.h"
 
-chuGenPolygonPinwheel::chuGenPolygonPinwheel()
-: chuGenerator("PolygonPinwheel")
+chuGenPolygonPinwheel::chuGenPolygonPinwheel(ValueTree source)
+: chuGenerator("PolygonPinwheel", source)
 {
     addParameter(sides = new chuParameterInt("Sides", 3, 12, 5));
     addParameter(radius = new chuParameterFloat("Radius", 0.1, 1.0, 1.0));

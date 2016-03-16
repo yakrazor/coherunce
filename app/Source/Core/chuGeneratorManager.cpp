@@ -13,17 +13,20 @@
 #include "chuGenFivePoints.h"
 #include "chuGen16Step.h"
 #include "chuGenJavascript.h"
+#include "chuApplication.h"
 
 #define STRING_BLOCK(...) #__VA_ARGS__
 
 chuGeneratorManager::chuGeneratorManager()
 {
+    /*
     auto pinwheel = new chuGenPolygonPinwheel();
     pinwheel->setActive(false);
     pinwheel->sides->setValue(6);
     pinwheel->radius->setValue(0.75);
     pinwheel->setOSCAddress("/generator/1");
-    allGenerators.add(pinwheel);
+    allGenerators.push_back(pinwheel);
+    getApp()->getCurrentProject()->addGenerator(pinwheel);
 
     auto pinwheel2 = new chuGenPolygonPinwheel();
     pinwheel2->setActive(false);
@@ -31,24 +34,28 @@ chuGeneratorManager::chuGeneratorManager()
     pinwheel2->radius->setValue(0.6);
     pinwheel2->color->setValue(Color::fromRGB(255, 0, 255));
     pinwheel2->setOSCAddress("/generator/2");
-    allGenerators.add(pinwheel2);
+    allGenerators.push_back(pinwheel2);
+    getApp()->getCurrentProject()->addGenerator(pinwheel2);
 
     auto fivePoints = new chuGenFivePoints();
     fivePoints->setActive(false);
     fivePoints->color->setValue(Color::fromRGB(0, 255, 0));
     fivePoints->setOSCAddress("/generator/3");
-    allGenerators.add(fivePoints);
+    allGenerators.push_back(fivePoints);
+    getApp()->getCurrentProject()->addGenerator(fivePoints);
 
     auto fivePoints2 = new chuGenFivePoints();
     fivePoints2->setActive(false);
     fivePoints2->color->setValue(Color::fromRGB(0, 0, 255));
     fivePoints2->setOSCAddress("/generator/4");
-    allGenerators.add(fivePoints2);
+    allGenerators.push_back(fivePoints2);
+    getApp()->getCurrentProject()->addGenerator(fivePoints2);
 
     auto step = new chuGen16Step();
     step->setActive(false);
     step->setOSCAddress("/generator/5");
-    allGenerators.add(step);
+    allGenerators.push_back(step);
+    getApp()->getCurrentProject()->addGenerator(step);
 
     auto js = new chuGenJavascript();
     js->code->setValue(
@@ -63,7 +70,8 @@ chuGeneratorManager::chuGeneratorManager()
         "g.addPoint(a, -a * b * clk);\n"
         "g.addPoint(0, 0);\n"
     );
-    allGenerators.add(js);
+    allGenerators.push_back(js);
+    getApp()->getCurrentProject()->addGenerator(js);
 
     auto js2 = new chuGenJavascript();
     js2->code->setValue(
@@ -90,7 +98,9 @@ chuGeneratorManager::chuGeneratorManager()
     js2->c->setValue(0.3);
     js2->d->setValue(0.5);
 
-    allGenerators.add(js2);
+    allGenerators.push_back(js2);
+    getApp()->getCurrentProject()->addGenerator(js2);
+     */
 }
 
 chuGeneratorManager::~chuGeneratorManager()
@@ -102,6 +112,40 @@ void chuGeneratorManager::setCurrentGenerator(chuGenerator* gen)
 {
     currentGenerator = gen;
     sendChangeMessage();
+}
+
+void chuGeneratorManager::deserializeGenerator(String type, ValueTree data)
+{
+    chuGenerator* newGen = nullptr;
+    if (type == "PolygonPinwheel")
+    {
+        newGen = new chuGenPolygonPinwheel(data);
+    }
+    else if (type == "FivePoints")
+    {
+        newGen = new chuGenFivePoints(data);
+    }
+    else if (type == "CustomJavascript")
+    {
+        newGen = new chuGenJavascript(data);
+    }
+    else if (type == "PolygonPinwheel")
+    {
+        newGen = new chuGenPolygonPinwheel(data);
+    }
+    else if (type == "16Step")
+    {
+        newGen = new chuGen16Step(data);
+    }
+
+    if (newGen)
+    {
+        allGenerators.add(newGen);
+    }
+    else
+    {
+        // TODO: warn on unexpected generator type
+    }
 }
 
 

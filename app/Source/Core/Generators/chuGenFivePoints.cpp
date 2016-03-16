@@ -11,8 +11,8 @@
 #include "chuGenFivePoints.h"
 
 
-chuGenFivePoints::chuGenFivePoints()
-: chuGenerator("FivePoints")
+chuGenFivePoints::chuGenFivePoints(ValueTree source)
+: chuGenerator("FivePoints", source)
 {
     addParameter(sides = new chuParameterInt("Sides", 3, 8, 3));
     addParameter(radius = new chuParameterFloat("Radius", 0.01, 0.1, 0.08));

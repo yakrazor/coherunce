@@ -49,6 +49,13 @@ String chuParameterProvider::getName()
 void chuParameterProvider::addParameter(chuParameter* newParam)
 {
     parameters.add(newParam);
+    auto saved = data.getChildWithProperty("name", newParam->getName());
+    if (saved.isValid())
+    {
+        newParam->deserialize(saved);
+        data.removeChild(saved, nullptr);
+    }
+    data.addChild(newParam->data, data.getNumChildren(), nullptr);
 }
 
 PropertyPanel* chuParameterProvider::createPanel()

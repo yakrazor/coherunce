@@ -61,9 +61,12 @@ void chuClipButton::paint(Graphics& g)
 
 void chuClipButton::setGenerator(chuGenerator* gen)
 {
-    generator = gen;
-    labelButton->setButtonText(gen->getName());
-    preview->setGenerator(gen);
+    if (gen != nullptr)
+    {
+        generator = gen;
+        labelButton->setButtonText(gen->getName());
+        preview->setGenerator(gen);
+    }
 }
 
 void chuClipButton::changeListenerCallback(ChangeBroadcaster *source) {

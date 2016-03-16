@@ -19,7 +19,7 @@
 
 class chuGenerator : public chuParameterProvider {
 public:
-    chuGenerator(String generatorName);
+    chuGenerator(String generatorName, ValueTree source = ValueTree("generator"));
     virtual ~chuGenerator() {}
 
     bool isActive() const;

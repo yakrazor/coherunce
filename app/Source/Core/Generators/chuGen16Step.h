@@ -16,7 +16,7 @@
 
 class chuGen16Step : public chuGenerator {
 public:
-    chuGen16Step();
+    chuGen16Step(ValueTree source = ValueTree("generator"));
     virtual std::vector<PatternItem> getPatterns(float barClock) override;
 
     chuParameterFloat* height;

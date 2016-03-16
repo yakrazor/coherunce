@@ -60,6 +60,8 @@ public:
 
     LaserOutputThread* getLaserOutputThread() { return laserThread; }
     chuFrameTimer* getFrameTimer() { return frameTimer; }
+
+    chuProject* getCurrentProject() { return currentProject; }
     
 private:
     ScopedPointer<Component> mainWindow;

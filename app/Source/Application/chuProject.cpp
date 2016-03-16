@@ -9,18 +9,35 @@
 */
 
 #include "chuProject.h"
+#include "chuGeneratorManager.h"
+
 
 chuProject::chuProject()
 : data("coherunceProject")
 {
     undoManager = new UndoManager();
-
-    data.addChild(ValueTree("generators"), 0, nullptr);
 }
 
 chuProject::~chuProject()
 {
 
+}
+
+void chuProject::addGenerator(chuGenerator* gen)
+{
+    auto genlist = data.getOrCreateChildWithName("generators", nullptr);
+    genlist.addChild(gen->getData(), genlist.getNumChildren(), nullptr);
+}
+
+void chuProject::deserializeGenerators()
+{
+    auto genList = data.getChildWithName("generators");
+    for (int i = 0; i < genList.getNumChildren(); i++)
+    {
+        auto genData = genList.getChild(i);
+        auto genType = genData.getProperty("name").toString();
+        getGeneratorManager()->deserializeGenerator(genType, genData);
+    }
 }
 
 void chuProject::loadFromFile(String filePath)
@@ -39,6 +56,7 @@ void chuProject::loadFromFile(File file)
         auto newData = ValueTree::fromXml(*xmlElement);
         if (newData != ValueTree::invalid) {
             data = newData;
+            deserializeGenerators();
         }
         delete xmlElement;
     } else {

@@ -37,6 +37,7 @@ public:
     const chuParameterOptions& getOptions() { return options; }
 
 protected:
+    friend class chuParameterProvider;
     ValueTree data;
     chuParameterOptions options;
 };

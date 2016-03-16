@@ -12,12 +12,16 @@
 #define CHUPROJECT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "chuGenerator.h"
 
 class chuProject
 {
 public:
     chuProject();
     ~chuProject();
+
+    void addGenerator(chuGenerator* gen);
+    void deserializeGenerators();
     
     void loadFromFile(String filePath);
     void loadFromFile(File file);
