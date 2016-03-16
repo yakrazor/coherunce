@@ -13,10 +13,11 @@
 
 chuParameterOptions chuParameterOptions::Default;
 
-chuParameter::chuParameter(const String& _name, const chuParameterOptions& _options)
-: name(_name), options(_options)
+chuParameter::chuParameter(const String& name, const chuParameterOptions& paramOptions)
+: options(paramOptions)
 {
-
+    data = ValueTree("parameter");
+    data.setProperty("name", name, nullptr);
 }
 
 chuParameterProvider::chuParameterProvider(const String& name, ValueTree source)

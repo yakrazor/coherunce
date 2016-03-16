@@ -18,18 +18,17 @@ public:
     chuParameterFloat(const String& _name, float _min, float _max, float _defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
     virtual ~chuParameterFloat() {}
 
-    virtual PropertyComponent* createComponent() override;
+    virtual void deserialize(ValueTree saved) override;
     virtual void oscMessageReceived(const OSCMessage &message) override;
+    virtual PropertyComponent* createComponent() override;
 
-    float getMinValue() const { return minValue.load(); }
-    float getMaxValue() const { return maxValue.load(); }
-    float getValue() const { return value.load(); }
-    void setValue(float newValue) { value.store(newValue); }
+    float getMinValue() const;
+    float getMaxValue() const;
+    float getValue() const;
 
-private:
-    std::atomic<float> minValue;
-    std::atomic<float> maxValue;
-    std::atomic<float> value;
+    void setMinValue(float newMin);
+    void setMaxValue(float newMax);
+    void setValue(float newValue);
 };
 
 

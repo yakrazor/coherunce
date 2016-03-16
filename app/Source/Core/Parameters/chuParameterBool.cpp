@@ -10,9 +10,32 @@
 
 #include "chuParameterBool.h"
 
-chuParameterBool::chuParameterBool(const String& _name, bool _defaultValue, const chuParameterOptions& _options)
-: chuParameter(_name, _options), value(_defaultValue)
+chuParameterBool::chuParameterBool(const String& name, bool defaultValue, const chuParameterOptions& options)
+: chuParameter(name, options)
 {
+    data.setProperty("_type", "bool", nullptr);
+    setValue(defaultValue);
+}
+
+bool chuParameterBool::getValue() const
+{
+    return data.getProperty("value");
+}
+
+void chuParameterBool::setValue(bool newValue)
+{
+    data.setProperty("value", newValue, nullptr);
+}
+
+void chuParameterBool::deserialize(ValueTree saved)
+{
+    if (saved.hasProperty("_type") &&
+        saved.getProperty("_type") == "bool" &&
+        saved.hasProperty("value"))
+    {
+        bool savedValue = saved.getProperty("value");
+        setValue(savedValue);
+    }
 }
 
 void chuParameterBool::oscMessageReceived(const OSCMessage& message)
@@ -20,11 +43,15 @@ void chuParameterBool::oscMessageReceived(const OSCMessage& message)
     OSCArgument* arg = message.begin();
     if (arg && arg->isInt32())
     {
-        value = (float)arg->getInt32();
+        setValue(arg->getInt32() != 0);
     }
     else if (arg && arg->isFloat32())
     {
-        value = (int)arg->getFloat32();
+        setValue(arg->getFloat32() != 0);
+    }
+    else if (arg && arg->isString())
+    {
+        setValue(arg->getString().toLowerCase() == "true");
     }
 }
 

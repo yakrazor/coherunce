@@ -15,21 +15,20 @@
 
 class chuParameterInt : public chuParameter {
 public:
-    chuParameterInt(const String& _name, int _min, int _max, int _defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
+    chuParameterInt(const String& name, int min, int max, int defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
     virtual ~chuParameterInt() {}
 
-    virtual PropertyComponent* createComponent() override;
+    virtual void deserialize(ValueTree saved) override;
     virtual void oscMessageReceived(const OSCMessage &message) override;
+    virtual PropertyComponent* createComponent() override;
 
-    int getMinValue() const { return minValue.load(); }
-    int getMaxValue() const { return maxValue.load(); }
-    int getValue() const { return value.load(); }
-    void setValue(int newValue) { value.store(newValue); }
+    int getMinValue() const;
+    int getMaxValue() const;
+    int getValue() const;
 
-private:
-    std::atomic<int> minValue;
-    std::atomic<int> maxValue;
-    std::atomic<int> value;
+    void setMinValue(int newMin);
+    void setMaxValue(int newMax);
+    void setValue(int newValue);
 };
 
 

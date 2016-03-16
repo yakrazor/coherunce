@@ -10,10 +10,65 @@
 
 #include "chuParameterInt.h"
 
-chuParameterInt::chuParameterInt(const String& _name, int _min, int _max, int _defaultValue,
-                                 const chuParameterOptions& _options)
-: chuParameter(_name, _options), minValue(_min), maxValue(_max), value(_defaultValue)
+chuParameterInt::chuParameterInt(const String& name, int min, int max, int defaultValue,
+                                 const chuParameterOptions& options)
+: chuParameter(name, options)
 {
+    data.setProperty("_type", "int", nullptr);
+    setMinValue(min);
+    setMaxValue(max);
+    setValue(defaultValue);
+}
+
+int chuParameterInt::getMinValue() const
+{
+    return data.getProperty("min");
+}
+
+int chuParameterInt::getMaxValue() const
+{
+    return data.getProperty("max");
+}
+
+int chuParameterInt::getValue() const
+{
+    return data.getProperty("value");
+}
+
+void chuParameterInt::setMinValue(int newMin)
+{
+    data.setProperty("min", newMin, nullptr);
+}
+
+void chuParameterInt::setMaxValue(int newMax)
+{
+    data.setProperty("max", newMax, nullptr);
+}
+
+void chuParameterInt::setValue(int newValue)
+{
+    data.setProperty("value", newValue, nullptr);
+}
+
+void chuParameterInt::deserialize(ValueTree saved)
+{
+    if (saved.hasProperty("_type") &&
+        saved.getProperty("_type") == "int" &&
+        saved.hasProperty("value"))
+    {
+        int savedValue = saved.getProperty("value");
+
+        if (savedValue < getMinValue())
+        {
+            savedValue = getMinValue();
+        }
+        else if (savedValue > getMaxValue())
+        {
+            savedValue = getMaxValue();
+        }
+
+        data.setProperty("value", savedValue, nullptr);
+    }
 }
 
 void chuParameterInt::oscMessageReceived(const OSCMessage& message)
@@ -21,11 +76,11 @@ void chuParameterInt::oscMessageReceived(const OSCMessage& message)
     OSCArgument* arg = message.begin();
     if (arg && arg->isInt32())
     {
-        value = (float)arg->getInt32();
+        setValue(arg->getInt32());
     }
     else if (arg && arg->isFloat32())
     {
-        value = (int)arg->getFloat32();
+        setValue(floor(arg->getFloat32()));
     }
 }
 

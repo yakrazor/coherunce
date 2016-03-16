@@ -25,18 +25,19 @@ public:
 
 class chuParameter : public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::RealtimeCallback> {
 public:
-    chuParameter(const String& _name, const chuParameterOptions& _options = chuParameterOptions::Default);
+    chuParameter(const String& name, const chuParameterOptions& paramOptions = chuParameterOptions::Default);
     virtual ~chuParameter() {}
 
-    // Parameter subclasses must override these two methods:
-    virtual PropertyComponent* createComponent() = 0;
+    // Parameter subclasses must override these three methods:
+    virtual void deserialize(ValueTree saved) = 0;
     virtual void oscMessageReceived(const OSCMessage &message) = 0;
+    virtual PropertyComponent* createComponent() = 0;
 
-    const String& getName() { return name; }
+    const String getName() { return data.getProperty("name"); }
     const chuParameterOptions& getOptions() { return options; }
 
-private:
-    String name;
+protected:
+    ValueTree data;
     chuParameterOptions options;
 };
 

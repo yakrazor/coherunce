@@ -17,17 +17,15 @@
 
 class chuParameterString : public chuParameter {
 public:
-    chuParameterString(const String& _name, const String& str, const chuParameterOptions& _options = chuParameterOptions::Default);
+    chuParameterString(const String& name, const String& str, const chuParameterOptions& options = chuParameterOptions::Default);
     virtual ~chuParameterString() {}
 
-    virtual PropertyComponent* createComponent() override;
+    virtual void deserialize(ValueTree saved) override;
     virtual void oscMessageReceived(const OSCMessage &message) override;
+    virtual PropertyComponent* createComponent() override;
 
-    const String& getValue() const { return value; }
-    void setValue(const String& str) { value = str; }
-
-private:
-    String value;
+    const String getValue() const;
+    void setValue(const String& str);
 };
 
 

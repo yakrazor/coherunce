@@ -10,10 +10,34 @@
 
 #include "chuParameterColor.h"
 
-chuParameterColor::chuParameterColor(const String& _name, const Color& _color, const chuParameterOptions& _options)
-: chuParameter(_name, _options)
+chuParameterColor::chuParameterColor(const String& name, const Color& color, const chuParameterOptions& options)
+: chuParameter(name, options)
 {
-    setValue(_color);
+    data.setProperty("_type", "color", nullptr);
+    setValue(color);
+}
+
+Color chuParameterColor::getValue() const
+{
+    int value = data.getProperty("value");
+    return Color(value);
+}
+
+void chuParameterColor::setValue(const Color& c)
+{
+    int value = c.getARGB();
+    data.setProperty("value", value, nullptr);
+}
+
+void chuParameterColor::deserialize(ValueTree saved)
+{
+    if (saved.hasProperty("_type") &&
+        saved.getProperty("_type") == "color" &&
+        saved.hasProperty("value"))
+    {
+        int savedValue = saved.getProperty("value");
+        setValue(Color(savedValue));
+    }
 }
 
 void chuParameterColor::oscMessageReceived(const OSCMessage& message)

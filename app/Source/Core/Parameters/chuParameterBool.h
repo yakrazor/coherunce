@@ -15,17 +15,15 @@
 
 class chuParameterBool : public chuParameter {
 public:
-    chuParameterBool(const String& _name, bool _defaultValue, const chuParameterOptions& _options = chuParameterOptions::Default);
+    chuParameterBool(const String& name, bool defaultValue, const chuParameterOptions& options = chuParameterOptions::Default);
     virtual ~chuParameterBool() {}
 
-    virtual PropertyComponent* createComponent() override;
+    virtual void deserialize(ValueTree saved) override;
     virtual void oscMessageReceived(const OSCMessage &message) override;
+    virtual PropertyComponent* createComponent() override;
 
-    bool getValue() const { return value.load(); }
-    void setValue(bool newValue) { value.store(newValue); }
-
-private:
-    std::atomic<bool> value;
+    bool getValue() const;
+    void setValue(bool newValue);
 };
 
 

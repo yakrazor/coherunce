@@ -18,17 +18,15 @@ typedef Colours Colors;
 
 class chuParameterColor : public chuParameter {
 public:
-    chuParameterColor(const String& _name, const Color& _color, const chuParameterOptions& _options = chuParameterOptions::Default);
+    chuParameterColor(const String& name, const Color& color, const chuParameterOptions& options = chuParameterOptions::Default);
     virtual ~chuParameterColor() {}
 
-    virtual PropertyComponent* createComponent() override;
+    virtual void deserialize(ValueTree saved) override;
     virtual void oscMessageReceived(const OSCMessage &message) override;
+    virtual PropertyComponent* createComponent() override;
 
-    Color getValue() const { return Color(value.load()); }
-    void setValue(const Color& c) { value.store(c.getARGB()); }
-
-private:
-    std::atomic<uint32> value;
+    Color getValue() const;
+    void setValue(const Color& c);
 };
 
 
