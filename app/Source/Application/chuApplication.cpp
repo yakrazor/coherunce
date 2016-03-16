@@ -47,10 +47,9 @@ void chuApplication::initialise(const String& commandLine)
     chuOSCManager::initialize(7900);
 
     currentProject = new chuProject();
-    currentProject->loadFromFile("./default.chu");
+    currentProject->loadFromFile("../../../../../files/default.chu");
 
     mainWindow = new chuMainWindow(getApplicationName());
-
 }
 
 void chuApplication::shutdown()
