@@ -22,19 +22,15 @@ public:
     chuGenerator(String generatorName);
     virtual ~chuGenerator() {}
 
-    virtual String getName() const override { return name; }
-    bool isActive() const { return active; }
-    void setActive(bool b) { active = b; }
+    bool isActive() const;
+    void setActive(bool b);
 
     void setOSCAddress(const String& addr);
 
-    virtual void init() {};
     virtual std::vector<PatternItem> getPatterns(float barClock) = 0;
-    virtual void getParamList(std::vector<chuParameter*>& params) override {};
-
-private:
-    String name;
-    bool active;
+    virtual void getParamList(std::vector<chuParameter*>& params) override;
+protected:
+    ScopedPointer<chuParameterBool> active;
 };
 
 

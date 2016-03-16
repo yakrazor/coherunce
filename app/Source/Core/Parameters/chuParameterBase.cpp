@@ -19,6 +19,24 @@ chuParameter::chuParameter(const String& _name, const chuParameterOptions& _opti
 
 }
 
+chuParameterProvider::chuParameterProvider(const String& name, ValueTree source)
+{
+    data = source;
+    if (!data.hasProperty("name")) {
+        data.setProperty("name", name, nullptr);
+    }
+}
+
+String chuParameterProvider::getName()
+{
+    if (data.isValid())
+    {
+        return data.getProperty("name");
+    } else {
+        return "";
+    }
+}
+
 PropertyPanel* chuParameterProvider::createPanel()
 {
     Array<PropertyComponent*> propertyComponents;

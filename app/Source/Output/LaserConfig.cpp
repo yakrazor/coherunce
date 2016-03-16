@@ -11,7 +11,8 @@
 #include "LaserConfig.h"
 
 LaserConfig::LaserConfig()
-: pointsPerSecond("Points Per Second", 200, 100000, 35000)
+: chuParameterProvider("Laser Config", ValueTree("laserConfig"))
+, pointsPerSecond("Points Per Second", 200, 100000, 35000)
 , longestUnbrokenLine("Longest Unbroken Line", 200, 10000, 1000)
 , internalDwellPoints("Internal Dwell Points", 0, 50, 3)
 , dwellOffPoints("Dwell Points (Off)", 0, 50, 10)

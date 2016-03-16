@@ -12,10 +12,23 @@
 #include "chuOSCManager.h"
 
 
-chuGenerator::chuGenerator(String generatorName) : name(generatorName), active(false)
+chuGenerator::chuGenerator(String generatorName)
+: chuParameterProvider(generatorName, ValueTree("generator"))
 {
-    init();
+   active = new chuParameterBool("Active", false);
 };
+
+bool chuGenerator::isActive() const
+{
+    return active ? active->getValue() : false;
+}
+
+void chuGenerator::setActive(bool b)
+{
+    if (active) {
+        active->setValue(b);
+    }
+}
 
 void chuGenerator::setOSCAddress(const String& addr)
 {
@@ -29,5 +42,10 @@ void chuGenerator::setOSCAddress(const String& addr)
             chuOSCManager::getReceiver()->addListener(param, addr + "/param/" + param->getName());
         }
     }
+}
+
+void chuGenerator::getParamList(std::vector<chuParameter*>& params)
+{
+    params.push_back(active);
 }
 

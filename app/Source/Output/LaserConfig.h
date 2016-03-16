@@ -36,7 +36,6 @@ public:
     chuParameterInt blueDelay;
 
     virtual void getParamList(std::vector<chuParameter*>& params) override;
-    virtual String getName() const override { return "Laser Config"; }
 };
 
 class LaserStatistics

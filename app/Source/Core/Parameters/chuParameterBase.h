@@ -43,11 +43,18 @@ private:
 class chuParameterProvider
 {
 public:
+    chuParameterProvider(const String& name, ValueTree source);
+    
     virtual ~chuParameterProvider() {}
     virtual void getParamList(std::vector<chuParameter*>& params) = 0;
-    virtual String getName() const = 0;
+
+    String getName();
+    ValueTree getData() { return data; }
 
     PropertyPanel* createPanel();
+
+protected:
+    ValueTree data;
 };
 
 
