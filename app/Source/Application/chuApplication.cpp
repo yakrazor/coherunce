@@ -226,7 +226,10 @@ bool chuApplication::perform(const InvocationInfo& info)
                 } else {
                     currentProject = new chuProject();
                 }
+                mainWindow = nullptr;
+                getGeneratorManager()->getAllGenerators().clear();
                 currentProject->loadFromFile(fc.getResult());
+                mainWindow = new chuMainWindow(getApplicationName());
             }
             return true;
         case CommandIDs::Save:

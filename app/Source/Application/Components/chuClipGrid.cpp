@@ -47,6 +47,11 @@ chuClipGrid::chuClipGrid()
 
 chuClipGrid::~chuClipGrid()
 {
+    auto manager = getGeneratorManager();
+    if (manager)
+    {
+        manager->removeChangeListener(this);
+    }
 }
 
 void chuClipGrid::paint(Graphics& g)

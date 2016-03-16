@@ -13,8 +13,9 @@
 #include "chuGeneratorManager.h"
 
 
-chuInspector::chuInspector(ChangeBroadcaster* broadcaster)
+chuInspector::chuInspector(ChangeBroadcaster* bc)
 {
+    broadcaster = bc;
     if (broadcaster)
     {
         broadcaster->addChangeListener(this);
@@ -38,6 +39,10 @@ void chuInspector::inspectParameters(chuParameterProvider* provider)
 
 chuInspector::~chuInspector()
 {
+    if (broadcaster)
+    {
+        broadcaster->removeChangeListener(this);
+    }
 }
 
 void chuInspector::paint(Graphics& g)
