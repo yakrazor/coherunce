@@ -28,9 +28,9 @@ public:
     void setOSCAddress(const String& addr);
 
     virtual std::vector<PatternItem> getPatterns(float barClock) = 0;
-    virtual void getParamList(std::vector<chuParameter*>& params) override;
+
 protected:
-    ScopedPointer<chuParameterBool> active;
+    chuParameterBool* active;
 };
 
 

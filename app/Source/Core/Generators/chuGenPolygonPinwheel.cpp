@@ -13,22 +13,11 @@
 chuGenPolygonPinwheel::chuGenPolygonPinwheel()
 : chuGenerator("PolygonPinwheel")
 {
-    sides = new chuParameterInt("Sides", 3, 12, 5);
-    radius = new chuParameterFloat("Radius", 0.1, 1.0, 1.0);
-    copies = new chuParameterInt("Copies", 1, 6, 3);
-    scale = new chuParameterFloat("Scale", 0.01, 1.0, 0.618);
-    color = new chuParameterColor("Color", Colors::red);
-}
-
-void chuGenPolygonPinwheel::getParamList(std::vector<chuParameter*>& params)
-{
-    chuGenerator::getParamList(params); // call superclass
-    
-    params.push_back(sides);
-    params.push_back(radius);
-    params.push_back(copies);
-    params.push_back(scale);
-    params.push_back(color);
+    addParameter(sides = new chuParameterInt("Sides", 3, 12, 5));
+    addParameter(radius = new chuParameterFloat("Radius", 0.1, 1.0, 1.0));
+    addParameter(copies = new chuParameterInt("Copies", 1, 6, 3));
+    addParameter(scale = new chuParameterFloat("Scale", 0.01, 1.0, 0.618));
+    addParameter(color = new chuParameterColor("Color", Colors::red));
 }
 
 std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns(float barClock)

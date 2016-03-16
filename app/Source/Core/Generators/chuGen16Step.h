@@ -18,14 +18,13 @@ class chuGen16Step : public chuGenerator {
 public:
     chuGen16Step();
     virtual std::vector<PatternItem> getPatterns(float barClock) override;
-    virtual void getParamList(std::vector<chuParameter*>& params) override;
 
-    ScopedPointer<chuParameterFloat> height;
-    ScopedPointer<chuParameterBool> quantized;
-    ScopedPointer<chuParameterInt> numSteps;
-    ScopedPointer<chuParameterFloat> pointiness;
-    ScopedPointer<chuParameterColor> activeColor;
-    ScopedPointer<chuParameterColor> restColor;
+    chuParameterFloat* height;
+    chuParameterBool* quantized;
+    chuParameterInt* numSteps;
+    chuParameterFloat* pointiness;
+    chuParameterColor* activeColor;
+    chuParameterColor* restColor;
 };
 
 

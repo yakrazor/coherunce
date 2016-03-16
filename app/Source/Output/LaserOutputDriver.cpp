@@ -62,7 +62,7 @@ public:
         int res = etherdream_write(thisDevice,
                                    (etherdream_point*)points,
                                    count,
-                                   laserConfig.pointsPerSecond.getValue(), count < 600 ? -1 : 1);
+                                   laserConfig.pointsPerSecond->getValue(), count < 600 ? -1 : 1);
 
         if (res != 0)
         {

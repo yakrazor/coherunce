@@ -47,14 +47,17 @@ public:
     chuParameterProvider(const String& name, ValueTree source);
     
     virtual ~chuParameterProvider() {}
-    virtual void getParamList(std::vector<chuParameter*>& params) = 0;
+    void getParamList(std::vector<chuParameter*>& params);
 
     String getName();
     ValueTree getData() { return data; }
 
+    void addParameter(chuParameter* newParameter);
+
     PropertyPanel* createPanel();
 
 protected:
+    OwnedArray<chuParameter> parameters;
     ValueTree data;
 };
 

@@ -13,25 +13,13 @@
 chuGen16Step::chuGen16Step()
 : chuGenerator("16Step")
 {
-    height = new chuParameterFloat("Height", 0.01, 1.0, 0.3);
-    quantized = new chuParameterBool("Quantize", true);
-    numSteps = new chuParameterInt("Steps", 2, 16, 16);
+    addParameter(height = new chuParameterFloat("Height", 0.01, 1.0, 0.3));
+    addParameter(quantized = new chuParameterBool("Quantize", true));
+    addParameter(numSteps = new chuParameterInt("Steps", 2, 16, 16));
     
-    pointiness = new chuParameterFloat("Pointiness", 0.0, 1.0, 0.0);
-    restColor = new chuParameterColor("RestColor", Colors::blue);
-    activeColor = new chuParameterColor("ActiveColor", Colors::red);
-}
-
-void chuGen16Step::getParamList(std::vector<chuParameter*>& params)
-{
-    chuGenerator::getParamList(params); // call superclass
-
-    params.push_back(height);
-    params.push_back(quantized);
-    params.push_back(numSteps);
-    params.push_back(pointiness);
-    params.push_back(restColor);
-    params.push_back(activeColor);
+    addParameter(pointiness = new chuParameterFloat("Pointiness", 0.0, 1.0, 0.0));
+    addParameter(restColor = new chuParameterColor("RestColor", Colors::blue));
+    addParameter(activeColor = new chuParameterColor("ActiveColor", Colors::red));
 }
 
 std::vector<PatternItem> chuGen16Step::getPatterns(float barClock)

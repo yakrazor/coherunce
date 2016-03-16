@@ -25,17 +25,15 @@ public:
     const int ildaIntensityMin = 0;
     const int ildaIntensityMax = 65535;
 
-    chuParameterInt pointsPerSecond;
-    chuParameterInt longestUnbrokenLine;
-    chuParameterInt internalDwellPoints;
-    chuParameterInt dwellOffPoints;
-    chuParameterInt dwellOnPoints;
-    chuParameterFloat globalIntensity;
-    chuParameterInt redDelay;
-    chuParameterInt greenDelay;
-    chuParameterInt blueDelay;
-
-    virtual void getParamList(std::vector<chuParameter*>& params) override;
+    chuParameterInt* pointsPerSecond;
+    chuParameterInt* longestUnbrokenLine;
+    chuParameterInt* internalDwellPoints;
+    chuParameterInt* dwellOffPoints;
+    chuParameterInt* dwellOnPoints;
+    chuParameterFloat* globalIntensity;
+    chuParameterInt* redDelay;
+    chuParameterInt* greenDelay;
+    chuParameterInt* blueDelay;
 };
 
 class LaserStatistics

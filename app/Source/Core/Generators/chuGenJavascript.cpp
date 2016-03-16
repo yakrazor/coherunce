@@ -102,11 +102,12 @@ struct InteropObject : public DynamicObject
 chuGenJavascript::chuGenJavascript()
 : chuGenerator("CustomJavascript")
 {
-    a = new chuParameterFloat("a", 0.0, 1.0, 0.5);
-    b = new chuParameterFloat("b", 0.0, 1.0, 0.5);
-    c = new chuParameterFloat("c", 0.0, 1.0, 0.5);
-    d = new chuParameterFloat("d", 0.0, 1.0, 0.5);
-    code = new chuParameterString("Code",
+    addParameter(a = new chuParameterFloat("a", 0.0, 1.0, 0.5));
+    addParameter(b = new chuParameterFloat("b", 0.0, 1.0, 0.5));
+    addParameter(c = new chuParameterFloat("c", 0.0, 1.0, 0.5));
+    addParameter(d = new chuParameterFloat("d", 0.0, 1.0, 0.5));
+
+    addParameter(code = new chuParameterString("Code",
                                   "var a = g.getParameter('a');\n" \
                                   "var b = g.getParameter('b');\n" \
                                   "var d = g.getParameter('c');\n" \
@@ -114,23 +115,12 @@ chuGenJavascript::chuGenJavascript()
                                   "var clk = 1.0 - g.getParameter('barClock');\n\n" \
                                   "// add points with g.addPoint(x, y)\n" \
                                   "// change color with g.setColor(r, g, b) [0-255]\n"
-                                  );
+                                  ));
 
     engine.maximumExecutionTime = RelativeTime::seconds(5);
     engine.registerNativeObject("g", new InteropObject(this));
 
     currentColour = Colours::red;
-}
-
-void chuGenJavascript::getParamList(std::vector<chuParameter*>& params)
-{
-    chuGenerator::getParamList(params); // call superclass
-
-    params.push_back(a);
-    params.push_back(b);
-    params.push_back(c);
-    params.push_back(d);
-    params.push_back(code);
 }
 
 std::vector<PatternItem> chuGenJavascript::getPatterns(float barClock)

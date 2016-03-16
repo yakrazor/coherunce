@@ -104,13 +104,13 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
     pointIndex = 0;
 
     int scale = config.ildaXMax;
-    int longestUnbrokenLine = config.longestUnbrokenLine.getValue();
-    int internalShapeDwellPoints = config.internalDwellPoints.getValue();
-    int dwellOffPoints = config.dwellOffPoints.getValue();
-    int dwellOnPoints = config.dwellOnPoints.getValue();
+    int longestUnbrokenLine = config.longestUnbrokenLine->getValue();
+    int internalShapeDwellPoints = config.internalDwellPoints->getValue();
+    int dwellOffPoints = config.dwellOffPoints->getValue();
+    int dwellOnPoints = config.dwellOnPoints->getValue();
     int intensityMax = config.ildaIntensityMax;
 
-    uint16_t intensity = intensityMax * std::max(0.0f, std::min(config.globalIntensity.getValue(), 1.0f));
+    uint16_t intensity = intensityMax * std::max(0.0f, std::min(config.globalIntensity->getValue(), 1.0f));
 
     int16_t prevItemX = state.currentPoint.x;
     int16_t prevItemY = state.currentPoint.y;

@@ -18,12 +18,12 @@ class chuGenPolygonPinwheel : public chuGenerator {
 public:
     chuGenPolygonPinwheel();
     virtual std::vector<PatternItem> getPatterns(float barClock) override;
-    virtual void getParamList(std::vector<chuParameter*>& params) override;
-    ScopedPointer<chuParameterInt> sides;
-    ScopedPointer<chuParameterFloat> radius;
-    ScopedPointer<chuParameterInt> copies;
-    ScopedPointer<chuParameterFloat> scale;
-    ScopedPointer<chuParameterColor> color;
+
+    chuParameterInt* sides;
+    chuParameterFloat* radius;
+    chuParameterInt* copies;
+    chuParameterFloat* scale;
+    chuParameterColor* color;
 };
 
 

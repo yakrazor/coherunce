@@ -18,14 +18,13 @@ class chuGenJavascript : public chuGenerator {
 public:
     chuGenJavascript();
     virtual std::vector<PatternItem> getPatterns(float barClock) override;
-    virtual void getParamList(std::vector<chuParameter*>& params) override;
 
-    ScopedPointer<chuParameterFloat> a;
-    ScopedPointer<chuParameterFloat> b;
-    ScopedPointer<chuParameterFloat> c;
-    ScopedPointer<chuParameterFloat> d;
+    chuParameterFloat* a;
+    chuParameterFloat* b;
+    chuParameterFloat* c;
+    chuParameterFloat* d;
     
-    ScopedPointer<chuParameterString> code;
+    chuParameterString* code;
 
     std::vector<PatternItem> patternBuffer;
     float localBarClock;

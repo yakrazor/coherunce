@@ -28,6 +28,14 @@ chuParameterProvider::chuParameterProvider(const String& name, ValueTree source)
     }
 }
 
+void chuParameterProvider::getParamList(std::vector<chuParameter*>& params)
+{
+    for (auto iter = parameters.begin(); iter != parameters.end(); iter++)
+    {
+        params.push_back(*iter);
+    }
+}
+
 String chuParameterProvider::getName()
 {
     if (data.isValid())
@@ -36,6 +44,11 @@ String chuParameterProvider::getName()
     } else {
         return "";
     }
+}
+
+void chuParameterProvider::addParameter(chuParameter* newParam)
+{
+    parameters.add(newParam);
 }
 
 PropertyPanel* chuParameterProvider::createPanel()

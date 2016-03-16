@@ -12,27 +12,15 @@
 
 LaserConfig::LaserConfig()
 : chuParameterProvider("Laser Config", ValueTree("laserConfig"))
-, pointsPerSecond("Points Per Second", 200, 100000, 35000)
-, longestUnbrokenLine("Longest Unbroken Line", 200, 10000, 1000)
-, internalDwellPoints("Internal Dwell Points", 0, 50, 3)
-, dwellOffPoints("Dwell Points (Off)", 0, 50, 10)
-, dwellOnPoints("Dwell Points (On)", 0, 50, 2)
-, globalIntensity("Intensity", 0, 1.0, 0.0)
-, redDelay("Red Delay", 0, 20, 6)
-, greenDelay("Green Delay", 0, 20, 6)
-, blueDelay("Blue Delay", 0, 20, 6)
 {
+    addParameter(pointsPerSecond = new chuParameterInt("Points Per Second", 200, 100000, 35000));
+    addParameter(longestUnbrokenLine = new chuParameterInt("Longest Unbroken Line", 200, 10000, 1000));
+    addParameter(internalDwellPoints = new chuParameterInt("Internal Dwell Points", 0, 50, 3));
+    addParameter(dwellOffPoints = new chuParameterInt("Dwell Points (Off)", 0, 50, 10));
+    addParameter(dwellOnPoints = new chuParameterInt("Dwell Points (On)", 0, 50, 2));
+    addParameter(globalIntensity = new chuParameterFloat("Intensity", 0, 1.0, 0.0));
+    addParameter(redDelay = new chuParameterInt("Red Delay", 0, 20, 6));
+    addParameter(greenDelay = new chuParameterInt("Green Delay", 0, 20, 6));
+    addParameter(blueDelay = new chuParameterInt("Blue Delay", 0, 20, 6));
 }
 
-void LaserConfig::getParamList(std::vector<chuParameter*>& params)
-{
-    params.push_back(&pointsPerSecond);
-    params.push_back(&longestUnbrokenLine);
-    params.push_back(&internalDwellPoints);
-    params.push_back(&dwellOffPoints);
-    params.push_back(&dwellOnPoints);
-    params.push_back(&globalIntensity);
-    params.push_back(&redDelay);
-    params.push_back(&greenDelay);
-    params.push_back(&blueDelay);
-}

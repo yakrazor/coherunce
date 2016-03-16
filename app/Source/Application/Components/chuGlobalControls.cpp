@@ -85,7 +85,7 @@ void chuGlobalControls::sliderValueChanged(Slider* slider)
 {
     if (slider && slider->getName() == "INTENSITY")
     {
-        getApp()->getLaserOutputThread()->getLaserConfig().globalIntensity.setValue(slider->getValue());
+        getApp()->getLaserOutputThread()->getLaserConfig().globalIntensity->setValue(slider->getValue());
         return;
     }
 }

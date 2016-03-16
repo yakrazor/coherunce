@@ -15,7 +15,7 @@
 chuGenerator::chuGenerator(String generatorName)
 : chuParameterProvider(generatorName, ValueTree("generator"))
 {
-   active = new chuParameterBool("Active", false);
+    addParameter(active = new chuParameterBool("Active", false));
 };
 
 bool chuGenerator::isActive() const
@@ -44,8 +44,4 @@ void chuGenerator::setOSCAddress(const String& addr)
     }
 }
 
-void chuGenerator::getParamList(std::vector<chuParameter*>& params)
-{
-    params.push_back(active);
-}
 
