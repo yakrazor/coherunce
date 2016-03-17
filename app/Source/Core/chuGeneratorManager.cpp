@@ -9,10 +9,6 @@
 */
 
 #include "chuGeneratorManager.h"
-#include "chuGenPolygonPinwheel.h"
-#include "chuGenFivePoints.h"
-#include "chuGen16Step.h"
-#include "chuGenJavascript.h"
 #include "chuApplication.h"
 
 #define STRING_BLOCK(...) #__VA_ARGS__
@@ -140,7 +136,7 @@ void chuGeneratorManager::deserializeGenerator(String type, ValueTree data)
 
     if (newGen)
     {
-        allGenerators.add(newGen);
+        addGenerator(newGen);
     }
     else
     {
@@ -148,6 +144,10 @@ void chuGeneratorManager::deserializeGenerator(String type, ValueTree data)
     }
 }
 
+void chuGeneratorManager::addGenerator(chuGenerator* newGen)
+{
+    allGenerators.add(newGen);
+}
 
 ScopedPointer<chuGeneratorManager> theManager;
 

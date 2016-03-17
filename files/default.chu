@@ -92,5 +92,15 @@
       <parameter name="d" _type="float" min="0" max="1" value="0.5"/>
       <parameter name="Code" _type="string" value="var a = g.getParameter('a');&#10;var b = g.getParameter('b');&#10;var c = g.getParameter('c');&#10;var clk = g.getParameter('barClock');&#10;&#10;var steps = 16;&#10;var k = Math.abs(clk - 0.5);&#10;var s = clk * Math.floor(16 * b);&#10;var pump = 1.0 - (s - Math.floor(s));&#10;&#10;for (var t = -1; t &lt;= 1.0; t += 1/steps)&#10;{&#10;    g.setColor(255, 0, 0);&#10;    g.addPoint(t, (a + c * pump) * Math.sin(k * t * Math.PI * 2));&#10;    g.setColor(0, 255 * clk, 255 * (1 - clk));&#10;    g.addPoint(t, (a + c * pump) * Math.sin(1 - k * t * Math.PI * 2));&#10;}&#10;"/>
     </generator>
+    <generator _type="16Step" name="16Step1">
+      <parameter name="Active" _type="bool" value="0"/>
+      <parameter name="Height" _type="float" min="0.0099999997764825820923" max="1"
+                 value="0.30000001192092895508"/>
+      <parameter name="Quantize" _type="bool" value="1"/>
+      <parameter name="Steps" _type="int" min="2" max="16" value="16"/>
+      <parameter name="Pointiness" _type="float" min="0" max="1" value="0"/>
+      <parameter name="RestColor" _type="color" value="-16776961"/>
+      <parameter name="ActiveColor" _type="color" value="-65536"/>
+    </generator>
   </generators>
 </coherunceProject>

@@ -14,7 +14,7 @@
 #include "../../../JuceLibraryCode/JuceHeader.h"
 #include "chuClipButton.h"
 
-class chuClipGrid : public Component, public ChangeListener
+class chuClipGrid : public Component, public ChangeListener, public TextButton::Listener
 {
 public:
     chuClipGrid();
@@ -24,9 +24,13 @@ public:
     virtual void resized() override;
 
     virtual void changeListenerCallback(ChangeBroadcaster* source) override;
+    virtual void buttonClicked(Button*) override;
+
+    void addGenerator(chuGenerator* gen);
 
 private:
     OwnedArray<chuClipButton> childControls;
+    ScopedPointer<TextButton> addButton;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuClipGrid)
 };

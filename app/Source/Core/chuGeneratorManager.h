@@ -14,6 +14,11 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Generators/chuGenerator.h"
 
+#include "chuGenPolygonPinwheel.h"
+#include "chuGenFivePoints.h"
+#include "chuGen16Step.h"
+#include "chuGenJavascript.h"
+
 class chuGeneratorManager : public ChangeBroadcaster
 {
 public:
@@ -26,6 +31,7 @@ public:
     void setCurrentGenerator(chuGenerator* gen);
 
     void deserializeGenerator(String type, ValueTree data);
+    void addGenerator(chuGenerator* newGen);
 
 private:
     OwnedArray<chuGenerator> allGenerators;
