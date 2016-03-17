@@ -10,6 +10,7 @@
 
 #include "chuParameterBase.h"
 #include "chuApplication.h"
+#include "chuOSCManager.h"
 
 chuParameterOptions chuParameterOptions::Default;
 
@@ -45,7 +46,7 @@ chuParameterProvider::chuParameterProvider(const String& typeName, ValueTree sou
     }
 }
 
-void chuParameterProvider::getParamList(std::vector<chuParameter*>& params)
+void chuParameterProvider::getParamList(std::vector<chuParameter*>& params) const
 {
     for (auto iter = parameters.begin(); iter != parameters.end(); iter++)
     {
@@ -53,7 +54,7 @@ void chuParameterProvider::getParamList(std::vector<chuParameter*>& params)
     }
 }
 
-String chuParameterProvider::getType()
+const String chuParameterProvider::getType() const
 {
     if (data.isValid())
     {
@@ -63,7 +64,7 @@ String chuParameterProvider::getType()
     }
 }
 
-String chuParameterProvider::getName()
+const String chuParameterProvider::getName() const
 {
     if (data.isValid())
     {
@@ -91,9 +92,23 @@ void chuParameterProvider::addParameter(chuParameter* newParam)
         data.removeChild(saved, nullptr);
     }
     data.addChild(newParam->data, data.getNumChildren(), nullptr);
+
+    if (getOSCRoot().isNotEmpty())
+    {
+        newParam->listenAtOSCAddress(getOSCRoot());
+    }
 }
 
-PropertyPanel* chuParameterProvider::createPanel()
+void chuParameter::listenAtOSCAddress(const String& prefix)
+{
+    chuOSCManager::getReceiver()->removeListener(this);
+    String fullAddress = prefix + "/param/" + getName();
+    fullAddress = fullAddress.replaceCharacters(" #*,?[]{}", "_");
+    printf("[OSC] Registering OSC address %s\n", fullAddress.toRawUTF8());
+    chuOSCManager::getReceiver()->addListener(this, fullAddress);
+}
+
+PropertyPanel* chuParameterProvider::createPanel() const
 {
     Array<PropertyComponent*> propertyComponents;
     std::vector<chuParameter*> params;

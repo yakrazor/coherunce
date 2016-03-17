@@ -36,6 +36,8 @@ public:
     const String getName() { return data.getProperty("name"); }
     const chuParameterOptions& getOptions() { return options; }
 
+    void listenAtOSCAddress(const String& prefix);
+
 protected:
     friend class chuParameterProvider;
     ValueTree data;
@@ -48,16 +50,17 @@ public:
     chuParameterProvider(const String& typeName, ValueTree source);
     
     virtual ~chuParameterProvider() {}
-    void getParamList(std::vector<chuParameter*>& params);
+    void getParamList(std::vector<chuParameter*>& params) const;
+    virtual const String getOSCRoot() const { return String::empty; }
 
-    String getType();
-    String getName();
+    const String getType() const;
+    const String getName() const;
     virtual void setName(String name);
     ValueTree getData() { return data; }
 
     void addParameter(chuParameter* newParameter);
 
-    PropertyPanel* createPanel();
+    PropertyPanel* createPanel() const;
 
 protected:
     OwnedArray<chuParameter> parameters;

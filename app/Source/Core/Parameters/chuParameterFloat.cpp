@@ -47,6 +47,15 @@ void chuParameterFloat::setMaxValue(float newMax)
 
 void chuParameterFloat::setValue(float newValue)
 {
+    if (newValue < getMinValue())
+    {
+        newValue = getMinValue();
+    }
+    else if (newValue > getMaxValue())
+    {
+        newValue = getMaxValue();
+    }
+
     data.setProperty("value", newValue, nullptr);
 }
 
@@ -57,16 +66,6 @@ void chuParameterFloat::deserialize(ValueTree saved)
         saved.hasProperty("value"))
     {
         float savedValue = saved.getProperty("value");
-
-        if (savedValue < getMinValue())
-        {
-            savedValue = getMinValue();
-        }
-        else if (savedValue > getMaxValue())
-        {
-            savedValue = getMaxValue();
-        }
-
         data.setProperty("value", savedValue, nullptr);
     }
 }

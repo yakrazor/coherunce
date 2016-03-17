@@ -26,12 +26,13 @@ public:
     void setActive(bool b);
 
     virtual void setName(String generatorName) override;
-
-    void setOSCAddress(const String& addr);
+    virtual const String getOSCRoot() const override;
 
     virtual std::vector<PatternItem> getPatterns(float barClock) = 0;
 
 protected:
+    void remapOSCAddresses();
+
     chuParameterBool* active;
 };
 

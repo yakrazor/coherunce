@@ -34,10 +34,15 @@ void chuGenerator::setName(String name)
 {
     chuParameterProvider::setName(name);
 
-    setOSCAddress("/generator/" + name);
+    remapOSCAddresses();
 }
 
-void chuGenerator::setOSCAddress(const String& addr)
+const String chuGenerator::getOSCRoot() const
+{
+    return "/generator/" + getName();
+}
+
+void chuGenerator::remapOSCAddresses()
 {
     std::vector<chuParameter*> params;
     getParamList(params);
@@ -45,8 +50,7 @@ void chuGenerator::setOSCAddress(const String& addr)
     {
         if (chuOSCManager::getReceiver())
         {
-            chuOSCManager::getReceiver()->removeListener(param);
-            chuOSCManager::getReceiver()->addListener(param, addr + "/param/" + param->getName());
+            param->listenAtOSCAddress(getOSCRoot());
         }
     }
 }

@@ -23,6 +23,8 @@
 
 void chuApplication::initialise(const String& commandLine)
 {
+    chuOSCManager::initialize(7900);
+
     laserThread = new LaserOutputThread();
     laserThread->startThread();
 
@@ -43,8 +45,6 @@ void chuApplication::initialise(const String& commandLine)
     getApplicationCommandManager().registerAllCommandsForTarget(this);
     menu->initialize();
     mainMenu = menu;
-
-    chuOSCManager::initialize(7900);
 
     currentProject = new chuProject();
     currentProject->loadFromFile("../../../../../files/default.chu");
