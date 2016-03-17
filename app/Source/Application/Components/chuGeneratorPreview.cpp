@@ -36,11 +36,11 @@ void chuGeneratorPreview::timerCallback() {
     drawGeneratorPreview();
 }
 
-ScopedPointer<Drawable> chuGeneratorPreview::getPreviewBuffer() {
+ScopedPointer<DrawableComposite> chuGeneratorPreview::getPreviewBuffer() {
     if (!previewBuffer) {
         return nullptr;
     }
-    return previewBuffer->createCopy();
+    return previewBuffer;
 }
 
 void chuGeneratorPreview::drawGeneratorPreview()

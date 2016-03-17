@@ -25,7 +25,7 @@ public:
     void startPreviewUpdate();
     void stopPreviewUpdate();
     void drawGeneratorPreview();
-    ScopedPointer<Drawable> getPreviewBuffer();
+    ScopedPointer<DrawableComposite> getPreviewBuffer();
 
     virtual void timerCallback() override;
     
