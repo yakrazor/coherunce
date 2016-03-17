@@ -48,7 +48,7 @@ private:
     LaserOutputBuffer outputBuffer;
 
     ScopedPointer<LaserOutputDriver> outputDriver;
-    ScopedPointer<LaserOutputDevice> outputDevice;
+    OwnedArray<LaserOutputDevice> outputDevices;
 };
 
 
