@@ -45,12 +45,14 @@ protected:
 class chuParameterProvider
 {
 public:
-    chuParameterProvider(const String& name, ValueTree source);
+    chuParameterProvider(const String& typeName, ValueTree source);
     
     virtual ~chuParameterProvider() {}
     void getParamList(std::vector<chuParameter*>& params);
 
+    String getType();
     String getName();
+    virtual void setName(String name);
     ValueTree getData() { return data; }
 
     void addParameter(chuParameter* newParameter);

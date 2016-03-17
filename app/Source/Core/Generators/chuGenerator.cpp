@@ -12,8 +12,8 @@
 #include "chuOSCManager.h"
 
 
-chuGenerator::chuGenerator(String generatorName, ValueTree source)
-: chuParameterProvider(generatorName, source)
+chuGenerator::chuGenerator(String generatorTypeName, ValueTree source)
+: chuParameterProvider(generatorTypeName, source)
 {
     addParameter(active = new chuParameterBool("Active", false));
 };
@@ -28,6 +28,13 @@ void chuGenerator::setActive(bool b)
     if (active) {
         active->setValue(b);
     }
+}
+
+void chuGenerator::setName(String name)
+{
+    chuParameterProvider::setName(name);
+
+    setOSCAddress("/generator/" + name);
 }
 
 void chuGenerator::setOSCAddress(const String& addr)

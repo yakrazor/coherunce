@@ -35,7 +35,7 @@ void chuProject::deserializeGenerators()
     for (int i = 0; i < genList.getNumChildren(); i++)
     {
         auto genData = genList.getChild(i);
-        auto genType = genData.getProperty("name").toString();
+        auto genType = genData.getProperty("_type").toString();
         getGeneratorManager()->deserializeGenerator(genType, genData);
     }
 }

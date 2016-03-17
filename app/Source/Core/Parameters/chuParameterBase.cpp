@@ -13,6 +13,21 @@
 
 chuParameterOptions chuParameterOptions::Default;
 
+#include <map>
+#include <utility>
+
+std::map<String, int> numberingMap;
+
+String getNumberedName(String base)
+{
+    auto iter = numberingMap.find(base);
+    if (iter == numberingMap.end())
+    {
+        iter = numberingMap.insert(std::make_pair(base, 1)).first;
+    }
+    return base + String(iter->second++);
+}
+
 chuParameter::chuParameter(const String& name, const chuParameterOptions& paramOptions)
 : options(paramOptions)
 {
@@ -20,11 +35,13 @@ chuParameter::chuParameter(const String& name, const chuParameterOptions& paramO
     data.setProperty("name", name, nullptr);
 }
 
-chuParameterProvider::chuParameterProvider(const String& name, ValueTree source)
+chuParameterProvider::chuParameterProvider(const String& typeName, ValueTree source)
 {
     data = source;
-    if (!data.hasProperty("name")) {
-        data.setProperty("name", name, nullptr);
+    data.setProperty("_type", typeName, nullptr);
+    if (!data.hasProperty("name"))
+    {
+        data.setProperty("name", getNumberedName(typeName), nullptr);
     }
 }
 
@@ -36,6 +53,16 @@ void chuParameterProvider::getParamList(std::vector<chuParameter*>& params)
     }
 }
 
+String chuParameterProvider::getType()
+{
+    if (data.isValid())
+    {
+        return data.getProperty("_type");
+    } else {
+        return "";
+    }
+}
+
 String chuParameterProvider::getName()
 {
     if (data.isValid())
@@ -43,6 +70,14 @@ String chuParameterProvider::getName()
         return data.getProperty("name");
     } else {
         return "";
+    }
+}
+
+void chuParameterProvider::setName(String name)
+{
+    if (data.isValid())
+    {
+        data.setProperty("name", name, nullptr);
     }
 }
 
@@ -73,8 +108,15 @@ PropertyPanel* chuParameterProvider::createPanel()
         propertyComponents.add(pc);
     }
 
+    String displayName = getName();
+    String type = getType();
+    if (!displayName.contains(type))
+    {
+        displayName += " (" + type + ")";
+    }
+
     auto panel = new PropertyPanel();
-    panel->addSection(getName() + " Parameters", propertyComponents);
+    panel->addSection(displayName + " Parameters", propertyComponents);
     return panel;
 }
 

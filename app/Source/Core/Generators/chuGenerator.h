@@ -19,11 +19,13 @@
 
 class chuGenerator : public chuParameterProvider {
 public:
-    chuGenerator(String generatorName, ValueTree source = ValueTree("generator"));
+    chuGenerator(String generatorTypeName, ValueTree source = ValueTree("generator"));
     virtual ~chuGenerator() {}
 
     bool isActive() const;
     void setActive(bool b);
+
+    virtual void setName(String generatorName) override;
 
     void setOSCAddress(const String& addr);
 
