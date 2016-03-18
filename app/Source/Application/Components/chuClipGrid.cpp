@@ -14,8 +14,8 @@
 #include "chuClipButton.h"
 #include "chuApplication.h"
 
-#define GRID_COLS 5
-#define GRID_ROWS 5
+#define GRID_COLS 7
+#define GRID_ROWS 7
 
 //==============================================================================
 chuClipGrid::chuClipGrid()
