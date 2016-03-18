@@ -30,7 +30,7 @@ bool LaserOutputThread::init() {
         wait(1200);
     }
 
-    if (outputDevice == nullptr)
+    if (outputDevices.size() == 0)
     {
         int cc = outputDriver->getDeviceCount();
         if (!cc) {
@@ -38,14 +38,18 @@ bool LaserOutputThread::init() {
             return false;
         }
 
-        printf("Connecting...\n");
-        outputDevice = outputDriver->connectToDevice(0);
-
-        if (outputDevice == nullptr)
-        {
-            printf("Could not connect to DAC!\n");
-            return false;
+        for (int i = 0; i < outputDriver->getDeviceCount(); i++) {
+            printf("Connecting...\n");
+            auto outputDevice = outputDriver->connectToDevice(i);
+            
+            if (outputDevice == nullptr)
+            {
+                printf("Could not connect to DAC!\n");
+                return false;
+            }
+            outputDevices.add(outputDevice);
         }
+        
     }
 
     return true;
@@ -73,46 +77,48 @@ void LaserOutputThread::run() {
         {
             return;
         }
-        if (outputDriver == nullptr || outputDevice == nullptr) {
+        if (outputDriver == nullptr || outputDevices.size() == 0) {
             wait(250);
             init();
         }
-        if (outputDriver && outputDriver->isOutputEnabled() && outputDevice)
+        if (outputDriver && outputDriver->isOutputEnabled() && outputDevices.size() > 0)
         {
-            outputDevice->setRedDelay(getLaserConfig().redDelay->getValue());
-            outputDevice->setGreenDelay(getLaserConfig().greenDelay->getValue());
-            outputDevice->setBlueDelay(getLaserConfig().blueDelay->getValue());
+            for (auto outputDevice : outputDevices) {
+                outputDevice->setRedDelay(getLaserConfig().redDelay->getValue());
+                outputDevice->setGreenDelay(getLaserConfig().greenDelay->getValue());
+                outputDevice->setBlueDelay(getLaserConfig().blueDelay->getValue());
 
-            LaserPointOptimizer optimizer(laserConfig, outputDevice->getState());
-            optimizer.fillBufferFromFrame(outputBuffer);
+                LaserPointOptimizer optimizer(laserConfig, outputDevice->getState());
+                optimizer.fillBufferFromFrame(outputBuffer);
 
-            count = outputBuffer.getPointCount();
-            if (count <= 0) {
-                outputDevice->stop();
-                continue;
-            }
-            else
-            {
-                outputDevice->waitForDeviceReady();
-
-                if (!outputDevice->writeToDevice(laserConfig, outputBuffer))
-                {
-                    printf("ERROR: write failed\n");
+                count = outputBuffer.getPointCount();
+                if (count <= 0) {
+                    outputDevice->stop();
+                    continue;
                 }
+                else
+                {
+                    outputDevice->waitForDeviceReady();
 
-                frameCount++;
-                if (frameCount == 20) {
-                    double now = Time::getMillisecondCounterHiRes();
-                    double delta = now - clock;
+                    if (!outputDevice->writeToDevice(laserConfig, outputBuffer))
+                    {
+                        printf("ERROR: write failed\n");
+                    }
 
-                    stats.framesPerSecond = 20000/delta;
-                    stats.pointsPerFrame = count;
+                    frameCount++;
+                    if (frameCount == 20) {
+                        double now = Time::getMillisecondCounterHiRes();
+                        double delta = now - clock;
 
-                    // TODO: move this to UI
-                    printf("Points: %d FPS: %f\n", stats.pointsPerFrame, stats.framesPerSecond);
+                        stats.framesPerSecond = 20000/delta;
+                        stats.pointsPerFrame = count;
 
-                    frameCount = 0;
-                    clock = now;
+                        // TODO: move this to UI
+                        printf("Points: %d FPS: %f\n", stats.pointsPerFrame, stats.framesPerSecond);
+
+                        frameCount = 0;
+                        clock = now;
+                    }
                 }
             }
         }
