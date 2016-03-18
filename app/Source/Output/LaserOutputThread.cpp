@@ -98,26 +98,28 @@ void LaserOutputThread::run() {
                 }
                 else
                 {
-                    outputDevice->waitForDeviceReady();
-
-                    if (!outputDevice->writeToDevice(laserConfig, outputBuffer))
+                    if (outputDevice->waitForDeviceReady())
                     {
-                        printf("ERROR: write failed\n");
-                    }
 
-                    frameCount++;
-                    if (frameCount == 20) {
-                        double now = Time::getMillisecondCounterHiRes();
-                        double delta = now - clock;
+                        if (!outputDevice->writeToDevice(laserConfig, outputBuffer))
+                        {
+                            printf("ERROR: write failed\n");
+                        }
 
-                        stats.framesPerSecond = 20000/delta;
-                        stats.pointsPerFrame = count;
+                        frameCount++;
+                        if (frameCount == 20) {
+                            double now = Time::getMillisecondCounterHiRes();
+                            double delta = now - clock;
 
-                        // TODO: move this to UI
-                        printf("Points: %d FPS: %f\n", stats.pointsPerFrame, stats.framesPerSecond);
+                            stats.framesPerSecond = 20000/delta;
+                            stats.pointsPerFrame = count;
 
-                        frameCount = 0;
-                        clock = now;
+                            // TODO: move this to UI
+                            printf("Points: %d FPS: %f\n", stats.pointsPerFrame, stats.framesPerSecond);
+
+                            frameCount = 0;
+                            clock = now;
+                        }
                     }
                 }
             }

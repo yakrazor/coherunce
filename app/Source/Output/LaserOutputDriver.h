@@ -20,7 +20,7 @@ class LaserOutputDevice
 public:
     virtual ~LaserOutputDevice() {}
 
-    virtual void waitForDeviceReady() = 0;
+    virtual bool waitForDeviceReady() = 0;
     virtual bool writeToDevice(LaserConfig& laserConfig, LaserOutputBuffer& buffer) = 0;
     virtual void stop() = 0;
 

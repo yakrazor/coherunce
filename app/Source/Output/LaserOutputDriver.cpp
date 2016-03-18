@@ -45,9 +45,24 @@ public:
     {
     }
 
-    virtual void waitForDeviceReady() override
+    virtual bool waitForDeviceReady() override
     {
-        etherdream_wait_for_ready(thisDevice);
+        int res = etherdream_wait_for_ready(thisDevice);
+        if (res == 0)
+        {
+            return true;
+        }
+        else
+        {
+            // some kind of error, try reconnecting
+            if (etherdream_connect(thisDevice) >= 0)
+            {
+                int res = etherdream_wait_for_ready(thisDevice);
+                return res == 0;
+            }
+        }
+
+        return false;
     }
 
     virtual bool writeToDevice(LaserConfig& laserConfig, LaserOutputBuffer& buffer) override
