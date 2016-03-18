@@ -27,9 +27,7 @@ void chuGenRecolorEffect::getPatterns(float barClock, std::vector<PatternItem>& 
         c = color1->getValue();
         c = c.interpolatedWith(color2->getValue(), i / (patterns.size() * 1.0));
 
-        item.red = c.getRed() << 8;
-        item.green = c.getGreen() << 8;
-        item.blue = c.getBlue() << 8;
+        item.colour = c;
 
         for (int j = 0; j < item.polyline.colours.size(); j++)
         {

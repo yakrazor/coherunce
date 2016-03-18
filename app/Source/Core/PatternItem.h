@@ -52,14 +52,12 @@ enum PatternType {
 struct PatternItem
 {
     PatternItem()
-    : type(PatternType::Point), origin(0,0), rotation(0), red(65535), green(0), blue(0), width(0), radius(0), height(0), sides(0) {}
+    : type(PatternType::Point), origin(0,0), rotation(0), colour(Colours::red), width(0), radius(0), height(0), sides(0) {}
 
     PatternType type;
     Vector2f origin;
     float rotation;
-    uint16_t red;
-    uint16_t green;
-    uint16_t blue;
+    Colour colour;
 
     float width;
     float radius;

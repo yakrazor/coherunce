@@ -19,6 +19,7 @@ public:
     LaserState();
     
     ildaPoint currentPoint;
+    
     int redDelay;
     int greenDelay;
     int blueDelay;

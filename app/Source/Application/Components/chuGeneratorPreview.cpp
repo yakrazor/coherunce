@@ -78,7 +78,7 @@ void chuGeneratorPreview::drawGeneratorPreview()
                             item.rotation * float_Pi/180.0);
             
             auto dp = new DrawablePath();
-            dp->setStrokeFill(Colour(item.red >> 8, item.green >> 8, item.blue >> 8));
+            dp->setStrokeFill(item.colour);
             dp->setFill(Colours::transparentBlack);
             dp->setStrokeThickness(2.0f);
             dp->setPath(path);

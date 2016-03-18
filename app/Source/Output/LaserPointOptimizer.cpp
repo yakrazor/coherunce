@@ -20,18 +20,6 @@ LaserPointOptimizer::LaserPointOptimizer(const LaserConfig& _config, const Laser
 {
 }
 
-void add_point(ildaPoint* point, int16_t x, int16_t y, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
-{
-    point->x = x;
-    point->y = y;
-    point->r = r;
-    point->g = g;
-    point->b = b;
-    point->i = i;
-    point->u1 = 0;
-    point->u2 = 0;
-}
-
 void add_point(ildaPoint* point, int16_t x, int16_t y, const Colour& colour, uint16_t i)
 {
     point->x = x;
@@ -44,41 +32,124 @@ void add_point(ildaPoint* point, int16_t x, int16_t y, const Colour& colour, uin
     point->u2 = 0;
 }
 
-void LaserPointOptimizer::addLine(ildaPoint* points, int dwellOffPoints, int dwellOnPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t r, uint16_t g, uint16_t b, uint16_t i)
-{
+// Cohen-Sutherland implementation from Wikipedia
+// TODO: replace with more efficient choice
 
-    int dx = (x2 - x1) / numSegments;
-    int dy = (y2 - y1) / numSegments;
-    for (int i = 0; i < dwellOffPoints; i++)
-    {
-        add_point(&points[pointIndex++], x1, y1, 0, 0, 0, 0);
-    }
-    for (int i = 0; i < dwellOnPoints; i++)
-    {
-        add_point(&points[pointIndex++], x1, y1, r, g, b, i);
-    }
-    for (int i = 0; i <= numSegments; i++)
-    {
-        add_point(&points[pointIndex++], x1 + dx * i, y1 + dy * i, r, g, b, i);
-    }
-    for (int i = 0; i < dwellOnPoints; i++)
-    {
-        add_point(&points[pointIndex++], x2, y2, r, g, b, i);
-    }
-    for (int i = 0; i < dwellOffPoints; i++)
-    {
-        add_point(&points[pointIndex++], x2, y2, 0, 0, 0, 0);
-    }
+typedef int OutCode;
+
+const int INSIDE = 0; // 0000
+const int LEFT = 1;   // 0001
+const int RIGHT = 2;  // 0010
+const int BOTTOM = 4; // 0100
+const int TOP = 8;    // 1000
+
+// Compute the bit code for a point (x, y) using the clip rectangle
+// bounded diagonally by (xmin, ymin), and (xmax, ymax)
+
+const int xmin = -1;
+const int xmax = 1;
+const int ymin = -1;
+const int ymax = 1;
+
+OutCode ComputeOutCode(double x, double y)
+{
+    OutCode code;
+
+    code = INSIDE;          // initialised as being inside of clip window
+
+    if (x < xmin)           // to the left of clip window
+        code |= LEFT;
+    else if (x > xmax)      // to the right of clip window
+        code |= RIGHT;
+    if (y < ymin)           // below the clip window
+        code |= BOTTOM;
+    else if (y > ymax)      // above the clip window
+        code |= TOP;
+
+    return code;
 }
 
-void LaserPointOptimizer::addLine(ildaPoint* points, int dwellOffPoints, int dwellOnPoints, int numSegments, int16_t x1, int16_t y1, int16_t x2, int16_t y2, const Colour& startColour, const Colour& endColour, uint16_t i)
+// Cohen–Sutherland clipping algorithm clips a line from
+// P0 = (x0, y0) to P1 = (x1, y1) against a rectangle with
+// diagonal from (xmin, ymin) to (xmax, ymax).
+bool CohenSutherlandLineClip(float& x0, float& y0, float& x1, float& y1)
 {
+    // compute outcodes for P0, P1, and whatever point lies outside the clip rectangle
+    OutCode outcode0 = ComputeOutCode(x0, y0);
+    OutCode outcode1 = ComputeOutCode(x1, y1);
+    bool accept = false;
+
+    while (true) {
+        if (!(outcode0 | outcode1)) { // Bitwise OR is 0. Trivially accept and get out of loop
+            accept = true;
+            break;
+        } else if (outcode0 & outcode1) { // Bitwise AND is not 0. Trivially reject and get out of loop
+            break;
+        } else {
+            // failed both tests, so calculate the line segment to clip
+            // from an outside point to an intersection with clip edge
+            double x, y;
+
+            // At least one endpoint is outside the clip rectangle; pick it.
+            OutCode outcodeOut = outcode0 ? outcode0 : outcode1;
+
+            // Now find the intersection point;
+            // use formulas y = y0 + slope * (x - x0), x = x0 + (1 / slope) * (y - y0)
+            if (outcodeOut & TOP) {           // point is above the clip rectangle
+                x = x0 + (x1 - x0) * (ymax - y0) / (y1 - y0);
+                y = ymax;
+            } else if (outcodeOut & BOTTOM) { // point is below the clip rectangle
+                x = x0 + (x1 - x0) * (ymin - y0) / (y1 - y0);
+                y = ymin;
+            } else if (outcodeOut & RIGHT) {  // point is to the right of clip rectangle
+                y = y0 + (y1 - y0) * (xmax - x0) / (x1 - x0);
+                x = xmax;
+            } else if (outcodeOut & LEFT) {   // point is to the left of clip rectangle
+                y = y0 + (y1 - y0) * (xmin - x0) / (x1 - x0);
+                x = xmin;
+            }
+
+            // Now we move outside point to intersection point to clip
+            // and get ready for next pass.
+            if (outcodeOut == outcode0) {
+                x0 = x;
+                y0 = y;
+                outcode0 = ComputeOutCode(x0, y0);
+            } else {
+                x1 = x;
+                y1 = y;
+                outcode1 = ComputeOutCode(x1, y1);
+            }
+        }
+    }
+
+    return accept;
+}
+
+
+bool LaserPointOptimizer::addLine(ildaPoint* points, float fx1, float fy1, float fx2, float fy2, const Colour& startColour, const Colour& endColour, uint16_t i)
+{
+    int xScale = config.ildaXMax * (config.flipHorizontal->getValue() ? -1 : 1);
+    int yScale = config.ildaYMax * (config.flipVertical->getValue() ? -1 : 1);
+
+    int longestUnbrokenLine = config.longestUnbrokenLine->getValue();
+    int dwellOffPoints = config.dwellOffPoints->getValue();
+    int dwellOnPoints = config.dwellOnPoints->getValue();
+
+    int x1 = fx1 * xScale;
+    int y1 = fy1 * yScale;
+    int x2 = fx2 * xScale;
+    int y2 = fy2 * yScale;
+
+    int distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+    int numSegments = std::max(1, distance / longestUnbrokenLine);
 
     int dx = (x2 - x1) / numSegments;
     int dy = (y2 - y1) / numSegments;
+
     for (int i = 0; i < dwellOffPoints; i++)
     {
-        add_point(&points[pointIndex++], x1, y1, 0, 0, 0, 0);
+        add_point(&points[pointIndex++], x1, y1, Colours::black, 0);
     }
     for (int i = 0; i < dwellOnPoints; i++)
     {
@@ -95,36 +166,46 @@ void LaserPointOptimizer::addLine(ildaPoint* points, int dwellOffPoints, int dwe
     }
     for (int i = 0; i < dwellOffPoints; i++)
     {
-        add_point(&points[pointIndex++], x2, y2, 0, 0, 0, 0);
+        add_point(&points[pointIndex++], x2, y2, Colours::black, 0);
     }
+
+    return true;
 }
 
 void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
 {
     pointIndex = 0;
 
-    int xScale = config.ildaXMax * (config.flipHorizontal->getValue() ? -1 : 1);
-    int yScale = config.ildaYMax * (config.flipVertical->getValue() ? -1 : 1);
-
-    int longestUnbrokenLine = config.longestUnbrokenLine->getValue();
-    int internalShapeDwellPoints = config.internalDwellPoints->getValue();
-    int dwellOffPoints = config.dwellOffPoints->getValue();
-    int dwellOnPoints = config.dwellOnPoints->getValue();
     int intensityMax = config.ildaIntensityMax;
 
     uint16_t intensity = intensityMax * std::max(0.0f, std::min(config.globalIntensity->getValue(), 1.0f));
 
-    int16_t prevItemX = state.currentPoint.x;
-    int16_t prevItemY = state.currentPoint.y;
+    int xScale = config.ildaXMax * (config.flipHorizontal->getValue() ? -1 : 1);
+    int yScale = config.ildaYMax * (config.flipVertical->getValue() ? -1 : 1);
+
+    float currentX = state.currentPoint.x / (xScale * 1.0);
+    float currentY = state.currentPoint.y / (yScale * 1.0);
 
     buffer.getPatternQueue().process_frame([&](LaserOutputBuffer::PatternQueue::frame_type frame) {
         for (auto& item : frame) {
 
-            // clamp input point
-            if (item.origin.x < -1.0) { item.origin.x = -1.0; }
-            if (item.origin.x > 1.0)  { item.origin.x = 1.0; }
-            if (item.origin.y < -1.0) { item.origin.y = -1.0; }
-            if (item.origin.y > 1.0)  { item.origin.y = 1.0; }
+            if (item.type == PatternType::RegularPolygon) {
+
+                // Convert to polyline
+                item.type = PatternType::Polyline;
+
+                // Find the start point
+                float rad = item.rotation * PI/180.0;
+                float x = (item.origin.x + item.radius * cos(rad));
+                float y = (item.origin.y + item.radius * sin(rad));
+                item.polyline.addPoint(Vector2f(x, y), item.colour);
+
+                for (int i = 1; i < item.sides + 1; i++) {
+                    x = (item.origin.x + item.radius * cos(2 * PI * i / item.sides + rad));
+                    y = (item.origin.y + item.radius * sin(2 * PI * i / item.sides + rad));
+                    item.polyline.addPoint(Vector2f(x, y), item.colour);
+                }
+            }
 
             if (item.type == PatternType::Polyline) {
 
@@ -134,70 +215,34 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
                     continue;
                 }
 
-                int16_t ptX = vertices[0].x * xScale;
-                int16_t ptY = vertices[0].y * yScale;
-
-                int move_distance = sqrt(pow(prevItemX - ptX, 2) + pow(prevItemY - ptY, 2));
-                int numMoveSegments = std::max(1, move_distance / longestUnbrokenLine);
-
-                // move from end of last item to start of this item
-                addLine(buffer.points, dwellOffPoints, dwellOnPoints, numMoveSegments, prevItemX, prevItemY, ptX, ptY, 0, 0, 0, 0);
-
-                prevItemX = ptX;
-                prevItemY = ptY;
-
-                for (int i = 1; i < vertices.size(); i++)
+                for (int i = 0; i < vertices.size() - 1; i++)
                 {
-                    int16_t ptX = vertices[i].x * xScale;
-                    int16_t ptY = vertices[i].y * yScale;
+                    float lineStartX = vertices[i].x;
+                    float lineStartY = vertices[i].y;
+                    float lineEndX = vertices[i+1].x;
+                    float lineEndY = vertices[i+1].y;
 
-                    const Colour& startColour = item.polyline.colours[i - 1];
-                    const Colour& endColour = item.polyline.colours[i];
+                    // Potentially clip the line endpoints, skipping if completely offscreen
+                    if (!CohenSutherlandLineClip(lineStartX, lineStartY, lineEndX, lineEndY))
+                    {
+                        continue;
+                    }
 
-                    int distance = sqrt(pow(prevItemX - ptX, 2) + pow(prevItemY - ptY, 2));
-                    int numSegments = std::max(1, distance / longestUnbrokenLine);
-                    addLine(buffer.points, 0, internalShapeDwellPoints, numSegments, prevItemX, prevItemY, ptX, ptY, startColour, endColour, intensity);
+                    // If we're not already at the start, do a blank move to the start of this line
+                    if (lineStartX != currentX || lineStartY != currentY)
+                    {
+                        addLine(buffer.points, currentX, currentY, lineStartX, lineStartY, Colours::black, Colours::black, 0);
+                    }
 
-                    prevItemX = ptX;
-                    prevItemY = ptY;
+                    const Colour& startColour = item.polyline.colours[i];
+                    const Colour& endColour = item.polyline.colours[i + 1];
+
+                    addLine(buffer.points, lineStartX, lineStartY, lineEndX, lineEndY, startColour, endColour, intensity);
+
+                    currentX = lineEndX;
+                    currentY = lineEndY;
                 }
 
-            }
-            else if (item.type == PatternType::RegularPolygon) {
-
-                // Find the start point
-                float rad = item.rotation * PI/180.0;
-                int16_t origX = (item.origin.x + item.radius * cos(rad)) * xScale;
-                int16_t origY = (item.origin.y + item.radius * sin(rad)) * yScale;
-
-                // Find the length of the polygon sides and the initial move vector
-                int s = 2 * item.radius * sin(PI / item.sides) * xScale;
-                int move_distance = sqrt(pow(prevItemX - origX, 2) + pow(prevItemY - origY, 2));
-
-                int numMoveSegments = std::max(1, move_distance / longestUnbrokenLine);
-                int numSegments = std::max(1, s / longestUnbrokenLine);
-                int pointsInPattern = (item.sides + 1) * (numSegments + 1 + 2 * internalShapeDwellPoints) + numMoveSegments + dwellOnPoints + dwellOffPoints;
-                if (pointsInPattern + pointIndex > LaserOutputBuffer::maxPoints) {
-                    continue;
-                }
-
-                // move from end of last item to start of this item
-                addLine(buffer.points, dwellOffPoints, dwellOnPoints, numMoveSegments, prevItemX, prevItemY, origX, origY, 0, 0, 0, 0);
-
-                int16_t lastX = origX;
-                int16_t lastY = origY;
-
-                for (int i = 0; i < item.sides; i++) {
-                    int16_t nextX = (item.origin.x + item.radius * cos(2 * PI * i / item.sides + rad)) * xScale;
-                    int16_t nextY = (item.origin.y + item.radius * sin(2 * PI * i / item.sides + rad)) * yScale;
-                    addLine(buffer.points, 0, internalShapeDwellPoints, numSegments, lastX, lastY, nextX, nextY, item.red, item.green, item.blue, intensity);
-                    lastX = nextX;
-                    lastY = nextY;
-                }
-                addLine(buffer.points, 0, internalShapeDwellPoints, numSegments, lastX, lastY, origX, origY, item.red, item.green, item.blue, intensity);
-
-                prevItemX = origX;
-                prevItemY = origY;
             }
         }
 
