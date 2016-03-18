@@ -182,7 +182,7 @@ void chuParameter::listenAtOSCAddress(const String& prefix)
     chuOSCManager::getReceiver()->addListener(this, fullAddress);
 }
 
-PropertyPanel* chuParameterProvider::createPanel() const
+void chuParameterProvider::createPanel(PropertyPanel* panel) const
 {
     Array<PropertyComponent*> propertyComponents;
     std::vector<chuParameter*> params;
@@ -204,9 +204,10 @@ PropertyPanel* chuParameterProvider::createPanel() const
         displayName += " (" + type + ")";
     }
 
-    auto panel = new PropertyPanel();
-    panel->addSection(displayName + " Parameters", propertyComponents);
-    return panel;
+    if (panel)
+    {
+        panel->addSection(displayName + " Parameters", propertyComponents);
+    }
 }
 
 

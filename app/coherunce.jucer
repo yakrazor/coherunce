@@ -24,6 +24,10 @@
               file="Source/Core/Generators/chuGenPolygonPinwheel.h"/>
         <FILE id="T57OOh" name="chuGenPolygonPinwheel.cpp" compile="1" resource="0"
               file="Source/Core/Generators/chuGenPolygonPinwheel.cpp"/>
+        <FILE id="ZbepBc" name="chuGenRecolorEffect.h" compile="0" resource="0"
+              file="Source/Core/Generators/chuGenRecolorEffect.h"/>
+        <FILE id="DbHaez" name="chuGenRecolorEffect.cpp" compile="1" resource="0"
+              file="Source/Core/Generators/chuGenRecolorEffect.cpp"/>
       </GROUP>
       <GROUP id="{B3965FF4-711D-3D26-7EB1-8105EEBFE28E}" name="Parameters">
         <FILE id="vUuhoS" name="chuParameters.h" compile="0" resource="0" file="Source/Core/Parameters/chuParameters.h"/>

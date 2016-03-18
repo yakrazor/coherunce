@@ -18,6 +18,7 @@
 #include "chuGenFivePoints.h"
 #include "chuGen16Step.h"
 #include "chuGenJavascript.h"
+#include "chuGenRecolorEffect.h"
 
 class chuGeneratorManager : public ChangeBroadcaster
 {
@@ -26,6 +27,7 @@ public:
     ~chuGeneratorManager();
 
     OwnedArray<chuGenerator>& getAllGenerators() { return allGenerators; }
+    OwnedArray<chuGenerator>& getGlobalEffects() { return globalEffects; }
 
     chuGenerator* getCurrentGenerator() { return currentGenerator; }
     void setCurrentGenerator(chuGenerator* gen);
@@ -37,6 +39,8 @@ public:
 
 private:
     OwnedArray<chuGenerator> allGenerators;
+    OwnedArray<chuGenerator> globalEffects;
+    
     chuGenerator* currentGenerator;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuGeneratorManager)

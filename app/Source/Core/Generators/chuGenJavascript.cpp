@@ -123,7 +123,7 @@ chuGenJavascript::chuGenJavascript(ValueTree source)
     currentColour = Colours::red;
 }
 
-std::vector<PatternItem> chuGenJavascript::getPatterns(float barClock)
+std::vector<PatternItem> chuGenJavascript::getPatterns(float barClock, std::vector<PatternItem>& existingPatterns)
 {
     patternBuffer.clear();
     PatternItem item;

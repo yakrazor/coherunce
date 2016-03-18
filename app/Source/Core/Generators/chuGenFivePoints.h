@@ -17,7 +17,7 @@
 class chuGenFivePoints : public chuGenerator {
 public:
     chuGenFivePoints(ValueTree source = ValueTree("generator"));
-    virtual std::vector<PatternItem> getPatterns(float barClock) override;
+    virtual std::vector<PatternItem> getPatterns(float barClock, std::vector<PatternItem>& existingPatterns) override;
 
     static constexpr float leapXMin = -300.0;
     static constexpr float leapXMax = 300.0;

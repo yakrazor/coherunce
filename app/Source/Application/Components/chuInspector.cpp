@@ -14,7 +14,10 @@
 
 
 chuInspector::chuInspector(ChangeBroadcaster* bc)
+: panel(new PropertyPanel())
 {
+    addAndMakeVisible(panel);
+
     broadcaster = bc;
     if (broadcaster)
     {
@@ -24,16 +27,17 @@ chuInspector::chuInspector(ChangeBroadcaster* bc)
 
 void chuInspector::inspectParameters(chuParameterProvider* provider)
 {
-    if (panel)
-    {
-        removeChildComponent(panel);
-    }
+    panel->setBounds(getLocalBounds());
+    panel->clear();
 
     if (provider)
     {
-        panel = provider->createPanel();
-        addAndMakeVisible(panel);
-        panel->setBounds(getLocalBounds());
+        provider->createPanel(panel);
+    }
+
+    for (auto globalEffect : getGeneratorManager()->getGlobalEffects())
+    {
+        globalEffect->createPanel(panel);
     }
 }
 

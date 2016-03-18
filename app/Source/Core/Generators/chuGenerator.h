@@ -28,7 +28,8 @@ public:
     virtual void setName(String generatorName) override;
     virtual const String getOSCRoot() const override;
 
-    virtual std::vector<PatternItem> getPatterns(float barClock) = 0;
+    virtual std::vector<PatternItem> getPatterns(float barClock, std::vector<PatternItem>& existingPatterns = emptyPatterns) = 0;
+    static std::vector<PatternItem> emptyPatterns;
 
 protected:
 

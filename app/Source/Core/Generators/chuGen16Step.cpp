@@ -22,7 +22,7 @@ chuGen16Step::chuGen16Step(ValueTree source)
     addParameter(activeColor = new chuParameterColor("ActiveColor", Colors::red));
 }
 
-std::vector<PatternItem> chuGen16Step::getPatterns(float barClock)
+std::vector<PatternItem> chuGen16Step::getPatterns(float barClock, std::vector<PatternItem>& existingPatterns)
 {
     int count = numSteps->getValue();
     float step = barClock * (count - 1);

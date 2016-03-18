@@ -97,6 +97,9 @@ chuGeneratorManager::chuGeneratorManager()
     allGenerators.push_back(js2);
     getApp()->getCurrentProject()->addGenerator(js2);
      */
+
+    auto allRed = new chuGenRecolorEffect();
+    globalEffects.add(allRed);
 }
 
 chuGeneratorManager::~chuGeneratorManager()

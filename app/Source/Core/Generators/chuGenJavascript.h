@@ -17,7 +17,7 @@
 class chuGenJavascript : public chuGenerator {
 public:
     chuGenJavascript(ValueTree source = ValueTree("generator"));
-    virtual std::vector<PatternItem> getPatterns(float barClock) override;
+    virtual std::vector<PatternItem> getPatterns(float barClock, std::vector<PatternItem>& existingPatterns) override;
 
     chuParameterFloat* a;
     chuParameterFloat* b;

@@ -60,7 +60,7 @@ public:
 
     void addParameter(chuParameter* newParameter);
 
-    PropertyPanel* createPanel() const;
+    void createPanel(PropertyPanel* panel) const;
 
 protected:
     void remapOSCAddresses();

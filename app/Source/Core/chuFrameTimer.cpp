@@ -83,10 +83,9 @@ void chuFrameTimer::timerCallback()
     }
 
     if (laserThread) {
-        
-        auto& patterns = laserThread->getOutputBuffer().getPatternQueue();
 
-        patterns.start_frame();
+        std::vector<PatternItem> patterns;
+
         for (auto& generator : getGeneratorManager()->getAllGenerators())
         {
             if (generator->isActive())
@@ -94,11 +93,23 @@ void chuFrameTimer::timerCallback()
                 auto items = generator->getPatterns(barClock);
                 for (auto& item : items)
                 {
-                    patterns.push_item(item);
+                    patterns.push_back(item);
                 }
             }
         }
-        patterns.finish_frame();
+
+        for (auto& generator : getGeneratorManager()->getGlobalEffects())
+        {
+            if (generator->isActive())
+            {
+                patterns = generator->getPatterns(barClock, patterns);
+            }
+        }
+
+        auto& queue = laserThread->getOutputBuffer().getPatternQueue();
+        queue.start_frame();
+        queue.push_items(patterns);
+        queue.finish_frame();
     }
 }
 

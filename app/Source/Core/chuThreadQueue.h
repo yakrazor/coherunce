@@ -47,6 +47,11 @@ public:
         cv.notify_one();
     }
 
+    void push_items(frame_type& newFrame) {
+        std::unique_lock<std::mutex> guard(mutex);
+        frame.insert(frame.begin(), newFrame.begin(), newFrame.end());
+    }
+
     void process_frame(std::function<void(frame_type)> action) {
         std::unique_lock<std::mutex> guard(mutex);
 

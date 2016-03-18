@@ -20,7 +20,7 @@ chuGenPolygonPinwheel::chuGenPolygonPinwheel(ValueTree source)
     addParameter(color = new chuParameterColor("Color", Colors::red));
 }
 
-std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns(float barClock)
+std::vector<PatternItem> chuGenPolygonPinwheel::getPatterns(float barClock, std::vector<PatternItem>& existingPatterns)
 {
     std::vector<PatternItem> items;
     PatternItem item;

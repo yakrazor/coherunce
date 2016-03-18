@@ -44,7 +44,7 @@ inline float rescale(float value, float inputMin, float inputMax, float outputMi
     return outputMin + s * (outputMax - outputMin);
 }
 
-std::vector<PatternItem> chuGenFivePoints::getPatterns(float barClock)
+std::vector<PatternItem> chuGenFivePoints::getPatterns(float barClock, std::vector<PatternItem>& existingPatterns)
 {
     PatternItem item;
     item.type = PatternType::RegularPolygon;
