@@ -16,13 +16,14 @@
 
 #include <etherdream.h>
 
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
 void sendEtherdreamOSCMessage(struct etherdream* device, String address, float value)
 {
-    // TODO: get the correct DAC IP address
-    // possible hack: get in_addr from device struct (requires dumping in full struct definition from etherdream.c)
-    // doesn't appear to work, though
-    //const char *strHostAddress = inet_ntoa(device->addr);
-    const char *strHostAddress = "192.168.2.3";
+    const struct in_addr* addr = etherdream_get_in_addr(device);
+    String strHostAddress(inet_ntoa(*addr));
 
     OSCMessage message(address);
     message.addFloat32(value);
