@@ -85,7 +85,7 @@
       <parameter name="Code" _type="string" value="var a = g.getParameter('a');&#10;var b = g.getParameter('b');&#10;var clk = 1.0 - g.getParameter('barClock');&#10;&#10;g.addPoint(0,0);&#10;g.addPoint(-a, a * b * clk);&#10;g.addPoint(-a, -a * b * clk);&#10;g.addPoint(a, a * b * clk);&#10;g.addPoint(a, -a * b * clk);&#10;g.addPoint(0, 0);&#10;"/>
     </generator>
     <generator _type="CustomJavascript" name="Beatwave1">
-      <parameter name="Active" _type="bool" value="0"/>
+      <parameter name="Active" _type="bool" value="1"/>
       <parameter name="a" _type="float" min="0" max="1" value="0.1170878484845161438"/>
       <parameter name="b" _type="float" min="0" max="1" value="0.20545679330825805664"/>
       <parameter name="c" _type="float" min="0" max="1" value="0.30000001192092895508"/>
@@ -114,5 +114,41 @@
       <parameter name="pt5y" _type="float" min="60" max="360" value="210"/>
       <parameter name="pt5on" _type="int" min="0" max="1" value="1"/>
     </generator>
+    <generator _type="FivePoints" name="FivePoints1">
+      <parameter name="Active" _type="bool" value="0"/>
+      <parameter name="Sides" _type="int" min="3" max="8" value="3"/>
+      <parameter name="Radius" _type="float" min="0.0099999997764825820923" max="0.10000000149011611938"
+                 value="0.079999998211860656738"/>
+      <parameter name="Color" _type="color" value="-65536"/>
+      <parameter name="pt1x" _type="float" min="-300" max="300" value="-200"/>
+      <parameter name="pt1y" _type="float" min="60" max="360" value="210"/>
+      <parameter name="pt1on" _type="int" min="0" max="1" value="1"/>
+      <parameter name="pt2x" _type="float" min="-300" max="300" value="-100"/>
+      <parameter name="pt2y" _type="float" min="60" max="360" value="210"/>
+      <parameter name="pt2on" _type="int" min="0" max="1" value="1"/>
+      <parameter name="pt3x" _type="float" min="-300" max="300" value="0"/>
+      <parameter name="pt3y" _type="float" min="60" max="360" value="210"/>
+      <parameter name="pt3on" _type="int" min="0" max="1" value="1"/>
+      <parameter name="pt4x" _type="float" min="-300" max="300" value="100"/>
+      <parameter name="pt4y" _type="float" min="60" max="360" value="210"/>
+      <parameter name="pt4on" _type="int" min="0" max="1" value="1"/>
+      <parameter name="pt5x" _type="float" min="-300" max="300" value="200"/>
+      <parameter name="pt5y" _type="float" min="60" max="360" value="210"/>
+      <parameter name="pt5on" _type="int" min="0" max="1" value="1"/>
+    </generator>
   </generators>
+  <laserConfig _type="Laser Config" name="Laser Config2">
+    <parameter name="Points Per Second" _type="int" min="200" max="100000" value="35000"/>
+    <parameter name="Longest Unbroken Line" _type="int" min="200" max="10000"
+               value="1000"/>
+    <parameter name="Internal Dwell Points" _type="int" min="0" max="50" value="3"/>
+    <parameter name="Dwell Points (Off)" _type="int" min="0" max="50" value="10"/>
+    <parameter name="Dwell Points (On)" _type="int" min="0" max="50" value="2"/>
+    <parameter name="Intensity" _type="float" min="0" max="1" value="0"/>
+    <parameter name="Red Delay" _type="int" min="0" max="20" value="6"/>
+    <parameter name="Green Delay" _type="int" min="0" max="20" value="6"/>
+    <parameter name="Blue Delay" _type="int" min="0" max="20" value="6"/>
+    <parameter name="Flip Horizontal" _type="bool" value="0"/>
+    <parameter name="Flip Vertical" _type="bool" value="0"/>
+  </laserConfig>
 </coherunceProject>

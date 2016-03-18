@@ -10,8 +10,8 @@
 
 #include "LaserConfig.h"
 
-LaserConfig::LaserConfig()
-: chuParameterProvider("Laser Config", ValueTree("laserConfig"))
+LaserConfig::LaserConfig(ValueTree source)
+: chuParameterProvider("Laser Config", source)
 {
     addParameter(pointsPerSecond = new chuParameterInt("Points Per Second", 200, 100000, 35000));
     addParameter(longestUnbrokenLine = new chuParameterInt("Longest Unbroken Line", 200, 10000, 1000));

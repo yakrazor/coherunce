@@ -22,7 +22,8 @@ public:
 
     void addGenerator(chuGenerator* gen);
     void deleteGenerator(chuGenerator* gen);
-    void deserializeGenerators();
+
+    void deserialize();
     
     void loadFromFile(String filePath);
     void loadFromFile(File file);
