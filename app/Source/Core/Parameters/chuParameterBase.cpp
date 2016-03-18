@@ -17,17 +17,59 @@ chuParameterOptions chuParameterOptions::Default;
 #include <map>
 #include <utility>
 
-std::map<String, int> numberingMap;
-
-String getNumberedName(String base)
+class NamingHelper
 {
-    auto iter = numberingMap.find(base);
-    if (iter == numberingMap.end())
+public:
+
+    String getUniqueNumberedName(String base)
     {
-        iter = numberingMap.insert(std::make_pair(base, 1)).first;
+        auto iter = numberingMap.find(base);
+        if (iter == numberingMap.end())
+        {
+            iter = numberingMap.insert(std::make_pair(base, 0)).first;
+        }
+        return base + String(++iter->second);
     }
-    return base + String(iter->second++);
-}
+
+    void saveNumberedName(String name)
+    {
+        String permittedCharacters = "1234567890";
+        String base = String::empty;
+        String trailing = String::empty;
+
+        for (int index = name.length() - 1; index >= 0; index--)
+        {
+            if (!permittedCharacters.containsChar(name[index]))
+            {
+                base = name.substring(0, index + 1);
+                trailing = name.substring(index + 1);
+                break;
+            }
+        }
+
+        if (trailing.isNotEmpty() && base.isNotEmpty())
+        {
+            int number = trailing.getIntValue();
+            auto iter = numberingMap.find(base);
+            if (iter == numberingMap.end())
+            {
+                iter = numberingMap.insert(std::make_pair(base, number)).first;
+            }
+            else
+            {
+                if (number > numberingMap[base])
+                {
+                    numberingMap[base] = number;
+                }
+            }
+        }
+    }
+
+protected:
+    std::map<String, int> numberingMap;
+};
+
+NamingHelper namingHelper;
 
 chuParameter::chuParameter(const String& name, const chuParameterOptions& paramOptions)
 : options(paramOptions)
@@ -42,7 +84,11 @@ chuParameterProvider::chuParameterProvider(const String& typeName, ValueTree sou
     data.setProperty("_type", typeName, nullptr);
     if (!data.hasProperty("name"))
     {
-        data.setProperty("name", getNumberedName(typeName), nullptr);
+        data.setProperty("name", namingHelper.getUniqueNumberedName(typeName), nullptr);
+    }
+    else
+    {
+        namingHelper.saveNumberedName(data.getProperty("name"));
     }
 }
 
