@@ -31,7 +31,6 @@ public:
     virtual std::vector<PatternItem> getPatterns(float barClock) = 0;
 
 protected:
-    void remapOSCAddresses();
 
     chuParameterBool* active;
 };

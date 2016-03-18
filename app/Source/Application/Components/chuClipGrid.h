@@ -27,8 +27,11 @@ public:
     virtual void buttonClicked(Button*) override;
 
     void addGenerator(chuGenerator* gen);
+    void deleteGenerator(chuGenerator* genToDelete);
 
 private:
+    void updateAddButton();
+
     OwnedArray<chuClipButton> childControls;
     ScopedPointer<TextButton> addButton;
 

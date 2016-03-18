@@ -32,6 +32,8 @@ public:
 
     void deserializeGenerator(String type, ValueTree data);
     void addGenerator(chuGenerator* newGen);
+    void deleteGenerator(chuGenerator* genToDelete);
+    void renameGenerator(chuGenerator* gen, const String& newName);
 
 private:
     OwnedArray<chuGenerator> allGenerators;

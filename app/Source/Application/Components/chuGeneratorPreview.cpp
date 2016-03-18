@@ -9,6 +9,9 @@
 */
 
 #include "chuGeneratorPreview.h"
+#include "Core/Generators/chuGenerator.h"
+#include "chuGeneratorManager.h"
+#include "chuApplication.h"
 
 chuGeneratorPreview::chuGeneratorPreview(chuGenerator* gen) {
     
@@ -46,6 +49,8 @@ ScopedPointer<Drawable> chuGeneratorPreview::getPreviewBuffer() {
 void chuGeneratorPreview::drawGeneratorPreview()
 {
     if (!generator) {
+        previewBuffer = new DrawableComposite();
+        sendChangeMessage();
         return;
     }
     previewBuffer = new DrawableComposite();

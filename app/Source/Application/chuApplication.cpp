@@ -158,6 +158,10 @@ void chuApplication::getCommandInfo(CommandID commandID, ApplicationCommandInfo&
             result.setInfo("Close Window", "Close the active window", "General", 0);
             result.addDefaultKeypress('W', ModifierKeys::commandModifier);
             return;
+        case CommandIDs::Rename:
+            result.setInfo("Rename", "Renames the selected item", "General", 0);
+            result.addDefaultKeypress('R', ModifierKeys::commandModifier);
+            return;
         case StandardApplicationCommandIDs::undo:
             result.setInfo("Undo", "Undoes the last action", "General", 0);
             result.addDefaultKeypress('Z', ModifierKeys::commandModifier);
@@ -181,6 +185,11 @@ void chuApplication::getCommandInfo(CommandID commandID, ApplicationCommandInfo&
             result.addDefaultKeypress('V', ModifierKeys::commandModifier);
             result.setActive(false);
             return;
+        case StandardApplicationCommandIDs::del:
+            result.setInfo("Delete", "Deletes the selection", "General", 0);
+            result.addDefaultKeypress(KeyPress::backspaceKey, 0);
+            result.setActive(true);
+            return;
     }
     JUCEApplication::getCommandInfo(commandID, result);
 }
@@ -194,11 +203,13 @@ void chuApplication::getAllCommands(Array<CommandID>& commands)
     commands.add(CommandIDs::SaveAs);
     commands.add(CommandIDs::HelpContents);
     commands.add(CommandIDs::CloseWindow);
+    commands.add(CommandIDs::Rename);
     commands.add(StandardApplicationCommandIDs::undo);
     commands.add(StandardApplicationCommandIDs::redo);
     commands.add(StandardApplicationCommandIDs::cut);
     commands.add(StandardApplicationCommandIDs::copy);
     commands.add(StandardApplicationCommandIDs::paste);
+    commands.add(StandardApplicationCommandIDs::del);
 
     JUCEApplication::getAllCommands(commands);
 }
@@ -264,6 +275,23 @@ bool chuApplication::perform(const InvocationInfo& info)
                 }
                 return true;
             }
+        case CommandIDs::Rename:
+            if (getGeneratorManager()->getCurrentGenerator())
+            {
+                String name = getGeneratorManager()->getCurrentGenerator()->getName();
+
+                AlertWindow window("Rename", "", AlertWindow::NoIcon, nullptr);
+                window.addTextEditor("name", name);
+                window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
+                window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+                if (window.runModalLoop())
+                {
+                    name = window.getTextEditorContents("name");
+                    getGeneratorManager()->renameGenerator(getGeneratorManager()->getCurrentGenerator(), name);
+                }
+            }
+            return true;
+
         case StandardApplicationCommandIDs::undo:
             // TODO: implement me
             return true;
@@ -278,6 +306,10 @@ bool chuApplication::perform(const InvocationInfo& info)
             return false;
         case StandardApplicationCommandIDs::paste:
             return false;
+
+        case StandardApplicationCommandIDs::del:
+            getMainWindow()->getClipGrid()->deleteGenerator(getGeneratorManager()->getCurrentGenerator());
+            return true;
 
     }
 

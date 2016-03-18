@@ -29,9 +29,11 @@ chuMainWindow::chuMainWindow(String name)
 
     addKeyListener(getApp()->getApplicationCommandManager().getKeyMappings());
 
+    clipGrid = new chuClipGrid();
+
     auto splitPane = new chuMultiSplitPane();
     splitPane->addPane(new chuGlobalControls(), 250, 300, 250);
-    splitPane->addPane(new chuClipGrid(), 100, 500, 200, true);
+    splitPane->addPane(clipGrid, 100, 500, 200, true);
     splitPane->addPane(new chuInspector(getGeneratorManager()), 50, 400, 300);
     splitPane->setBounds(getBounds());
     setContentOwned(splitPane, true);

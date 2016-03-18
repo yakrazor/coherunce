@@ -37,6 +37,8 @@ chuClipButton::chuClipButton()
 
 void chuClipButton::paint(Graphics& g)
 {
+    labelButton->setButtonText(generator != nullptr ? generator->getName() : "");
+
     g.fillAll(Colours::black);
 
     auto r = getLocalBounds();
@@ -61,12 +63,8 @@ void chuClipButton::paint(Graphics& g)
 
 void chuClipButton::setGenerator(chuGenerator* gen)
 {
-    if (gen != nullptr)
-    {
-        generator = gen;
-        labelButton->setButtonText(gen->getName());
-        preview->setGenerator(gen);
-    }
+    generator = gen;
+    preview->setGenerator(gen);
 }
 
 void chuClipButton::changeListenerCallback(ChangeBroadcaster *source) {

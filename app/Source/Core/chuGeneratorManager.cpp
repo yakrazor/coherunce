@@ -149,6 +149,21 @@ void chuGeneratorManager::addGenerator(chuGenerator* newGen)
     allGenerators.add(newGen);
 }
 
+void chuGeneratorManager::deleteGenerator(chuGenerator* genToDelete)
+{
+    if (genToDelete == currentGenerator)
+    {
+        setCurrentGenerator(nullptr);
+    }
+    allGenerators.removeObject(genToDelete);
+}
+
+void chuGeneratorManager::renameGenerator(chuGenerator* gen, const String& newName)
+{
+    gen->setName(newName);
+    sendChangeMessage();
+}
+
 ScopedPointer<chuGeneratorManager> theManager;
 
 chuGeneratorManager* getGeneratorManager()

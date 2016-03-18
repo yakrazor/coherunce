@@ -42,17 +42,5 @@ const String chuGenerator::getOSCRoot() const
     return "/generator/" + getName();
 }
 
-void chuGenerator::remapOSCAddresses()
-{
-    std::vector<chuParameter*> params;
-    getParamList(params);
-    for (auto& param : params)
-    {
-        if (chuOSCManager::getReceiver())
-        {
-            param->listenAtOSCAddress(getOSCRoot());
-        }
-    }
-}
 
 

@@ -25,7 +25,8 @@ enum CommandIDs {
     Save,
     SaveAs,
     HelpContents,
-    CloseWindow
+    CloseWindow,
+    Rename
 };
 
 

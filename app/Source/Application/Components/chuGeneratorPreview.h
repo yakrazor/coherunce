@@ -11,9 +11,9 @@
 #ifndef CHUGENERATORPREVIEW_H_INCLUDED
 #define CHUGENERATORPREVIEW_H_INCLUDED
 
-#include "Core/Generators/chuGenerator.h"
-#include "chuGeneratorManager.h"
-#include "chuApplication.h"
+#include "../../../JuceLibraryCode/JuceHeader.h"
+
+class chuGenerator;
 
 class chuGeneratorPreview : public Timer, public Component, public ChangeBroadcaster {
 public:

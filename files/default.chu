@@ -102,7 +102,7 @@
       <parameter name="RestColor" _type="color" value="-16776961"/>
       <parameter name="ActiveColor" _type="color" value="-65536"/>
     </generator>
-    <generator _type="FivePoints" name="FivePoints3">
+    <generator _type="FivePoints" name="FivePointsRed">
       <parameter name="Active" _type="bool" value="0"/>
       <parameter name="Sides" _type="int" min="3" max="8" value="3"/>
       <parameter name="Radius" _type="float" min="0.0099999997764825820923" max="0.10000000149011611938"

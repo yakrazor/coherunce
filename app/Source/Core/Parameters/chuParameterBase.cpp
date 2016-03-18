@@ -92,6 +92,11 @@ chuParameterProvider::chuParameterProvider(const String& typeName, ValueTree sou
     }
 }
 
+chuParameterProvider::~chuParameterProvider()
+{
+    deregisterOSCAddresses();
+}
+
 void chuParameterProvider::getParamList(std::vector<chuParameter*>& params) const
 {
     for (auto iter = parameters.begin(); iter != parameters.end(); iter++)
@@ -142,6 +147,29 @@ void chuParameterProvider::addParameter(chuParameter* newParam)
     if (getOSCRoot().isNotEmpty())
     {
         newParam->listenAtOSCAddress(getOSCRoot());
+    }
+}
+
+void chuParameterProvider::remapOSCAddresses()
+{
+    std::vector<chuParameter*> params;
+    getParamList(params);
+    for (auto& param : params)
+    {
+        param->listenAtOSCAddress(getOSCRoot());
+    }
+}
+
+void chuParameterProvider::deregisterOSCAddresses()
+{
+    if (chuOSCManager::getReceiver())
+    {
+        std::vector<chuParameter*> params;
+        getParamList(params);
+        for (auto& param : params)
+        {
+            chuOSCManager::getReceiver()->removeListener(param);
+        }
     }
 }
 

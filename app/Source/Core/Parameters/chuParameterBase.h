@@ -48,8 +48,8 @@ class chuParameterProvider
 {
 public:
     chuParameterProvider(const String& typeName, ValueTree source);
+    virtual ~chuParameterProvider();
     
-    virtual ~chuParameterProvider() {}
     void getParamList(std::vector<chuParameter*>& params) const;
     virtual const String getOSCRoot() const { return String::empty; }
 
@@ -63,6 +63,9 @@ public:
     PropertyPanel* createPanel() const;
 
 protected:
+    void remapOSCAddresses();
+    void deregisterOSCAddresses();
+
     OwnedArray<chuParameter> parameters;
     ValueTree data;
 };

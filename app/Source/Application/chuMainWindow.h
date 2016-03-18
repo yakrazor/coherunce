@@ -12,6 +12,7 @@
 #define CHUMAINWINDOW_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "chuClipGrid.h"
 
 class chuMainWindow : public DocumentWindow
 {
@@ -23,8 +24,11 @@ public:
 
     static chuMainWindow* getMainWindow();
 
+    chuClipGrid* getClipGrid() { return clipGrid; }
+
 private:
     ScopedPointer<LookAndFeel> customLookAndFeel;
+    chuClipGrid* clipGrid;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(chuMainWindow)
 };

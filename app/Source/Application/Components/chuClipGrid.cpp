@@ -12,6 +12,10 @@
 #include "chuClipGrid.h"
 #include "chuGeneratorManager.h"
 #include "chuClipButton.h"
+#include "chuApplication.h"
+
+#define GRID_COLS 5
+#define GRID_ROWS 5
 
 //==============================================================================
 chuClipGrid::chuClipGrid()
@@ -25,8 +29,8 @@ chuClipGrid::chuClipGrid()
     manager->addChangeListener(this);
 
     auto& generators = manager->getAllGenerators();
-    int cols = 5;
-    int rows = 5;
+    int cols = GRID_COLS;
+    int rows = GRID_ROWS;
 
     for (int i = 0; i < rows; i++)
     {
@@ -96,21 +100,24 @@ void chuClipGrid::addGenerator(chuGenerator* newGen)
     int lastIndex = manager->getAllGenerators().size();
     if (lastIndex < childControls.size())
     {
-        childControls[lastIndex]->setGenerator(newGen);
         getApp()->getCurrentProject()->addGenerator(newGen);
-        int x = 120 * ((lastIndex + 1) % 5) + 10;
-        int y = 110 * ((lastIndex + 1) / 5) + 10;
-
-        if (lastIndex + 1 < childControls.size())
-        {
-            addButton->setTopLeftPosition(x, y);
-            addButton->toFront(false);
-        }
-        else
-        {
-            addButton->setVisible(false);
-        }
+        childControls[lastIndex]->setGenerator(newGen);
+        updateAddButton();
     }
+}
+
+void chuClipGrid::deleteGenerator(chuGenerator* genToDelete)
+{
+    auto manager = getGeneratorManager();
+    manager->deleteGenerator(genToDelete);
+    auto& allGenerators = manager->getAllGenerators();
+
+    int index = 0;
+    for (auto gridButton : childControls)
+    {
+        gridButton->setGenerator(index < allGenerators.size() ? allGenerators[index++] : nullptr);
+    }
+    updateAddButton();
 }
 
 void addGeneratorFromMenu(int result, chuClipGrid* grid)
@@ -139,5 +146,25 @@ void chuClipGrid::buttonClicked(Button* button)
         m.showMenuAsync(PopupMenu::Options().withTargetComponent(addButton),
                         ModalCallbackFunction::create(addGeneratorFromMenu, this));
     }
+}
+
+void chuClipGrid::updateAddButton()
+{
+    auto manager = getGeneratorManager();
+    int genCount = manager->getAllGenerators().size();
+
+    int x = 120 * (genCount % GRID_COLS) + 10;
+    int y = 110 * (genCount / GRID_ROWS) + 10;
+
+    if (genCount < childControls.size())
+    {
+        addButton->setTopLeftPosition(x, y);
+        addButton->toFront(false);
+    }
+    else
+    {
+        addButton->setVisible(false);
+    }
+
 }
 
