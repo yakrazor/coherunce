@@ -23,19 +23,19 @@ chuGenFivePoints::chuGenFivePoints(ValueTree source)
 
     addParameter(pt1x  = new chuParameterFloat("pt1x",  leapXMin, leapXMax, (leapXMax - leapXMin)*1.0/6.0 + leapXMin, options));
     addParameter(pt1y  = new chuParameterFloat("pt1y",  leapYMin, leapYMax, (leapYMax + leapYMin)/2.0, options));
-    addParameter(pt1on = new chuParameterInt("pt1on", 0, 1, 1, options));
+    addParameter(pt1on = new chuParameterBool("pt1on", true, options));
     addParameter(pt2x  = new chuParameterFloat("pt2x",  leapXMin, leapXMax, (leapXMax - leapXMin)*2.0/6.0 + leapXMin, options));
     addParameter(pt2y  = new chuParameterFloat("pt2y",  leapYMin, leapYMax, (leapYMax + leapYMin)/2.0, options));
-    addParameter(pt2on = new chuParameterInt("pt2on", 0, 1, 1, options));
+    addParameter(pt2on = new chuParameterBool("pt2on", true, options));
     addParameter(pt3x  = new chuParameterFloat("pt3x",  leapXMin, leapXMax, (leapXMax - leapXMin)*3.0/6.0 + leapXMin, options));
     addParameter(pt3y  = new chuParameterFloat("pt3y",  leapYMin, leapYMax, (leapYMax + leapYMin)/2.0, options));
-    addParameter(pt3on = new chuParameterInt("pt3on", 0, 1, 1, options));
+    addParameter(pt3on = new chuParameterBool("pt3on", true, options));
     addParameter(pt4x  = new chuParameterFloat("pt4x",  leapXMin, leapXMax, (leapXMax - leapXMin)*4.0/6.0 + leapXMin, options));
     addParameter(pt4y  = new chuParameterFloat("pt4y",  leapYMin, leapYMax, (leapYMax + leapYMin)/2.0, options));
-    addParameter(pt4on = new chuParameterInt("pt4on", 0, 1, 1, options));
+    addParameter(pt4on = new chuParameterBool("pt4on", true, options));
     addParameter(pt5x  = new chuParameterFloat("pt5x",  leapXMin, leapXMax, (leapXMax - leapXMin)*5.0/6.0 + leapXMin, options));
     addParameter(pt5y  = new chuParameterFloat("pt5y",  leapYMin, leapYMax, (leapYMax + leapYMin)/2.0, options));
-    addParameter(pt5on = new chuParameterInt("pt5on", 0, 1, 1, options));
+    addParameter(pt5on = new chuParameterBool("pt5on", true, options));
 }
 
 inline float rescale(float value, float inputMin, float inputMax, float outputMin, float outputMax)
@@ -56,7 +56,7 @@ void chuGenFivePoints::getPatterns(float barClock, std::vector<PatternItem>& pat
     bool flipX = false;
     float laserXMin = flipX ? 1.0 : -1.0;
     float laserXMax = flipX ? -1.0 : 1.0;
-    bool flipY = false;
+    bool flipY = true;
     float laserYMin = flipY ? 1.0 : -1.0;
     float laserYMax = flipY ? -1.0 : 1.0;
 

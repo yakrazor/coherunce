@@ -29,19 +29,19 @@ public:
     chuParameterColor* color;
     chuParameterFloat* pt1x;
     chuParameterFloat* pt1y;
-    chuParameterInt* pt1on;
+    chuParameterBool* pt1on;
     chuParameterFloat* pt2x;
     chuParameterFloat* pt2y;
-    chuParameterInt* pt2on;
+    chuParameterBool* pt2on;
     chuParameterFloat* pt3x;
     chuParameterFloat* pt3y;
-    chuParameterInt* pt3on;
+    chuParameterBool* pt3on;
     chuParameterFloat* pt4x;
     chuParameterFloat* pt4y;
-    chuParameterInt* pt4on;
+    chuParameterBool* pt4on;
     chuParameterFloat* pt5x;
     chuParameterFloat* pt5y;
-    chuParameterInt* pt5on;
+    chuParameterBool* pt5on;
 };
 
 
