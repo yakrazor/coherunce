@@ -16,35 +16,35 @@
       <parameter name="Active" _type="bool" value="0"/>
       <parameter name="Sides" _type="int" min="3" max="12" value="3"/>
       <parameter name="Radius" _type="float" min="0.10000000149011611938" max="1"
-                 value="0.60000002384185791016"/>
+                 value="0.5826771855354309082"/>
       <parameter name="Copies" _type="int" min="1" max="6" value="3"/>
       <parameter name="Scale" _type="float" min="0.0099999997764825820923" max="1"
-                 value="0.61799997091293334961"/>
-      <parameter name="Color" _type="color" value="-65281"/>
+                 value="0.30708661675453186035"/>
+      <parameter name="Color" _type="color" value="-3014912"/>
     </generator>
-    <generator _type="FivePoints" name="FivePoints1">
-      <parameter name="Active" _type="bool" value="0"/>
+    <generator _type="FivePoints" name="Hand1">
+      <parameter name="Active" _type="bool" value="1"/>
       <parameter name="Sides" _type="int" min="3" max="8" value="3"/>
       <parameter name="Radius" _type="float" min="0.0099999997764825820923" max="0.10000000149011611938"
                  value="0.079999998211860656738"/>
       <parameter name="Color" _type="color" value="-16711936"/>
-      <parameter name="pt1x" _type="float" min="-300" max="300" value="-200"/>
-      <parameter name="pt1y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt1on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt2x" _type="float" min="-300" max="300" value="-100"/>
-      <parameter name="pt2y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt2on" _type="int" min="0" max="1" value="1"/>
+      <parameter name="pt1x" _type="float" min="-300" max="300" value="0"/>
+      <parameter name="pt1y" _type="float" min="60" max="360" value="60"/>
+      <parameter name="pt1on" _type="int" min="0" max="1" value="0"/>
+      <parameter name="pt2x" _type="float" min="-300" max="300" value="0"/>
+      <parameter name="pt2y" _type="float" min="60" max="360" value="60"/>
+      <parameter name="pt2on" _type="int" min="0" max="1" value="0"/>
       <parameter name="pt3x" _type="float" min="-300" max="300" value="0"/>
-      <parameter name="pt3y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt3on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt4x" _type="float" min="-300" max="300" value="100"/>
-      <parameter name="pt4y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt4on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt5x" _type="float" min="-300" max="300" value="200"/>
-      <parameter name="pt5y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt5on" _type="int" min="0" max="1" value="1"/>
+      <parameter name="pt3y" _type="float" min="60" max="360" value="60"/>
+      <parameter name="pt3on" _type="int" min="0" max="1" value="0"/>
+      <parameter name="pt4x" _type="float" min="-300" max="300" value="0"/>
+      <parameter name="pt4y" _type="float" min="60" max="360" value="60"/>
+      <parameter name="pt4on" _type="int" min="0" max="1" value="0"/>
+      <parameter name="pt5x" _type="float" min="-300" max="300" value="0"/>
+      <parameter name="pt5y" _type="float" min="60" max="360" value="60"/>
+      <parameter name="pt5on" _type="int" min="0" max="1" value="0"/>
     </generator>
-    <generator _type="FivePoints" name="FivePoints2">
+    <generator _type="FivePoints" name="Hand2">
       <parameter name="Active" _type="bool" value="0"/>
       <parameter name="Sides" _type="int" min="3" max="8" value="3"/>
       <parameter name="Radius" _type="float" min="0.0099999997764825820923" max="0.10000000149011611938"
@@ -91,50 +91,6 @@
       <parameter name="c" _type="float" min="0" max="1" value="0.30000001192092895508"/>
       <parameter name="d" _type="float" min="0" max="1" value="0.5"/>
       <parameter name="Code" _type="string" value="var a = g.getParameter('a');&#10;var b = g.getParameter('b');&#10;var c = g.getParameter('c');&#10;var clk = g.getParameter('barClock');&#10;&#10;var steps = 16;&#10;var k = Math.abs(clk - 0.5);&#10;var s = clk * Math.floor(16 * b);&#10;var pump = 1.0 - (s - Math.floor(s));&#10;&#10;for (var t = -1; t &lt;= 1.0; t += 1/steps)&#10;{&#10;    g.setColor(255, 0, 0);&#10;    g.addPoint(t, (a + c * pump) * Math.sin(k * t * Math.PI * 2));&#10;    g.setColor(0, 255 * clk, 255 * (1 - clk));&#10;    g.addPoint(t, (a + c * pump) * Math.sin(1 - k * t * Math.PI * 2));&#10;}&#10;"/>
-    </generator>
-    <generator _type="FivePoints" name="FivePointsRed">
-      <parameter name="Active" _type="bool" value="0"/>
-      <parameter name="Sides" _type="int" min="3" max="8" value="3"/>
-      <parameter name="Radius" _type="float" min="0.0099999997764825820923" max="0.10000000149011611938"
-                 value="0.079999998211860656738"/>
-      <parameter name="Color" _type="color" value="-65536"/>
-      <parameter name="pt1x" _type="float" min="-300" max="300" value="-200"/>
-      <parameter name="pt1y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt1on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt2x" _type="float" min="-300" max="300" value="-100"/>
-      <parameter name="pt2y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt2on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt3x" _type="float" min="-300" max="300" value="0"/>
-      <parameter name="pt3y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt3on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt4x" _type="float" min="-300" max="300" value="100"/>
-      <parameter name="pt4y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt4on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt5x" _type="float" min="-300" max="300" value="200"/>
-      <parameter name="pt5y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt5on" _type="int" min="0" max="1" value="1"/>
-    </generator>
-    <generator _type="FivePoints" name="FivePoints1">
-      <parameter name="Active" _type="bool" value="0"/>
-      <parameter name="Sides" _type="int" min="3" max="8" value="3"/>
-      <parameter name="Radius" _type="float" min="0.0099999997764825820923" max="0.10000000149011611938"
-                 value="0.079999998211860656738"/>
-      <parameter name="Color" _type="color" value="-65536"/>
-      <parameter name="pt1x" _type="float" min="-300" max="300" value="-200"/>
-      <parameter name="pt1y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt1on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt2x" _type="float" min="-300" max="300" value="-100"/>
-      <parameter name="pt2y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt2on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt3x" _type="float" min="-300" max="300" value="0"/>
-      <parameter name="pt3y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt3on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt4x" _type="float" min="-300" max="300" value="100"/>
-      <parameter name="pt4y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt4on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt5x" _type="float" min="-300" max="300" value="200"/>
-      <parameter name="pt5y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt5on" _type="int" min="0" max="1" value="1"/>
     </generator>
   </generators>
   <laserConfig _type="Laser Config" name="Laser Configuration">
