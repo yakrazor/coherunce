@@ -108,8 +108,9 @@ void chuClipGrid::addGenerator(chuGenerator* newGen)
 
 void chuClipGrid::deleteGenerator(chuGenerator* genToDelete)
 {
+    getApp()->getCurrentProject()->deleteGenerator(genToDelete);
+
     auto manager = getGeneratorManager();
-    manager->deleteGenerator(genToDelete);
     auto& allGenerators = manager->getAllGenerators();
 
     int index = 0;

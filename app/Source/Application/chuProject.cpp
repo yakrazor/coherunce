@@ -30,6 +30,16 @@ void chuProject::addGenerator(chuGenerator* gen)
     getGeneratorManager()->addGenerator(gen);
 }
 
+void chuProject::deleteGenerator(chuGenerator* gen)
+{
+    auto genlist = data.getChildWithName("generators");
+    if (genlist.isValid())
+    {
+        genlist.removeChild(gen->getData(), nullptr);
+    }
+    getGeneratorManager()->deleteGenerator(gen);
+}
+
 void chuProject::deserializeGenerators()
 {
     auto genList = data.getChildWithName("generators");

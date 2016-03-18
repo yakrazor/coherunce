@@ -21,6 +21,7 @@ public:
     ~chuProject();
 
     void addGenerator(chuGenerator* gen);
+    void deleteGenerator(chuGenerator* gen);
     void deserializeGenerators();
     
     void loadFromFile(String filePath);
