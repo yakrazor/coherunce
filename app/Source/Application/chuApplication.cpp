@@ -39,8 +39,6 @@ void chuApplication::initialise(const String& commandLine)
         setExternalClockSource(MidiInput::getDevices()[index]);
     }
 
-    settingsWindow = new chuPreferencesDialog();
-
     auto menu = new chuMenuBar();
     getApplicationCommandManager().registerAllCommandsForTarget(this);
     menu->initialize();
@@ -50,6 +48,8 @@ void chuApplication::initialise(const String& commandLine)
     currentProject->loadFromFile("../../../../../files/default.chu");
 
     mainWindow = new chuMainWindow(getApplicationName());
+    settingsWindow = new chuPreferencesDialog();
+
 }
 
 void chuApplication::shutdown()
@@ -269,7 +269,7 @@ bool chuApplication::perform(const InvocationInfo& info)
                 {
                     window->setVisible(false);
                 }
-                if (window != getMainWindow())
+                else if (window != getMainWindow())
                 {
                     delete window;
                 }

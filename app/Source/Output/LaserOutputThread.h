@@ -36,7 +36,8 @@ public:
     int getFPS();
     int getPointCount();
 
-    LaserConfig& getLaserConfig() { return laserConfig; }
+    LaserConfig& getLaserConfig() { return *laserConfig; }
+    void setLaserConfig(LaserConfig* newConfig) { laserConfig = newConfig; }
     LaserOutputBuffer& getOutputBuffer() { return outputBuffer; }
     const LaserStatistics& getStatistics() const { return stats; }
 
@@ -44,7 +45,7 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LaserOutputThread)
 
     LaserStatistics stats;
-    LaserConfig laserConfig;
+    ScopedPointer<LaserConfig> laserConfig;
     LaserOutputBuffer outputBuffer;
 
     ScopedPointer<LaserOutputDriver> outputDriver;

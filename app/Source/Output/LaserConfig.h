@@ -16,7 +16,8 @@
 class LaserConfig : public chuParameterProvider
 {
 public:
-    LaserConfig();
+    LaserConfig() : LaserConfig(ValueTree("laserConfig")) {}
+    LaserConfig(ValueTree source);
 
     const int ildaXMin = -32768;
     const int ildaXMax = 32767;

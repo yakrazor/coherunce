@@ -9,6 +9,7 @@
 */
 
 #include "chuProject.h"
+#include "chuApplication.h"
 #include "chuGeneratorManager.h"
 
 
@@ -16,6 +17,9 @@ chuProject::chuProject()
 : data("coherunceProject")
 {
     undoManager = new UndoManager();
+    auto lc = data.getOrCreateChildWithName("laserConfig", nullptr);
+    lc.addChild(getApp()->getLaserOutputThread()->getLaserConfig().getData(), 0, nullptr);
+    getApp()->getLaserOutputThread()->getLaserConfig().setName("Laser Configuration");
 }
 
 chuProject::~chuProject()
@@ -40,7 +44,7 @@ void chuProject::deleteGenerator(chuGenerator* gen)
     getGeneratorManager()->deleteGenerator(gen);
 }
 
-void chuProject::deserializeGenerators()
+void chuProject::deserialize()
 {
     auto genList = data.getChildWithName("generators");
     for (int i = 0; i < genList.getNumChildren(); i++)
@@ -49,6 +53,10 @@ void chuProject::deserializeGenerators()
         auto genType = genData.getProperty("_type").toString();
         getGeneratorManager()->deserializeGenerator(genType, genData);
     }
+
+    auto config = data.getOrCreateChildWithName("laserConfig", nullptr);
+    getApp()->getLaserOutputThread()->setLaserConfig(new LaserConfig(config));
+    getApp()->getLaserOutputThread()->getLaserConfig().setName("Laser Configuration");
 }
 
 void chuProject::loadFromFile(String filePath)
@@ -67,7 +75,7 @@ void chuProject::loadFromFile(File file)
         auto newData = ValueTree::fromXml(*xmlElement);
         if (newData != ValueTree::invalid) {
             data = newData;
-            deserializeGenerators();
+            deserialize();
         }
         delete xmlElement;
     } else {

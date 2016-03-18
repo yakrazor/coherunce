@@ -23,6 +23,9 @@ LaserOutputThread::~LaserOutputThread() {
 }
 
 bool LaserOutputThread::init() {
+
+    laserConfig = new LaserConfig();
+
     if (outputDriver == nullptr)
     {
         outputDriver = createEtherdreamOutputDriver();
@@ -83,7 +86,7 @@ void LaserOutputThread::run() {
         }
         if (outputDriver && outputDriver->isOutputEnabled() && outputDevices.size() > 0)
         {
-            LaserPointOptimizer optimizer(laserConfig, outputDevices[0]->getState());
+            LaserPointOptimizer optimizer(*laserConfig, outputDevices[0]->getState());
             optimizer.fillBufferFromFrame(outputBuffer);
 
             for (auto outputDevice : outputDevices) {
@@ -101,7 +104,7 @@ void LaserOutputThread::run() {
                     if (outputDevice->waitForDeviceReady())
                     {
 
-                        if (!outputDevice->writeToDevice(laserConfig, outputBuffer))
+                        if (!outputDevice->writeToDevice(*laserConfig, outputBuffer))
                         {
                             printf("ERROR: write failed\n");
                         }
