@@ -170,10 +170,11 @@ private:
         if (laserProperties == nullptr)
         {
             laserProperties = new PropertyPanel();
-            getApp()->getLaserOutputThread()->getLaserConfig().createPanel(laserProperties);
-            laserProperties->setBounds(12, 130, 430, 300);
             addAndMakeVisible(laserProperties);
+            laserProperties->setBounds(12, 130, 430, 300);
         }
+        laserProperties->clear();
+        getApp()->getLaserOutputThread()->getLaserConfig().createPanel(laserProperties);
     }
 };
 

@@ -16,6 +16,8 @@
 bool logging = false;
 
 LaserOutputThread::LaserOutputThread() : Thread("Laser Output Thread") {
+    laserConfig = new LaserConfig();
+
     init();
 }
 
@@ -24,7 +26,6 @@ LaserOutputThread::~LaserOutputThread() {
 
 bool LaserOutputThread::init() {
 
-    laserConfig = new LaserConfig();
 
     if (outputDriver == nullptr)
     {

@@ -77,7 +77,7 @@
       <parameter name="ActiveColor" _type="color" value="-65536"/>
     </generator>
     <generator _type="CustomJavascript" name="Bowtie">
-      <parameter name="Active" _type="bool" value="1"/>
+      <parameter name="Active" _type="bool" value="0"/>
       <parameter name="a" _type="float" min="0" max="1" value="0.66573661565780639648"/>
       <parameter name="b" _type="float" min="0" max="1" value="0.5"/>
       <parameter name="c" _type="float" min="0" max="1" value="0.5"/>
@@ -149,6 +149,6 @@
     <parameter name="Green Delay" _type="int" min="0" max="20" value="6"/>
     <parameter name="Blue Delay" _type="int" min="0" max="20" value="6"/>
     <parameter name="Flip Horizontal" _type="bool" value="0"/>
-    <parameter name="Flip Vertical" _type="bool" value="0"/>
+    <parameter name="Flip Vertical" _type="bool" value="1"/>
   </laserConfig>
 </coherunceProject>

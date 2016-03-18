@@ -191,7 +191,9 @@ void chuParameterProvider::createPanel(PropertyPanel* panel) const
     for (auto& param : params)
     {
         if (!param->getOptions().isUserVisible)
+        {
             continue;
+        }
         auto pc = param->createComponent();
         pc->setColour(PropertyComponent::backgroundColourId, Colours::transparentBlack);
         propertyComponents.add(pc);
