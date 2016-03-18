@@ -15,6 +15,7 @@
 #define STRING_BLOCK(...) #__VA_ARGS__
 
 chuGeneratorManager::chuGeneratorManager()
+: currentGenerator(nullptr)
 {
     /*
     auto pinwheel = new chuGenPolygonPinwheel();
@@ -106,6 +107,7 @@ chuGeneratorManager::chuGeneratorManager()
     globalEffects.add(translate);
 
     chuOSCManager::getReceiver()->addListener(this, "/currentGenerator/param");
+    chuOSCManager::getReceiver()->addListener(this, "/currentGenerator/select");
 }
 
 chuGeneratorManager::~chuGeneratorManager()
@@ -176,62 +178,80 @@ void chuGeneratorManager::renameGenerator(chuGenerator* gen, const String& newNa
 
 void chuGeneratorManager::oscMessageReceived(const OSCMessage& message)
 {
-    if (!currentGenerator) {
-        return;
-    }
-
-    OSCArgument* arg = message.begin();
-    if (!arg || !arg->isInt32())
+    if (message.getAddressPattern() == "/currentGenerator/select")
     {
-        return;
-    }
-
-    int paramIndex = arg->getInt32();
-
-    arg++;
-
-    if (!arg || !arg->isFloat32())
-    {
-        return;
-    }
-
-    float paramValue = arg->getFloat32();
-
-    std::vector<chuParameter*> params;
-    currentGenerator->getParamList(params);
-    int index = 0;
-    for (auto param : params)
-    {
-        chuParameterFloat* floatParam = dynamic_cast<chuParameterFloat*>(param);
-        if (floatParam)
+        OSCArgument* arg = message.begin();
+        if (!arg || !arg->isInt32())
         {
-            if (index == paramIndex)
-            {
-                floatParam->setValue(paramValue);
-                return;
-            }
-            else
-            {
-                index++;
-                continue;
-            }
+            return;
         }
 
-        chuParameterColor* colorParam = dynamic_cast<chuParameterColor*>(param);
-        if (colorParam)
+        int generatorIndex = arg->getInt32();
+
+        for (int i = 0; i < allGenerators.size(); i++)
         {
-            if (index == paramIndex)
-            {
-                colorParam->setHue(paramValue);
-                return;
-            }
-            else
-            {
-                index++;
-                continue;
-            }
+            allGenerators[i]->setActive(i == generatorIndex);
+        }
+        sendChangeMessage();
+    }
+    else if (message.getAddressPattern() == "/currentGenerator/param")
+    {
+        if (!currentGenerator) {
+            return;
         }
 
+        OSCArgument* arg = message.begin();
+        if (!arg || !arg->isInt32())
+        {
+            return;
+        }
+
+        int paramIndex = arg->getInt32();
+
+        arg++;
+
+        if (!arg || !arg->isFloat32())
+        {
+            return;
+        }
+
+        float paramValue = arg->getFloat32();
+
+        std::vector<chuParameter*> params;
+        currentGenerator->getParamList(params);
+        int index = 0;
+        for (auto param : params)
+        {
+            chuParameterFloat* floatParam = dynamic_cast<chuParameterFloat*>(param);
+            if (floatParam)
+            {
+                if (index == paramIndex)
+                {
+                    floatParam->setValue(paramValue);
+                    return;
+                }
+                else
+                {
+                    index++;
+                    continue;
+                }
+            }
+
+            chuParameterColor* colorParam = dynamic_cast<chuParameterColor*>(param);
+            if (colorParam)
+            {
+                if (index == paramIndex)
+                {
+                    colorParam->setHue(paramValue);
+                    return;
+                }
+                else
+                {
+                    index++;
+                    continue;
+                }
+            }
+        }
     }
 }
 

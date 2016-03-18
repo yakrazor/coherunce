@@ -89,6 +89,7 @@ void chuClipGrid::changeListenerCallback(ChangeBroadcaster* source)
         for (auto gridButton : childControls)
         {
             gridButton->setFocus(currentGen != nullptr && gridButton->getGenerator() == currentGen);
+            gridButton->repaint();
         }
     }
 }
