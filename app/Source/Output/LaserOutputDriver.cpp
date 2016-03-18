@@ -55,6 +55,7 @@ public:
         else
         {
             // some kind of error, try reconnecting
+            etherdream_disconnect(thisDevice);
             if (etherdream_connect(thisDevice) >= 0)
             {
                 int res = etherdream_wait_for_ready(thisDevice);
