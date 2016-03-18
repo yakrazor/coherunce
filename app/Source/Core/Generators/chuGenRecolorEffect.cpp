@@ -17,15 +17,15 @@ chuGenRecolorEffect::chuGenRecolorEffect(ValueTree source)
     addParameter(color2 = new chuParameterColor("Color2", Colors::blue));
 }
 
-std::vector<PatternItem> chuGenRecolorEffect::getPatterns(float barClock, std::vector<PatternItem>& existingPatterns)
+void chuGenRecolorEffect::getPatterns(float barClock, std::vector<PatternItem>& patterns)
 {
     Color c;
-    for (int i = 0; i < existingPatterns.size(); i++)
+    for (int i = 0; i < patterns.size(); i++)
     {
-        auto& item = existingPatterns[i];
+        auto& item = patterns[i];
 
         c = color1->getValue();
-        c = c.interpolatedWith(color2->getValue(), i / (existingPatterns.size() * 1.0));
+        c = c.interpolatedWith(color2->getValue(), i / (patterns.size() * 1.0));
 
         item.red = c.getRed() << 8;
         item.green = c.getGreen() << 8;
@@ -40,5 +40,4 @@ std::vector<PatternItem> chuGenRecolorEffect::getPatterns(float barClock, std::v
             ptColor = c;
         }
     }
-    return existingPatterns;
 }

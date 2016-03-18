@@ -22,7 +22,7 @@ chuGen16Step::chuGen16Step(ValueTree source)
     addParameter(activeColor = new chuParameterColor("ActiveColor", Colors::red));
 }
 
-std::vector<PatternItem> chuGen16Step::getPatterns(float barClock, std::vector<PatternItem>& existingPatterns)
+void chuGen16Step::getPatterns(float barClock, std::vector<PatternItem>& patterns)
 {
     int count = numSteps->getValue();
     float step = barClock * (count - 1);
@@ -34,7 +34,6 @@ std::vector<PatternItem> chuGen16Step::getPatterns(float barClock, std::vector<P
     float barWidth = 2.0 /(count * 1.0);
     float pointShift = barWidth * pointiness->getValue() * 0.5;
 
-    std::vector<PatternItem> items;
     PatternItem item;
     item.type = PatternType::Polyline;
     item.origin = Vector2f(0, 0);
@@ -52,6 +51,5 @@ std::vector<PatternItem> chuGen16Step::getPatterns(float barClock, std::vector<P
     }
     item.polyline.addPoint(Vector2f(1, -height->getValue()), restColor->getValue());
 
-    items.push_back(item);
-    return items;
+    patterns.push_back(item);
 }

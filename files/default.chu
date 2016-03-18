@@ -77,7 +77,7 @@
       <parameter name="ActiveColor" _type="color" value="-65536"/>
     </generator>
     <generator _type="CustomJavascript" name="Bowtie">
-      <parameter name="Active" _type="bool" value="0"/>
+      <parameter name="Active" _type="bool" value="1"/>
       <parameter name="a" _type="float" min="0" max="1" value="0.66573661565780639648"/>
       <parameter name="b" _type="float" min="0" max="1" value="0.5"/>
       <parameter name="c" _type="float" min="0" max="1" value="0.5"/>
@@ -85,7 +85,7 @@
       <parameter name="Code" _type="string" value="var a = g.getParameter('a');&#10;var b = g.getParameter('b');&#10;var clk = 1.0 - g.getParameter('barClock');&#10;&#10;g.addPoint(0,0);&#10;g.addPoint(-a, a * b * clk);&#10;g.addPoint(-a, -a * b * clk);&#10;g.addPoint(a, a * b * clk);&#10;g.addPoint(a, -a * b * clk);&#10;g.addPoint(0, 0);&#10;"/>
     </generator>
     <generator _type="CustomJavascript" name="Beatwave1">
-      <parameter name="Active" _type="bool" value="1"/>
+      <parameter name="Active" _type="bool" value="0"/>
       <parameter name="a" _type="float" min="0" max="1" value="0.1170878484845161438"/>
       <parameter name="b" _type="float" min="0" max="1" value="0.20545679330825805664"/>
       <parameter name="c" _type="float" min="0" max="1" value="0.30000001192092895508"/>
@@ -137,7 +137,7 @@
       <parameter name="pt5on" _type="int" min="0" max="1" value="1"/>
     </generator>
   </generators>
-  <laserConfig _type="Laser Config" name="Laser Config2">
+  <laserConfig _type="Laser Config" name="Laser Configuration">
     <parameter name="Points Per Second" _type="int" min="200" max="100000" value="35000"/>
     <parameter name="Longest Unbroken Line" _type="int" min="200" max="10000"
                value="1000"/>

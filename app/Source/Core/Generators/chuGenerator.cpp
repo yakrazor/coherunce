@@ -11,8 +11,6 @@
 #include "chuGenerator.h"
 #include "chuOSCManager.h"
 
-std::vector<PatternItem> chuGenerator::emptyPatterns;
-
 chuGenerator::chuGenerator(String generatorTypeName, ValueTree source)
 : chuParameterProvider(generatorTypeName, source)
 {

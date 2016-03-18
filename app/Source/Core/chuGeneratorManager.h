@@ -19,6 +19,7 @@
 #include "chuGen16Step.h"
 #include "chuGenJavascript.h"
 #include "chuGenRecolorEffect.h"
+#include "chuGenTranslateEffect.h"
 
 class chuGeneratorManager : public ChangeBroadcaster
 {

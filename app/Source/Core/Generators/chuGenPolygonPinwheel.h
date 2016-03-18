@@ -17,7 +17,7 @@
 class chuGenPolygonPinwheel : public chuGenerator {
 public:
     chuGenPolygonPinwheel(ValueTree source = ValueTree("generator"));
-    virtual std::vector<PatternItem> getPatterns(float barClock, std::vector<PatternItem>& existingPatterns) override;
+    virtual void getPatterns(float barClock, std::vector<PatternItem>& patterns) override;
 
     chuParameterInt* sides;
     chuParameterFloat* radius;

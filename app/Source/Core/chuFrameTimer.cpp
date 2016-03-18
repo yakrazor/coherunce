@@ -90,11 +90,7 @@ void chuFrameTimer::timerCallback()
         {
             if (generator->isActive())
             {
-                auto items = generator->getPatterns(barClock);
-                for (auto& item : items)
-                {
-                    patterns.push_back(item);
-                }
+                generator->getPatterns(barClock, patterns);
             }
         }
 
@@ -102,7 +98,7 @@ void chuFrameTimer::timerCallback()
         {
             if (generator->isActive())
             {
-                patterns = generator->getPatterns(barClock, patterns);
+                generator->getPatterns(barClock, patterns);
             }
         }
 

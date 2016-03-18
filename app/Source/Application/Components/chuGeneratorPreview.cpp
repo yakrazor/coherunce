@@ -55,8 +55,9 @@ void chuGeneratorPreview::drawGeneratorPreview()
     }
     previewBuffer = new DrawableComposite();
     previewBuffer->setBoundingBox(RelativeParallelogram(Rectangle<float>(-resolution, resolution, resolution, -resolution)));
-    
-    auto items = generator->getPatterns(getApp()->getFrameTimer()->getBarClock());
+
+    std::vector<PatternItem> items;
+    generator->getPatterns(getApp()->getFrameTimer()->getBarClock(), items);
     
     auto border = new DrawablePath();
     Path borderPath;

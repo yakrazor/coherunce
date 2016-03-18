@@ -100,6 +100,9 @@ chuGeneratorManager::chuGeneratorManager()
 
     auto allRed = new chuGenRecolorEffect();
     globalEffects.add(allRed);
+
+    auto translate = new chuGenTranslateEffect();
+    globalEffects.add(translate);
 }
 
 chuGeneratorManager::~chuGeneratorManager()

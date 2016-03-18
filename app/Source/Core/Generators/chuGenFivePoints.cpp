@@ -44,7 +44,7 @@ inline float rescale(float value, float inputMin, float inputMax, float outputMi
     return outputMin + s * (outputMax - outputMin);
 }
 
-std::vector<PatternItem> chuGenFivePoints::getPatterns(float barClock, std::vector<PatternItem>& existingPatterns)
+void chuGenFivePoints::getPatterns(float barClock, std::vector<PatternItem>& patterns)
 {
     PatternItem item;
     item.type = PatternType::RegularPolygon;
@@ -62,36 +62,34 @@ std::vector<PatternItem> chuGenFivePoints::getPatterns(float barClock, std::vect
     float laserYMin = flipY ? 1.0 : -1.0;
     float laserYMax = flipY ? -1.0 : 1.0;
 
-    std::vector<PatternItem> items;
     if (pt1on->getValue())
     {
         item.origin.x = rescale(pt1x->getValue(), leapXMin, leapXMax, laserXMin, laserXMax);
         item.origin.y = rescale(pt1y->getValue(), leapYMin, leapYMax, laserYMin, laserYMax);
-        items.push_back(item);
+        patterns.push_back(item);
     }
     if (pt2on->getValue())
     {
         item.origin.x = rescale(pt2x->getValue(), leapXMin, leapXMax, laserXMin, laserXMax);
         item.origin.y = rescale(pt2y->getValue(), leapYMin, leapYMax, laserYMin, laserYMax);
-        items.push_back(item);
+        patterns.push_back(item);
     }
     if (pt3on->getValue())
     {
         item.origin.x = rescale(pt3x->getValue(), leapXMin, leapXMax, laserXMin, laserXMax);
         item.origin.y = rescale(pt3y->getValue(), leapYMin, leapYMax, laserYMin, laserYMax);
-        items.push_back(item);
+        patterns.push_back(item);
     }
     if (pt4on->getValue())
     {
         item.origin.x = rescale(pt4x->getValue(), leapXMin, leapXMax, laserXMin, laserXMax);
         item.origin.y = rescale(pt4y->getValue(), leapYMin, leapYMax, laserYMin, laserYMax);
-        items.push_back(item);
+        patterns.push_back(item);
     }
     if (pt5on->getValue())
     {
         item.origin.x = rescale(pt5x->getValue(), leapXMin, leapXMax, laserXMin, laserXMax);
         item.origin.y = rescale(pt5y->getValue(), leapYMin, leapYMax, laserYMin, laserYMax);
-        items.push_back(item);
+        patterns.push_back(item);
     }
-    return items;
 }
