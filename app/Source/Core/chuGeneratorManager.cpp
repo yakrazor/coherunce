@@ -10,6 +10,7 @@
 
 #include "chuGeneratorManager.h"
 #include "chuApplication.h"
+#include "chuOSCManager.h"
 
 #define STRING_BLOCK(...) #__VA_ARGS__
 
@@ -103,6 +104,8 @@ chuGeneratorManager::chuGeneratorManager()
 
     auto translate = new chuGenTranslateEffect();
     globalEffects.add(translate);
+
+    chuOSCManager::getReceiver()->addListener(this, "/currentGenerator/param");
 }
 
 chuGeneratorManager::~chuGeneratorManager()
@@ -170,6 +173,68 @@ void chuGeneratorManager::renameGenerator(chuGenerator* gen, const String& newNa
     sendChangeMessage();
 }
 
+
+void chuGeneratorManager::oscMessageReceived(const OSCMessage& message)
+{
+    if (!currentGenerator) {
+        return;
+    }
+
+    OSCArgument* arg = message.begin();
+    if (!arg || !arg->isInt32())
+    {
+        return;
+    }
+
+    int paramIndex = arg->getInt32();
+
+    arg++;
+
+    if (!arg || !arg->isFloat32())
+    {
+        return;
+    }
+
+    float paramValue = arg->getFloat32();
+
+    std::vector<chuParameter*> params;
+    currentGenerator->getParamList(params);
+    int index = 0;
+    for (auto param : params)
+    {
+        chuParameterFloat* floatParam = dynamic_cast<chuParameterFloat*>(param);
+        if (floatParam)
+        {
+            if (index == paramIndex)
+            {
+                floatParam->setValue(paramValue);
+                return;
+            }
+            else
+            {
+                index++;
+                continue;
+            }
+        }
+
+        chuParameterColor* colorParam = dynamic_cast<chuParameterColor*>(param);
+        if (colorParam)
+        {
+            if (index == paramIndex)
+            {
+                colorParam->setHue(paramValue);
+                return;
+            }
+            else
+            {
+                index++;
+                continue;
+            }
+        }
+
+    }
+}
+
 ScopedPointer<chuGeneratorManager> theManager;
 
 chuGeneratorManager* getGeneratorManager()
@@ -185,3 +250,4 @@ void clearGeneratorManager()
 {
     theManager = nullptr;
 }
+

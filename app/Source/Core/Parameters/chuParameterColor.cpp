@@ -29,6 +29,19 @@ void chuParameterColor::setValue(const Color& c)
     data.setProperty("value", value, nullptr);
 }
 
+void chuParameterColor::setHue(float hue)
+{
+    if (hue < 0.0) hue = 0.0;
+    if (hue > 1.0) hue = 1.0;
+
+    float h, s, b;
+    auto c = getValue();
+    c.getHSB(h, s, b);
+    h = hue;
+    c = c.fromHSV(h, s, b, 1.0);
+    setValue(c);
+}
+
 void chuParameterColor::deserialize(ValueTree saved)
 {
     if (saved.hasProperty("_type") &&
@@ -42,6 +55,13 @@ void chuParameterColor::deserialize(ValueTree saved)
 
 void chuParameterColor::oscMessageReceived(const OSCMessage& message)
 {
+    // Hue only for now
+    // TODO: use optional 2nd and 3rd args for S/V
+    OSCArgument* arg = message.begin();
+    if (arg && arg->isFloat32())
+    {
+        setHue(arg->getFloat32());
+    }
 }
 
 class chuParameterColorButton : public PropertyComponent, public Button::Listener, public ChangeListener

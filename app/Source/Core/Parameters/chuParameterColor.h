@@ -27,6 +27,7 @@ public:
 
     Color getValue() const;
     void setValue(const Color& c);
+    void setHue(float hue);
 };
 
 

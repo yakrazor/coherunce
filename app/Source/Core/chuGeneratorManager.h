@@ -21,7 +21,7 @@
 #include "chuGenRecolorEffect.h"
 #include "chuGenTranslateEffect.h"
 
-class chuGeneratorManager : public ChangeBroadcaster
+class chuGeneratorManager : public ChangeBroadcaster, public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::RealtimeCallback>
 {
 public:
     chuGeneratorManager();
@@ -37,6 +37,8 @@ public:
     void addGenerator(chuGenerator* newGen);
     void deleteGenerator(chuGenerator* genToDelete);
     void renameGenerator(chuGenerator* gen, const String& newName);
+
+    virtual void oscMessageReceived(const OSCMessage &message) override;
 
 private:
     OwnedArray<chuGenerator> allGenerators;
