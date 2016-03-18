@@ -98,28 +98,30 @@ void LaserOutputThread::run() {
                 }
                 else
                 {
-                    if (outputDevice->waitForDeviceReady())
+                    auto timeBeforeWait = Time::getMillisecondCounterHiRes();
+                    outputDevice->waitForDeviceReady();
+                    auto timeAfterWait = Time::getMillisecondCounterHiRes();
+                    auto waitLength = timeAfterWait - timeBeforeWait;
+                    printf("Wait length: %f\n", waitLength);
+
+                    if (!outputDevice->writeToDevice(laserConfig, outputBuffer))
                     {
+                        printf("ERROR: write failed\n");
+                    }
 
-                        if (!outputDevice->writeToDevice(laserConfig, outputBuffer))
-                        {
-                            printf("ERROR: write failed\n");
-                        }
+                    frameCount++;
+                    if (frameCount == 20) {
+                        double now = Time::getMillisecondCounterHiRes();
+                        double delta = now - clock;
 
-                        frameCount++;
-                        if (frameCount == 20) {
-                            double now = Time::getMillisecondCounterHiRes();
-                            double delta = now - clock;
+                        stats.framesPerSecond = 20000/delta;
+                        stats.pointsPerFrame = count;
 
-                            stats.framesPerSecond = 20000/delta;
-                            stats.pointsPerFrame = count;
+                        // TODO: move this to UI
+                        printf("Points: %d FPS: %f\n", stats.pointsPerFrame, stats.framesPerSecond);
 
-                            // TODO: move this to UI
-                            printf("Points: %d FPS: %f\n", stats.pointsPerFrame, stats.framesPerSecond);
-
-                            frameCount = 0;
-                            clock = now;
-                        }
+                        frameCount = 0;
+                        clock = now;
                     }
                 }
             }
