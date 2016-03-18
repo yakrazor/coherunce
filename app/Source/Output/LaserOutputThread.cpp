@@ -83,13 +83,13 @@ void LaserOutputThread::run() {
         }
         if (outputDriver && outputDriver->isOutputEnabled() && outputDevices.size() > 0)
         {
+            LaserPointOptimizer optimizer(laserConfig, outputDevices[0]->getState());
+            optimizer.fillBufferFromFrame(outputBuffer);
+
             for (auto outputDevice : outputDevices) {
                 outputDevice->setRedDelay(getLaserConfig().redDelay->getValue());
                 outputDevice->setGreenDelay(getLaserConfig().greenDelay->getValue());
                 outputDevice->setBlueDelay(getLaserConfig().blueDelay->getValue());
-
-                LaserPointOptimizer optimizer(laserConfig, outputDevice->getState());
-                optimizer.fillBufferFromFrame(outputBuffer);
 
                 count = outputBuffer.getPointCount();
                 if (count <= 0) {
