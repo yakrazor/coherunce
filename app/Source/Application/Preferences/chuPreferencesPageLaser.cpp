@@ -171,7 +171,7 @@ private:
         {
             laserProperties = new PropertyPanel();
             getApp()->getLaserOutputThread()->getLaserConfig().createPanel(laserProperties);
-            laserProperties->setBounds(12, 130, 430, 200);
+            laserProperties->setBounds(12, 130, 430, 300);
             addAndMakeVisible(laserProperties);
         }
     }
@@ -214,7 +214,7 @@ public:
     void resized()
     {
         Rectangle<int> r(getLocalBounds().reduced(4));
-        laserContent->setBounds(r.removeFromTop(proportionOfHeight(0.65f)));
+        laserContent->setBounds(r.removeFromTop(480));
         diagnosticsBox.setBounds(r);
     }
 

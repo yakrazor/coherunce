@@ -34,6 +34,8 @@ public:
     chuParameterInt* redDelay;
     chuParameterInt* greenDelay;
     chuParameterInt* blueDelay;
+    chuParameterBool* flipHorizontal;
+    chuParameterBool* flipVertical;
 };
 
 class LaserStatistics

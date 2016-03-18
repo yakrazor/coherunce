@@ -22,5 +22,7 @@ LaserConfig::LaserConfig()
     addParameter(redDelay = new chuParameterInt("Red Delay", 0, 20, 6));
     addParameter(greenDelay = new chuParameterInt("Green Delay", 0, 20, 6));
     addParameter(blueDelay = new chuParameterInt("Blue Delay", 0, 20, 6));
+    addParameter(flipHorizontal = new chuParameterBool("Flip Horizontal", false));
+    addParameter(flipVertical = new chuParameterBool("Flip Vertical", false));
 }
 

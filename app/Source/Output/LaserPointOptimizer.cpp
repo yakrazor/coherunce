@@ -103,7 +103,9 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
 {
     pointIndex = 0;
 
-    int scale = config.ildaXMax;
+    int xScale = config.ildaXMax * (config.flipHorizontal->getValue() ? -1 : 1);
+    int yScale = config.ildaYMax * (config.flipVertical->getValue() ? -1 : 1);
+
     int longestUnbrokenLine = config.longestUnbrokenLine->getValue();
     int internalShapeDwellPoints = config.internalDwellPoints->getValue();
     int dwellOffPoints = config.dwellOffPoints->getValue();
@@ -132,8 +134,8 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
                     continue;
                 }
 
-                int16_t ptX = vertices[0].x * scale;
-                int16_t ptY = vertices[0].y * scale;
+                int16_t ptX = vertices[0].x * xScale;
+                int16_t ptY = vertices[0].y * yScale;
 
                 int move_distance = sqrt(pow(prevItemX - ptX, 2) + pow(prevItemY - ptY, 2));
                 int numMoveSegments = std::max(1, move_distance / longestUnbrokenLine);
@@ -146,8 +148,8 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
 
                 for (int i = 1; i < vertices.size(); i++)
                 {
-                    int16_t ptX = vertices[i].x * scale;
-                    int16_t ptY = vertices[i].y * scale;
+                    int16_t ptX = vertices[i].x * xScale;
+                    int16_t ptY = vertices[i].y * yScale;
 
                     const Colour& startColour = item.polyline.colours[i - 1];
                     const Colour& endColour = item.polyline.colours[i];
@@ -165,11 +167,11 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
 
                 // Find the start point
                 float rad = item.rotation * PI/180.0;
-                int16_t origX = (item.origin.x + item.radius * cos(rad)) * scale;
-                int16_t origY = (item.origin.y + item.radius * sin(rad)) * scale;
+                int16_t origX = (item.origin.x + item.radius * cos(rad)) * xScale;
+                int16_t origY = (item.origin.y + item.radius * sin(rad)) * yScale;
 
                 // Find the length of the polygon sides and the initial move vector
-                int s = 2 * item.radius * sin(PI / item.sides) * scale;
+                int s = 2 * item.radius * sin(PI / item.sides) * xScale;
                 int move_distance = sqrt(pow(prevItemX - origX, 2) + pow(prevItemY - origY, 2));
 
                 int numMoveSegments = std::max(1, move_distance / longestUnbrokenLine);
@@ -186,8 +188,8 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
                 int16_t lastY = origY;
 
                 for (int i = 0; i < item.sides; i++) {
-                    int16_t nextX = (item.origin.x + item.radius * cos(2 * PI * i / item.sides + rad)) * scale;
-                    int16_t nextY = (item.origin.y + item.radius * sin(2 * PI * i / item.sides + rad)) * scale;
+                    int16_t nextX = (item.origin.x + item.radius * cos(2 * PI * i / item.sides + rad)) * xScale;
+                    int16_t nextY = (item.origin.y + item.radius * sin(2 * PI * i / item.sides + rad)) * yScale;
                     addLine(buffer.points, 0, internalShapeDwellPoints, numSegments, lastX, lastY, nextX, nextY, item.red, item.green, item.blue, intensity);
                     lastX = nextX;
                     lastY = nextY;
