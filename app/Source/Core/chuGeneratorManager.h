@@ -20,6 +20,8 @@
 #include "chuGenJavascript.h"
 #include "chuGenRecolorEffect.h"
 #include "chuGenTranslateEffect.h"
+#include "chuGenNoiseEffect.h"
+#include "chuGenSinusoidEffect.h"
 
 class chuGeneratorManager : public ChangeBroadcaster, public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::RealtimeCallback>
 {

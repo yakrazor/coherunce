@@ -106,6 +106,12 @@ chuGeneratorManager::chuGeneratorManager()
     auto translate = new chuGenTranslateEffect();
     globalEffects.add(translate);
 
+    auto sinusoid = new chuGenSinusoidEffect();
+    globalEffects.add(sinusoid);
+
+    auto noise = new chuGenNoiseEffect();
+    globalEffects.add(noise);
+
     chuOSCManager::getReceiver()->addListener(this, "/currentGenerator/param");
     chuOSCManager::getReceiver()->addListener(this, "/currentGenerator/select");
 }

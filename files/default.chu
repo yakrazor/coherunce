@@ -67,7 +67,7 @@
       <parameter name="pt5on" _type="bool" value="0"/>
     </generator>
     <generator _type="16Step" name="16Step1">
-      <parameter name="Active" _type="bool" value="0"/>
+      <parameter name="Active" _type="bool" value="1"/>
       <parameter name="Height" _type="float" min="0.0099999997764825820923" max="1"
                  value="0.30000001192092895508"/>
       <parameter name="Quantize" _type="bool" value="1"/>
@@ -94,12 +94,12 @@
     </generator>
   </generators>
   <laserConfig _type="Laser Config" name="Laser Configuration">
-    <parameter name="Points Per Second" _type="int" min="200" max="100000" value="35000"/>
+    <parameter name="Points Per Second" _type="int" min="200" max="100000" value="40000"/>
     <parameter name="Longest Unbroken Line" _type="int" min="200" max="10000"
                value="1000"/>
     <parameter name="Internal Dwell Points" _type="int" min="0" max="50" value="3"/>
     <parameter name="Dwell Points (Off)" _type="int" min="0" max="50" value="10"/>
-    <parameter name="Dwell Points (On)" _type="int" min="0" max="50" value="2"/>
+    <parameter name="Dwell Points (On)" _type="int" min="0" max="50" value="3"/>
     <parameter name="Intensity" _type="float" min="0" max="1" value="0"/>
     <parameter name="Red Delay" _type="int" min="0" max="20" value="5"/>
     <parameter name="Green Delay" _type="int" min="0" max="20" value="5"/>

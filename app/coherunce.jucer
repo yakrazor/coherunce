@@ -28,10 +28,18 @@
               file="Source/Core/Generators/chuGenRecolorEffect.h"/>
         <FILE id="DbHaez" name="chuGenRecolorEffect.cpp" compile="1" resource="0"
               file="Source/Core/Generators/chuGenRecolorEffect.cpp"/>
-        <FILE id="ep5LV7" name="chuGenTranslateEffect.cpp" compile="1" resource="0"
-              file="Source/Core/Generators/chuGenTranslateEffect.cpp"/>
         <FILE id="eUjAyn" name="chuGenTranslateEffect.h" compile="0" resource="0"
               file="Source/Core/Generators/chuGenTranslateEffect.h"/>
+        <FILE id="ep5LV7" name="chuGenTranslateEffect.cpp" compile="1" resource="0"
+              file="Source/Core/Generators/chuGenTranslateEffect.cpp"/>
+        <FILE id="iXGO7i" name="chuGenNoiseEffect.h" compile="0" resource="0"
+              file="Source/Core/Generators/chuGenNoiseEffect.h"/>
+        <FILE id="SqVDcJ" name="chuGenNoiseEffect.cpp" compile="1" resource="0"
+              file="Source/Core/Generators/chuGenNoiseEffect.cpp"/>
+        <FILE id="OKv5Hk" name="chuGenSinusoidEffect.h" compile="0" resource="0"
+              file="Source/Core/Generators/chuGenSinusoidEffect.h"/>
+        <FILE id="XjTtvr" name="chuGenSinusoidEffect.cpp" compile="1" resource="0"
+              file="Source/Core/Generators/chuGenSinusoidEffect.cpp"/>
       </GROUP>
       <GROUP id="{B3965FF4-711D-3D26-7EB1-8105EEBFE28E}" name="Parameters">
         <FILE id="vUuhoS" name="chuParameters.h" compile="0" resource="0" file="Source/Core/Parameters/chuParameters.h"/>
@@ -61,6 +69,7 @@
               file="Source/Core/Parameters/chuParameterString.cpp"/>
       </GROUP>
       <FILE id="mM0sox" name="PatternItem.h" compile="0" resource="0" file="Source/Core/PatternItem.h"/>
+      <FILE id="vUUCjE" name="PatternItem.cpp" compile="1" resource="0" file="Source/Core/PatternItem.cpp"/>
       <FILE id="C8JIKw" name="chuThreadQueue.h" compile="0" resource="0"
             file="Source/Core/chuThreadQueue.h"/>
       <FILE id="BiHNzH" name="chuFrameTimer.h" compile="0" resource="0" file="Source/Core/chuFrameTimer.h"/>

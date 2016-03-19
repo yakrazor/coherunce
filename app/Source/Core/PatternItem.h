@@ -19,7 +19,32 @@ struct Vector2f
     Vector2f(float _x, float _y) : x(_x), y(_y) {}
     float x;
     float y;
+
+    inline float length() const { return sqrtf(x * x + y * y); }
+    inline Vector2f normalized() const { float l = length(); return Vector2f(x / l, y / l); }
+
 };
+
+inline Vector2f operator+(const Vector2f& a, const Vector2f& b)
+{
+    return Vector2f(a.x + b.x, a.y + b.y);
+}
+
+inline Vector2f operator-(const Vector2f& a, const Vector2f& b)
+{
+    return Vector2f(a.x - b.x, a.y - b.y);
+}
+
+inline Vector2f operator*(const Vector2f& a, float s)
+{
+    return Vector2f(a.x * s, a.y * s);
+}
+
+inline Vector2f operator*(float s, const Vector2f& a)
+{
+    return Vector2f(a.x * s, a.y * s);
+}
+
 
 class Polyline2f
 {
@@ -64,6 +89,8 @@ struct PatternItem
     float height;
     int sides;
     Polyline2f polyline;
+
+    void convertToPolyline();
 };
 
 

@@ -13,8 +13,6 @@
 #include "LaserOutputBuffer.h"
 #include "LaserState.h"
 
-#define PI 3.1415926
-
 LaserPointOptimizer::LaserPointOptimizer(const LaserConfig& _config, const LaserState& _state)
 : pointIndex(0), config(_config), state(_state)
 {
@@ -189,22 +187,8 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
     buffer.getPatternQueue().process_frame([&](LaserOutputBuffer::PatternQueue::frame_type frame) {
         for (auto& item : frame) {
 
-            if (item.type == PatternType::RegularPolygon) {
-
-                // Convert to polyline
-                item.type = PatternType::Polyline;
-
-                // Find the start point
-                float rad = item.rotation * PI/180.0;
-                float x = (item.origin.x + item.radius * cos(rad));
-                float y = (item.origin.y + item.radius * sin(rad));
-                item.polyline.addPoint(Vector2f(x, y), item.colour);
-
-                for (int i = 1; i < item.sides + 1; i++) {
-                    x = (item.origin.x + item.radius * cos(2 * PI * i / item.sides + rad));
-                    y = (item.origin.y + item.radius * sin(2 * PI * i / item.sides + rad));
-                    item.polyline.addPoint(Vector2f(x, y), item.colour);
-                }
+            if (item.type != PatternType::Polyline) {
+                item.convertToPolyline();
             }
 
             if (item.type == PatternType::Polyline) {
