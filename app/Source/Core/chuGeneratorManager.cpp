@@ -100,8 +100,10 @@ chuGeneratorManager::chuGeneratorManager()
     getApp()->getCurrentProject()->addGenerator(js2);
      */
 
-    auto allRed = new chuGenRecolorEffect();
-    globalEffects.add(allRed);
+    auto recolor = new chuGenRecolorEffect();
+    recolor->color1->setValue(Colours::blue);
+    recolor->color2->setValue(Colours::green);
+    globalEffects.add(recolor);
 
     auto translate = new chuGenTranslateEffect();
     globalEffects.add(translate);

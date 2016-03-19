@@ -25,7 +25,7 @@ void chuGenRecolorEffect::getPatterns(float barClock, std::vector<PatternItem>& 
         auto& item = patterns[i];
 
         c = color1->getValue();
-        c = c.interpolatedWith(color2->getValue(), i / (patterns.size() * 1.0));
+        c = c.interpolatedWith(color2->getValue(), i / ((patterns.size() - 1.0) * 1.0));
 
         item.colour = c;
 
