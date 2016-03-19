@@ -215,7 +215,7 @@ void chuGeneratorManager::oscMessageReceived(const OSCMessage& message)
             return;
         }
 
-        float paramValue = arg->getFloat32();
+        float rawValue = arg->getFloat32();
 
         std::vector<chuParameter*> params;
         currentGenerator->getParamList(params);
@@ -227,7 +227,24 @@ void chuGeneratorManager::oscMessageReceived(const OSCMessage& message)
             {
                 if (index == paramIndex)
                 {
-                    floatParam->setValue(paramValue);
+                    floatParam->setValue(floatParam->getMinValue() +
+                                         rawValue * (floatParam->getMaxValue() - floatParam->getMinValue()));
+                    return;
+                }
+                else
+                {
+                    index++;
+                    continue;
+                }
+            }
+
+            chuParameterInt* intParam = dynamic_cast<chuParameterInt*>(param);
+            if (intParam)
+            {
+                if (index == paramIndex)
+                {
+                    intParam->setValue(intParam->getMinValue() +
+                                         rawValue * (intParam->getMaxValue() - intParam->getMinValue()));
                     return;
                 }
                 else
@@ -242,7 +259,7 @@ void chuGeneratorManager::oscMessageReceived(const OSCMessage& message)
             {
                 if (index == paramIndex)
                 {
-                    colorParam->setHue(paramValue);
+                    colorParam->setHue(rawValue);
                     return;
                 }
                 else
