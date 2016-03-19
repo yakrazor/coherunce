@@ -50,6 +50,10 @@ struct InteropObject : public DynamicObject
                 {
                     result = thisObject->generator->localBarClock;
                 }
+                else if (args.arguments[0] == "barCount")
+                {
+                    result = thisObject->generator->localBarCount;
+                }
             }
         }
         return result;
@@ -129,7 +133,8 @@ void chuGenJavascript::getPatterns(float barClock, std::vector<PatternItem>& pat
     PatternItem item;
     item.type = Polyline;
     patternBuffer.push_back(item);
-    localBarClock = barClock;
+    localBarClock = fmod(barClock, 1.0);
+    localBarCount = (int)barClock;
     
     engine.execute(code->getValue());
 

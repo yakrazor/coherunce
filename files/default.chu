@@ -82,16 +82,16 @@
     </generator>
     <generator _type="CustomJavascript" name="Bowtie">
       <parameter name="Active" _type="bool" value="0"/>
-      <parameter name="a" _type="float" min="0" max="1" value="0.66573661565780639648"/>
+      <parameter name="a" _type="float" min="0" max="1" value="0.72231745719909667969"/>
       <parameter name="b" _type="float" min="0" max="1" value="0.5"/>
       <parameter name="c" _type="float" min="0" max="1" value="0.5"/>
       <parameter name="d" _type="float" min="0" max="1" value="0.5"/>
-      <parameter name="Code" _type="string" value="var a = g.getParameter('a');&#10;var b = g.getParameter('b');&#10;var clk = 1.0 - g.getParameter('barClock');&#10;&#10;g.addPoint(0,0);&#10;g.addPoint(-a, a * b * clk);&#10;g.addPoint(-a, -a * b * clk);&#10;g.addPoint(a, a * b * clk);&#10;g.addPoint(a, -a * b * clk);&#10;g.addPoint(0, 0);&#10;"/>
+      <parameter name="Code" _type="string" value="var a = g.getParameter('a');&#10;var b = g.getParameter('b');&#10;var clk = 1.0 - &#13;&#10;    (g.getParameter('barClock') + g.getParameter('barCount') % 8)/8;&#10;&#13;&#10;g.setColor(100, 0, 0);&#10;g.addPoint(0,0);&#10;g.setColor(0, 255, 0);&#13;&#10;g.addPoint(-a, a * b * clk);&#13;&#10;g.setColor(0, 100, 255);&#10;g.addPoint(-a, -a * b * clk);&#10;g.setColor(0, 255, 100);&#10;g.addPoint(a, a * b * clk);&#10;g.setColor(0, 0, 100);&#10;g.addPoint(a, -a * b * clk);&#10;g.setColor(100, 0, 0);&#10;g.addPoint(0, 0);&#10;"/>
     </generator>
     <generator _type="CustomJavascript" name="Beatwave1">
-      <parameter name="Active" _type="bool" value="0"/>
+      <parameter name="Active" _type="bool" value="1"/>
       <parameter name="a" _type="float" min="0" max="1" value="0.1170878484845161438"/>
-      <parameter name="b" _type="float" min="0" max="1" value="0.20545679330825805664"/>
+      <parameter name="b" _type="float" min="0" max="1" value="0.25"/>
       <parameter name="c" _type="float" min="0" max="1" value="0.30000001192092895508"/>
       <parameter name="d" _type="float" min="0" max="1" value="0.5"/>
       <parameter name="Code" _type="string" value="var a = g.getParameter('a');&#10;var b = g.getParameter('b');&#10;var c = g.getParameter('c');&#10;var clk = g.getParameter('barClock');&#10;&#10;var steps = 16;&#10;var k = Math.abs(clk - 0.5);&#10;var s = clk * Math.floor(16 * b);&#10;var pump = 1.0 - (s - Math.floor(s));&#10;&#10;for (var t = -1; t &lt;= 1.0; t += 1/steps)&#10;{&#10;    g.setColor(255, 0, 0);&#10;    g.addPoint(t, (a + c * pump) * Math.sin(k * t * Math.PI * 2));&#10;    g.setColor(0, 255 * clk, 255 * (1 - clk));&#10;    g.addPoint(t, (a + c * pump) * Math.sin(1 - k * t * Math.PI * 2));&#10;}&#10;"/>

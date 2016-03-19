@@ -28,6 +28,7 @@ public:
 
     std::vector<PatternItem> patternBuffer;
     float localBarClock;
+    int localBarCount;
     Colour currentColour;
     
 private:
