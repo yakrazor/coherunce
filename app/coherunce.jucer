@@ -9,10 +9,18 @@
         <FILE id="DuTmIV" name="chuGenerator.h" compile="0" resource="0" file="Source/Core/Generators/chuGenerator.h"/>
         <FILE id="aSeYE9" name="chuGenerator.cpp" compile="1" resource="0"
               file="Source/Core/Generators/chuGenerator.cpp"/>
+        <FILE id="Je0krA" name="chuGenPolygonPinwheel.h" compile="0" resource="0"
+              file="Source/Core/Generators/chuGenPolygonPinwheel.h"/>
+        <FILE id="T57OOh" name="chuGenPolygonPinwheel.cpp" compile="1" resource="0"
+              file="Source/Core/Generators/chuGenPolygonPinwheel.cpp"/>
         <FILE id="MObyHw" name="chuGenFivePoints.h" compile="0" resource="0"
               file="Source/Core/Generators/chuGenFivePoints.h"/>
         <FILE id="W2Vexu" name="chuGenFivePoints.cpp" compile="1" resource="0"
               file="Source/Core/Generators/chuGenFivePoints.cpp"/>
+        <FILE id="WMxuE1" name="chuGenHandplane.h" compile="0" resource="0"
+              file="Source/Core/Generators/chuGenHandplane.h"/>
+        <FILE id="FoRFME" name="chuGenHandplane.cpp" compile="1" resource="0"
+              file="Source/Core/Generators/chuGenHandplane.cpp"/>
         <FILE id="OIPkRw" name="chuGenJavascript.h" compile="0" resource="0"
               file="Source/Core/Generators/chuGenJavascript.h"/>
         <FILE id="M2uXyI" name="chuGenJavascript.cpp" compile="1" resource="0"
@@ -20,10 +28,6 @@
         <FILE id="kFXPNO" name="chuGen16Step.h" compile="0" resource="0" file="Source/Core/Generators/chuGen16Step.h"/>
         <FILE id="hVq1OI" name="chuGen16Step.cpp" compile="1" resource="0"
               file="Source/Core/Generators/chuGen16Step.cpp"/>
-        <FILE id="Je0krA" name="chuGenPolygonPinwheel.h" compile="0" resource="0"
-              file="Source/Core/Generators/chuGenPolygonPinwheel.h"/>
-        <FILE id="T57OOh" name="chuGenPolygonPinwheel.cpp" compile="1" resource="0"
-              file="Source/Core/Generators/chuGenPolygonPinwheel.cpp"/>
         <FILE id="ZbepBc" name="chuGenRecolorEffect.h" compile="0" resource="0"
               file="Source/Core/Generators/chuGenRecolorEffect.h"/>
         <FILE id="DbHaez" name="chuGenRecolorEffect.cpp" compile="1" resource="0"

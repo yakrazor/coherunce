@@ -90,6 +90,11 @@ void chuGeneratorPreview::drawGeneratorPreview()
             auto& vertices = item.polyline.vertices;
             for (int i = 1; i < vertices.size(); i++)
             {
+                if (vertices[i-1].isNaN() || vertices[i].isNaN())
+                {
+                    continue;
+                }
+                
                 Path path;
                 path.addLineSegment(
                     Line<float>(

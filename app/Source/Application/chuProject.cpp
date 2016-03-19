@@ -30,7 +30,7 @@ chuProject::~chuProject()
 void chuProject::addGenerator(chuGenerator* gen)
 {
     auto genlist = data.getOrCreateChildWithName("generators", nullptr);
-    genlist.addChild(gen->getData(), genlist.getNumChildren(), nullptr);
+    genlist.addChild(gen->getData(), -1, nullptr);
     getGeneratorManager()->addGenerator(gen);
 }
 

@@ -220,6 +220,11 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
 
                 for (int i = 0; i < vertices.size() - 1; i++)
                 {
+                    if (vertices[i].isNaN() || vertices[i+1].isNaN())
+                    {
+                        continue;
+                    }
+
                     float lineStartX = vertices[i].x;
                     float lineStartY = vertices[i].y;
                     float lineEndX = vertices[i+1].x;

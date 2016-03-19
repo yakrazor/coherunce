@@ -16,6 +16,7 @@
 
 #include "chuGenPolygonPinwheel.h"
 #include "chuGenFivePoints.h"
+#include "chuGenHandplane.h"
 #include "chuGen16Step.h"
 #include "chuGenJavascript.h"
 #include "chuGenRecolorEffect.h"

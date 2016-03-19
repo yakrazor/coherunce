@@ -130,8 +130,9 @@ void addGeneratorFromMenu(int result, chuClipGrid* grid)
     {
         case 1: newGen = new chuGenPolygonPinwheel(); break;
         case 2: newGen = new chuGenFivePoints(); break;
-        case 3: newGen = new chuGen16Step(); break;
-        case 4: newGen = new chuGenJavascript(); break;
+        case 3: newGen = new chuGenHandplane(); break;
+        case 4: newGen = new chuGen16Step(); break;
+        case 5: newGen = new chuGenJavascript(); break;
     }
     grid->addGenerator(newGen);
 }
@@ -143,8 +144,9 @@ void chuClipGrid::buttonClicked(Button* button)
         PopupMenu m;
         m.addItem(1, "PolygonPinwheel");
         m.addItem(2, "FivePoints");
-        m.addItem(3, "16Step");
-        m.addItem(4, "CustomJavascript");
+        m.addItem(3, "Handplane");
+        m.addItem(4, "16Step");
+        m.addItem(5, "CustomJavascript");
         m.showMenuAsync(PopupMenu::Options().withTargetComponent(addButton),
                         ModalCallbackFunction::create(addGeneratorFromMenu, this));
     }

@@ -140,6 +140,10 @@ void chuGeneratorManager::deserializeGenerator(String type, ValueTree data)
     {
         newGen = new chuGenFivePoints(data);
     }
+    else if (type == "Handplane")
+    {
+        newGen = new chuGenHandplane(data);
+    }
     else if (type == "CustomJavascript")
     {
         newGen = new chuGenJavascript(data);

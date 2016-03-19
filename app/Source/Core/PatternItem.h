@@ -12,6 +12,7 @@
 #define PATTERNS_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include <cmath>
 
 struct Vector2f
 {
@@ -22,7 +23,7 @@ struct Vector2f
 
     inline float length() const { return sqrtf(x * x + y * y); }
     inline Vector2f normalized() const { float l = length(); return Vector2f(x / l, y / l); }
-
+    inline bool isNaN() const { return isnan(x) || isnan(y); }
 };
 
 inline Vector2f operator+(const Vector2f& a, const Vector2f& b)
