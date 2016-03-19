@@ -34,7 +34,15 @@ void chuGenNoiseEffect::getPatterns(float barClock, std::vector<PatternItem>& pa
         item.convertToPolyline();
         if (item.type == PatternType::Polyline)
         {
-            for (int i = 0; i < item.polyline.vertices.size(); i++)
+            // move the start and endpoint by the same amount, to not break closed shapes
+            float startX = dist(engine) * amount->getValue();
+            float startY = dist(engine) * amount->getValue();
+            item.polyline.vertices[0].x += startX;
+            item.polyline.vertices[0].y += startY;
+            item.polyline.vertices[item.polyline.vertices.size() - 1].x += startX;
+            item.polyline.vertices[item.polyline.vertices.size() - 1].y += startY;
+
+            for (int i = 1; i < item.polyline.vertices.size() - 1; i++)
             {
                 item.polyline.vertices[i].x += dist(engine) * amount->getValue();
                 item.polyline.vertices[i].y += dist(engine) * amount->getValue();
