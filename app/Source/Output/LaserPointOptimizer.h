@@ -26,7 +26,7 @@ public:
 private:
 
     unsigned pointIndex;
-    bool addLine(ildaPoint* points, float fx1, float fy1, float fx2, float fy2, const Colour& startColour, const Colour& endColour, uint16_t i);
+    void addLine(LaserOutputBuffer& buffer, float fx1, float fy1, float fx2, float fy2, const Colour& startColour, const Colour& endColour, uint16_t i);
 
     const LaserConfig& config;
     const LaserState& state;

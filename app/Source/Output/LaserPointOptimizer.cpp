@@ -125,7 +125,7 @@ bool CohenSutherlandLineClip(float& x0, float& y0, float& x1, float& y1)
 }
 
 
-bool LaserPointOptimizer::addLine(ildaPoint* points, float fx1, float fy1, float fx2, float fy2, const Colour& startColour, const Colour& endColour, uint16_t i)
+void LaserPointOptimizer::addLine(LaserOutputBuffer& buffer, float fx1, float fy1, float fx2, float fy2, const Colour& startColour, const Colour& endColour, uint16_t i)
 {
     int xScale = config.ildaXMax * (config.flipHorizontal->getValue() ? -1 : 1);
     int yScale = config.ildaYMax * (config.flipVertical->getValue() ? -1 : 1);
@@ -147,27 +147,46 @@ bool LaserPointOptimizer::addLine(ildaPoint* points, float fx1, float fy1, float
 
     for (int i = 0; i < dwellOffPoints; i++)
     {
-        add_point(&points[pointIndex++], x1, y1, Colours::black, 0);
+        if (pointIndex >= buffer.maxPoints)
+        {
+            return;
+        }
+        add_point(&buffer.points[pointIndex++], x1, y1, Colours::black, 0);
     }
     for (int i = 0; i < dwellOnPoints; i++)
     {
-        add_point(&points[pointIndex++], x1, y1, startColour, i);
+        if (pointIndex >= buffer.maxPoints)
+        {
+            return;
+        }
+        add_point(&buffer.points[pointIndex++], x1, y1, startColour, i);
     }
     for (int i = 0; i <= numSegments; i++)
     {
+        if (pointIndex >= buffer.maxPoints)
+        {
+            return;
+        }
         Colour interpColour = startColour.interpolatedWith(endColour, i / (numSegments * 1.0));
-        add_point(&points[pointIndex++], x1 + dx * i, y1 + dy * i, interpColour, i);
+        add_point(&buffer.points[pointIndex++], x1 + dx * i, y1 + dy * i, interpColour, i);
     }
     for (int i = 0; i < dwellOnPoints; i++)
     {
-        add_point(&points[pointIndex++], x2, y2, endColour, i);
+        if (pointIndex >= buffer.maxPoints)
+        {
+            return;
+        }
+        add_point(&buffer.points[pointIndex++], x2, y2, endColour, i);
     }
     for (int i = 0; i < dwellOffPoints; i++)
     {
-        add_point(&points[pointIndex++], x2, y2, Colours::black, 0);
+        if (pointIndex >= buffer.maxPoints)
+        {
+            return;
+        }
+        add_point(&buffer.points[pointIndex++], x2, y2, Colours::black, 0);
     }
 
-    return true;
 }
 
 void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
@@ -215,13 +234,13 @@ void LaserPointOptimizer::fillBufferFromFrame(LaserOutputBuffer& buffer)
                     // If we're not already at the start, do a blank move to the start of this line
                     if (lineStartX != currentX || lineStartY != currentY)
                     {
-                        addLine(buffer.points, currentX, currentY, lineStartX, lineStartY, Colours::black, Colours::black, 0);
+                        addLine(buffer, currentX, currentY, lineStartX, lineStartY, Colours::black, Colours::black, 0);
                     }
 
                     const Colour& startColour = item.polyline.colours[i];
                     const Colour& endColour = item.polyline.colours[i + 1];
 
-                    addLine(buffer.points, lineStartX, lineStartY, lineEndX, lineEndY, startColour, endColour, intensity);
+                    addLine(buffer, lineStartX, lineStartY, lineEndX, lineEndY, startColour, endColour, intensity);
 
                     currentX = lineEndX;
                     currentY = lineEndY;
