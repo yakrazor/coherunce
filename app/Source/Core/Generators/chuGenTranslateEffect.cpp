@@ -15,24 +15,24 @@ chuGenTranslateEffect::chuGenTranslateEffect(ValueTree source)
 {
     addParameter(manualShiftX = new chuParameterFloat("Shift X", -2.0, 2.0, 0.0));
     addParameter(manualShiftY = new chuParameterFloat("Shift Y", -2.0, 2.0, 0.0));
-    addParameter(beatCount1X = new chuParameterInt("X Osc 1 Beats", 1, 4, 0));
+    addParameter(beatCount1X = new chuParameterInt("X Osc 1 Beats", 1, 64, 0));
     addParameter(beatShift1X = new chuParameterFloat("X Osc 1 Shift", -2.0, 2.0, 0.0));
-    addParameter(beatCount2X = new chuParameterInt("X Osc 2 Beats", 1, 4, 0));
+    addParameter(beatCount2X = new chuParameterInt("X Osc 2 Beats", 1, 64, 0));
     addParameter(beatShift2X = new chuParameterFloat("X Osc 2 Shift", -2.0, 2.0, 0.0));
-    addParameter(beatCount1Y = new chuParameterInt("Y Osc 1 Beats", 1, 4, 0));
+    addParameter(beatCount1Y = new chuParameterInt("Y Osc 1 Beats", 1, 64, 0));
     addParameter(beatShift1Y = new chuParameterFloat("Y Osc 1 Shift", -2.0, 2.0, 0.0));
-    addParameter(beatCount2Y = new chuParameterInt("Y Osc 2 Beats", 1, 4, 0));
+    addParameter(beatCount2Y = new chuParameterInt("Y Osc 2 Beats", 1, 64, 0));
     addParameter(beatShift2Y = new chuParameterFloat("Y Osc 2 Shift", -2.0, 2.0, 0.0));
 }
 
 void chuGenTranslateEffect::getPatterns(float barClock, std::vector<PatternItem>& patterns)
 {
     float xDelta = manualShiftX->getValue() +
-                    beatShift1X->getValue() * fmod(barClock * 4.0, beatCount1X->getValue()) +
-                    beatShift2X->getValue() * fmod(barClock * 4.0, beatCount2X->getValue());
+                    beatShift1X->getValue() * fmod(barClock * 4.0, beatCount1X->getValue()) / beatCount1X->getValue() +
+                    beatShift2X->getValue() * fmod(barClock * 4.0, beatCount2X->getValue()) / beatCount2X->getValue();
     float yDelta = manualShiftY->getValue() +
-                    beatShift1Y->getValue() * fmod(barClock * 4.0, beatCount1Y->getValue()) +
-                    beatShift2Y->getValue() * fmod(barClock * 4.0, beatCount2Y->getValue());
+                    beatShift1Y->getValue() * fmod(barClock * 4.0, beatCount1Y->getValue()) / beatCount1Y->getValue()+
+                    beatShift2Y->getValue() * fmod(barClock * 4.0, beatCount2Y->getValue()) / beatCount2Y->getValue();
 
     for (auto& item : patterns) {
         if (item.type == PatternType::Polyline)

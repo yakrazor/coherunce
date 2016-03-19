@@ -77,7 +77,6 @@ void chuFrameTimer::timerCallback()
         if ((timeStamp - lastDownbeatTimestamp) > (deltaMs * quarterNotesPerBar))
         {
             bars = (bars + 1) % 64;
-            printf("long bar clock is %d/64\n", bars);
             lastDownbeatTimestamp = Time::getMillisecondCounterHiRes();
             timeStamp = Time::getMillisecondCounterHiRes();
         }
@@ -163,6 +162,7 @@ void chuFrameTimer::handleIncomingMidiMessage(MidiInput*, const MidiMessage& mes
         {
             numPulses++;
             if (numPulses > pulsesPerBar) {
+                bars = (bars + 1) % 64;
                 numPulses -= pulsesPerBar;
             }
 

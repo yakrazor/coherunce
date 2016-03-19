@@ -27,6 +27,8 @@ public:
     chuParameterInt* sides;
     chuParameterFloat* radius;
     chuParameterColor* color;
+    chuParameterInt* rotationPeriod;
+    
     chuParameterFloat* pt1x;
     chuParameterFloat* pt1y;
     chuParameterBool* pt1on;

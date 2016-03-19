@@ -24,6 +24,7 @@ public:
     chuParameterInt* copies;
     chuParameterFloat* scale;
     chuParameterColor* color;
+    chuParameterInt* rotationPeriod;
 };
 
 

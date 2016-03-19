@@ -17,6 +17,7 @@ chuGenFivePoints::chuGenFivePoints(ValueTree source)
     addParameter(sides = new chuParameterInt("Sides", 3, 8, 3));
     addParameter(radius = new chuParameterFloat("Radius", 0.01, 0.1, 0.08));
     addParameter(color = new chuParameterColor("Color", Colors::red));
+    addParameter(rotationPeriod = new chuParameterInt("Rotation Period", 1, 32, 1));
 
     chuParameterOptions options;
     options.isUserVisible = true;
@@ -50,7 +51,8 @@ void chuGenFivePoints::getPatterns(float barClock, std::vector<PatternItem>& pat
     item.type = PatternType::RegularPolygon;
     item.sides = sides->getValue();
     item.radius = radius->getValue();
-    item.rotation = barClock * 360;
+    float period = rotationPeriod->getValue();
+    item.rotation = fmod(barClock, period) / period * 360;
     item.colour = color->getValue();
 
     bool flipX = false;

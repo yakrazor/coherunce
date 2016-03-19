@@ -18,6 +18,7 @@ chuGenPolygonPinwheel::chuGenPolygonPinwheel(ValueTree source)
     addParameter(copies = new chuParameterInt("Copies", 1, 6, 3));
     addParameter(scale = new chuParameterFloat("Scale", 0.01, 1.0, 0.618));
     addParameter(color = new chuParameterColor("Color", Colors::red));
+    addParameter(rotationPeriod = new chuParameterInt("Rotation Period", 1, 32, 1));
 }
 
 void chuGenPolygonPinwheel::getPatterns(float barClock, std::vector<PatternItem>& patterns)
@@ -27,7 +28,8 @@ void chuGenPolygonPinwheel::getPatterns(float barClock, std::vector<PatternItem>
     item.sides = sides->getValue();
     item.radius = radius->getValue();
     item.origin = Vector2f(0, 0);
-    item.rotation = fmod(barClock, 4.0) / 4.0 * 360;
+    float period = rotationPeriod->getValue();
+    item.rotation = fmod(barClock, period) / period * 360;
     item.colour = color->getValue();
 
     int count = 1;
