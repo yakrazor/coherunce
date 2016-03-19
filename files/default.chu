@@ -4,12 +4,12 @@
   <generators>
     <generator _type="PolygonPinwheel" name="PolygonPinwheel1">
       <parameter name="Active" _type="bool" value="0"/>
-      <parameter name="Sides" _type="int" min="3" max="12" value="6"/>
+      <parameter name="Sides" _type="int" min="3" max="12" value="3"/>
       <parameter name="Radius" _type="float" min="0.10000000149011611938" max="1"
-                 value="0.75"/>
-      <parameter name="Copies" _type="int" min="1" max="6" value="3"/>
+                 value="1"/>
+      <parameter name="Copies" _type="int" min="1" max="6" value="1"/>
       <parameter name="Scale" _type="float" min="0.0099999997764825820923" max="1"
-                 value="0.61799997091293334961"/>
+                 value="0.033385828137397766113"/>
       <parameter name="Color" _type="color" value="-65536"/>
     </generator>
     <generator _type="PolygonPinwheel" name="PolygonPinwheel2">
@@ -23,26 +23,26 @@
       <parameter name="Color" _type="color" value="-3014912"/>
     </generator>
     <generator _type="FivePoints" name="Hand1">
-      <parameter name="Active" _type="bool" value="1"/>
+      <parameter name="Active" _type="bool" value="0"/>
       <parameter name="Sides" _type="int" min="3" max="8" value="3"/>
       <parameter name="Radius" _type="float" min="0.0099999997764825820923" max="0.10000000149011611938"
                  value="0.079999998211860656738"/>
       <parameter name="Color" _type="color" value="-16711936"/>
       <parameter name="pt1x" _type="float" min="-300" max="300" value="0"/>
       <parameter name="pt1y" _type="float" min="60" max="360" value="60"/>
-      <parameter name="pt1on" _type="int" min="0" max="1" value="0"/>
+      <parameter name="pt1on" _type="bool" value="0"/>
       <parameter name="pt2x" _type="float" min="-300" max="300" value="0"/>
       <parameter name="pt2y" _type="float" min="60" max="360" value="60"/>
-      <parameter name="pt2on" _type="int" min="0" max="1" value="0"/>
+      <parameter name="pt2on" _type="bool" value="0"/>
       <parameter name="pt3x" _type="float" min="-300" max="300" value="0"/>
       <parameter name="pt3y" _type="float" min="60" max="360" value="60"/>
-      <parameter name="pt3on" _type="int" min="0" max="1" value="0"/>
+      <parameter name="pt3on" _type="bool" value="0"/>
       <parameter name="pt4x" _type="float" min="-300" max="300" value="0"/>
       <parameter name="pt4y" _type="float" min="60" max="360" value="60"/>
-      <parameter name="pt4on" _type="int" min="0" max="1" value="0"/>
+      <parameter name="pt4on" _type="bool" value="0"/>
       <parameter name="pt5x" _type="float" min="-300" max="300" value="0"/>
       <parameter name="pt5y" _type="float" min="60" max="360" value="60"/>
-      <parameter name="pt5on" _type="int" min="0" max="1" value="0"/>
+      <parameter name="pt5on" _type="bool" value="0"/>
     </generator>
     <generator _type="FivePoints" name="Hand2">
       <parameter name="Active" _type="bool" value="0"/>
@@ -50,21 +50,21 @@
       <parameter name="Radius" _type="float" min="0.0099999997764825820923" max="0.10000000149011611938"
                  value="0.079999998211860656738"/>
       <parameter name="Color" _type="color" value="-16776961"/>
-      <parameter name="pt1x" _type="float" min="-300" max="300" value="-200"/>
-      <parameter name="pt1y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt1on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt2x" _type="float" min="-300" max="300" value="-100"/>
-      <parameter name="pt2y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt2on" _type="int" min="0" max="1" value="1"/>
+      <parameter name="pt1x" _type="float" min="-300" max="300" value="0"/>
+      <parameter name="pt1y" _type="float" min="60" max="360" value="60"/>
+      <parameter name="pt1on" _type="bool" value="0"/>
+      <parameter name="pt2x" _type="float" min="-300" max="300" value="0"/>
+      <parameter name="pt2y" _type="float" min="60" max="360" value="60"/>
+      <parameter name="pt2on" _type="bool" value="0"/>
       <parameter name="pt3x" _type="float" min="-300" max="300" value="0"/>
-      <parameter name="pt3y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt3on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt4x" _type="float" min="-300" max="300" value="100"/>
-      <parameter name="pt4y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt4on" _type="int" min="0" max="1" value="1"/>
-      <parameter name="pt5x" _type="float" min="-300" max="300" value="200"/>
-      <parameter name="pt5y" _type="float" min="60" max="360" value="210"/>
-      <parameter name="pt5on" _type="int" min="0" max="1" value="1"/>
+      <parameter name="pt3y" _type="float" min="60" max="360" value="60"/>
+      <parameter name="pt3on" _type="bool" value="0"/>
+      <parameter name="pt4x" _type="float" min="-300" max="300" value="0"/>
+      <parameter name="pt4y" _type="float" min="60" max="360" value="60"/>
+      <parameter name="pt4on" _type="bool" value="0"/>
+      <parameter name="pt5x" _type="float" min="-300" max="300" value="0"/>
+      <parameter name="pt5y" _type="float" min="60" max="360" value="60"/>
+      <parameter name="pt5on" _type="bool" value="0"/>
     </generator>
     <generator _type="16Step" name="16Step1">
       <parameter name="Active" _type="bool" value="0"/>
@@ -101,10 +101,10 @@
     <parameter name="Dwell Points (Off)" _type="int" min="0" max="50" value="10"/>
     <parameter name="Dwell Points (On)" _type="int" min="0" max="50" value="2"/>
     <parameter name="Intensity" _type="float" min="0" max="1" value="0"/>
-    <parameter name="Red Delay" _type="int" min="0" max="20" value="6"/>
-    <parameter name="Green Delay" _type="int" min="0" max="20" value="6"/>
-    <parameter name="Blue Delay" _type="int" min="0" max="20" value="6"/>
+    <parameter name="Red Delay" _type="int" min="0" max="20" value="5"/>
+    <parameter name="Green Delay" _type="int" min="0" max="20" value="5"/>
+    <parameter name="Blue Delay" _type="int" min="0" max="20" value="5"/>
     <parameter name="Flip Horizontal" _type="bool" value="0"/>
-    <parameter name="Flip Vertical" _type="bool" value="1"/>
+    <parameter name="Flip Vertical" _type="bool" value="0"/>
   </laserConfig>
 </coherunceProject>

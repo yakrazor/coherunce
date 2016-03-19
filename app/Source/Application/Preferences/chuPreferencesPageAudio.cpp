@@ -106,7 +106,7 @@ private:
         {
             if (getApp()->getSharedAudioDeviceManager().isMidiInputEnabled(deviceName))
             {
-                getApp()->setExternalClockSource(deviceName);
+                //getApp()->setExternalClockSource(deviceName);
                 break;
             }
         }

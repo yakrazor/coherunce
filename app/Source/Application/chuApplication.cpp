@@ -39,6 +39,9 @@ void chuApplication::initialise(const String& commandLine)
         setExternalClockSource(MidiInput::getDevices()[index]);
     }
 
+    // temporarily hardcode
+    setExternalClockSource("UM-ONE");
+
     auto menu = new chuMenuBar();
     getApplicationCommandManager().registerAllCommandsForTarget(this);
     menu->initialize();
