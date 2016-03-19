@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 59.0, 104.0, 1213.0, 632.0 ],
+		"rect" : [ 59.0, 104.0, 915.0, 632.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -471,7 +471,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 483.0, 126.0, 270.0, 22.0 ],
 					"style" : "",
-					"text" : "prepend /generator/RecolorEffect1/param/Color1"
+					"text" : "prepend /generator/RecolorEffect1/param/Color2"
 				}
 
 			}
@@ -737,7 +737,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-5",
-					"items" : [ "AU DLS Synth 1", ",", "UM-ONE", ",", "from Max 1", ",", "from Max 2" ],
+					"items" : [ "AU DLS Synth 1", ",", "Oxygen 49", ",", "UM-ONE", ",", "from Max 1", ",", "from Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,

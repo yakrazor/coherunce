@@ -27,7 +27,7 @@ void chuGenPolygonPinwheel::getPatterns(float barClock, std::vector<PatternItem>
     item.sides = sides->getValue();
     item.radius = radius->getValue();
     item.origin = Vector2f(0, 0);
-    item.rotation = barClock * 360;
+    item.rotation = fmod(barClock, 4.0) / 4.0 * 360;
     item.colour = color->getValue();
 
     int count = 1;

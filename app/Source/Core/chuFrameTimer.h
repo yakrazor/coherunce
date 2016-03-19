@@ -24,6 +24,7 @@ public:
 
     void setBarClock(float clock);
     float getBarClock() { return barClock; };
+    float getBarClock64() { return barClock + bars; }
 
     void setExternalClock(bool isExternal);
     void setRunning(bool isRunning);
@@ -48,6 +49,8 @@ public:
 private:
     LaserOutputThread* laserThread;
     float barClock;
+    int bars;
+    
     unsigned int numPulses;
     double lastMidiClockTimestamp;
     double lastDownbeatTimestamp;

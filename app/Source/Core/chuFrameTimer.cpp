@@ -15,6 +15,7 @@
 
 chuFrameTimer::chuFrameTimer(LaserOutputThread* pLaserThread) : laserThread(pLaserThread), numPulses(0), barClock(0)
 {
+    bars = 0;
     bpmValue.setValue(120.0);
     isClockExternalValue.setValue(false);
     beatDeltaMillisecondsValue.setValue(24.0);
@@ -75,6 +76,8 @@ void chuFrameTimer::timerCallback()
 
         if ((timeStamp - lastDownbeatTimestamp) > (deltaMs * quarterNotesPerBar))
         {
+            bars = (bars + 1) % 64;
+            printf("long bar clock is %d/64\n", bars);
             lastDownbeatTimestamp = Time::getMillisecondCounterHiRes();
             timeStamp = Time::getMillisecondCounterHiRes();
         }
@@ -90,7 +93,7 @@ void chuFrameTimer::timerCallback()
         {
             if (generator->isActive())
             {
-                generator->getPatterns(barClock, patterns);
+                generator->getPatterns(getBarClock64(), patterns);
             }
         }
 
@@ -98,7 +101,7 @@ void chuFrameTimer::timerCallback()
         {
             if (generator->isActive())
             {
-                generator->getPatterns(barClock, patterns);
+                generator->getPatterns(getBarClock64(), patterns);
             }
         }
 
